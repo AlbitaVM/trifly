@@ -1,10 +1,10 @@
-package es.albavm.tfg.tryfly;
+package es.albavm.tfg.trifly;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TryflyApplicationTests {
+class TriflyApplicationTests {
 
 	@Test
 	void contextLoads() {

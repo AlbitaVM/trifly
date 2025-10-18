@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trifly - Planea tus itinerarios</title>
+
+  <!-- Bootstrap local -->
+ <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">-->
+
+  <!-- Tus estilos -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Tus estilos -->
+   <script defer src="/js/script.js"></script>
+</head>
+
+<body>
+  <header class="bg-light border-bottom shadow-sm sticky-top">
+    <div class="container d-flex align-items-center justify-content-between py-3">
+      <div class="d-flex align-items-center gap-2">
+        <div class="text-danger fs-4 fw-bold">✈️</div>
+        <h1 class="h4 m-0 fw-bold text-dark">Trifly</h1>
+      </div>
+
+      <nav class="d-none d-md-flex gap-4">
+        <a href="#" class="text-dark fw-medium text-decoration-none">Itinerarios</a>
+        <a href="#" class="text-secondary text-decoration-none">Notas</a>
+        <a href="#" class="text-secondary text-decoration-none">Recordatorios</a>
+        <a href="#" class="text-secondary text-decoration-none">Presupuestos</a>
+        <a href="#" class="text-secondary text-decoration-none">Divisas</a>
+      </nav>
+
+      <button class="btn btn-danger fw-bold">Iniciar Sesión</button>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <section class="text-center mb-5">
+      <h2 class="fw-bold display-5">Planifica tu Viaje Perfecto</h2>
+      <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">
+        Crea itinerarios de viaje deslumbrantes con o sin la ayuda de la IA. Tu próxima aventura está a solo unos clics de distancia.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <button class="btn btn-danger btn-lg fw-bold">🌟 Crear con IA</button>
+        <button class="btn btn-info btn-lg text-white fw-bold">✏️ Crear Manualmente</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold fs-3">Mis Itinerarios</h3>
+      </div>
+
+      <div class="row g-4">
+        <!-- Tarjeta 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/id/1015/600/400" class="card-img-top" alt="Aventura Europea">
+            <div class="card-body">
+              <h4 class="card-title fw-bold">Aventura Europea</h4>
+              <p class="text-muted">París, Roma, Berlín</p>
+              <p class="text-secondary small mb-3">📅 15 Jul, 2024 - 15 Ago, 2024</p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-secondary btn-sm">Ver</button>
+                <button class="btn btn-outline-warning btn-sm">Editar</button>
+                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/id/1021/600/400" class="card-img-top" alt="Escapada Sudamericana">
+            <div class="card-body">
+              <h4 class="card-title fw-bold">Escapada Sudamericana</h4>
+              <p class="text-muted">Río, Buenos Aires...</p>
+              <p class="text-secondary small mb-3">📅 01 Sep, 2024 - 30 Sep, 2024</p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-secondary btn-sm">Ver</button>
+                <button class="btn btn-outline-warning btn-sm">Editar</button>
+                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/id/1035/600/400" class="card-img-top" alt="Exploración Asiática">
+            <div class="card-body">
+              <h4 class="card-title fw-bold">Exploración Asiática</h4>
+              <p class="text-muted">Tokio, Seúl, Bangkok</p>
+              <p class="text-secondary small mb-3">📅 10 Oct, 2024 - 10 Nov, 2024</p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-secondary btn-sm">Ver</button>
+                <button class="btn btn-outline-warning btn-sm">Editar</button>
+                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Botón modo oscuro -->
+  <button id="toggle-dark" class="btn btn-outline-dark position-fixed bottom-0 end-0 m-4">
+    🌙
+  </button>
+
+  <!-- Script local -->
+  <script src="script.js"></script>
+</body>
+</html>

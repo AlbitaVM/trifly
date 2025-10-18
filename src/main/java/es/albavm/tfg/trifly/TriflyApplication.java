@@ -1,13 +1,13 @@
-package es.albavm.tfg.tryfly;
+package es.albavm.tfg.trifly;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TryflyApplication {
+public class TriflyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TryflyApplication.class, args);
+		SpringApplication.run(TriflyApplication.class, args);
 	}
 
 }
