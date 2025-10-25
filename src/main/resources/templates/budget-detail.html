@@ -1,0 +1,101 @@
+{{>header}}
+<main class="form-container">
+  <div class="container" style="max-width: 1200px;">
+    <!-- Header -->
+    <div class="budget-page-header">
+      <div>
+        <h1 class="budget-main-title">Presupuesto del Viaje</h1>
+        <p class="budget-subtitle">Gestiona tus gastos y mantente dentro del presupuesto.</p>
+      </div>
+      <a class="btn btn-danger btn-lg" href="/newBill">
+        <span class="material-symbols-outlined">add</span>
+        Añadir Gasto
+      </a>
+    </div>
+
+    <!-- Resumen del presupuesto -->
+    <div class="budget-summary">
+      <div class="budget-summary-card">
+        <p class="budget-card-label">Total Gastado</p>
+        <h2 class="budget-card-amount">$1,250</h2>
+      </div>
+      <div class="budget-summary-card">
+        <p class="budget-card-label">Presupuesto Restante</p>
+        <h2 class="budget-card-amount budget-remaining">$750</h2>
+      </div>
+      <div class="budget-summary-card">
+        <p class="budget-card-label">Presupuesto Total</p>
+        <h2 class="budget-card-amount">$2,000</h2>
+      </div>
+    </div>
+
+    <!-- Tabla de gastos -->
+    <div class="expenses-section">
+      <h2 class="expenses-title">Desglose de Gastos</h2>
+      <div class="expenses-card">
+        <table class="expenses-table">
+          <thead>
+            <tr>
+              <th>CATEGORÍA</th>
+              <th>GASTO</th>
+              <th>PORCENTAJE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="expense-category">Alojamiento</td>
+              <td class="expense-amount">$500</td>
+              <td class="expense-progress">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill red" style="width: 40%;"></div>
+                </div>
+                <span class="progress-percentage">40%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="expense-category">Transporte</td>
+              <td class="expense-amount">$300</td>
+              <td class="expense-progress">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill cyan" style="width: 24%;"></div>
+                </div>
+                <span class="progress-percentage">24%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="expense-category">Comida</td>
+              <td class="expense-amount">$250</td>
+              <td class="expense-progress">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill yellow" style="width: 20%;"></div>
+                </div>
+                <span class="progress-percentage">20%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="expense-category">Actividades</td>
+              <td class="expense-amount">$150</td>
+              <td class="expense-progress">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill pink" style="width: 12%;"></div>
+                </div>
+                <span class="progress-percentage">12%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="expense-category">Otros</td>
+              <td class="expense-amount">$50</td>
+              <td class="expense-progress">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill blue" style="width: 4%;"></div>
+                </div>
+                <span class="progress-percentage">4%</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{{>footer}}

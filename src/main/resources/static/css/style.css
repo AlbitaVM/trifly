@@ -1,43 +1,102 @@
-/* ----- Modo oscuro general ----- */
-body.dark-mode {
-  background-color: #121212;
-  color: #f1f1f1;
+/* --------- VARIABLES DE COLOR --------- */
+:root {
+    --primary: #030303;
+    --secondary: #4ECDC4;
+    --accent: #FFE66D;
+    --background-light: #F7FFF7;
+    --background-dark: #1A1A1A;
+    --text-light: #1A1A1A;
+    --text-dark: #F7FFF7;
 }
 
-body.dark-mode .card {
-  background-color: #1e1e1e;
-  border-color: #333;
-  color: #f1f1f1;
+.dark {
+    --primary: #030303;
+    --secondary: #4ECDC4;
+    --accent: #FFE66D;
+    --background-light: #1A1A1A;
+    --background-dark: #F7FFF7;
+    --text-light: #F7FFF7;
+    --text-dark: #1A1A1A;
 }
 
-body.dark-mode .card .text-muted {
-  color: #ccc !important;
+/* --------- CLASES DE UTILIDAD --------- */
+.bg-primary { background-color: var(--primary); }
+.text-primary { color: var(--primary); }
+.border-primary { border-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.text-secondary { color: var(--secondary); }
+.bg-accent { background-color: var(--accent); }
+.text-accent { color: var(--accent); }
+.bg-background-light { background-color: var(--background-light); }
+.bg-background-dark { background-color: var(--background-dark); }
+.text-text-light { color: var(--text-light); }
+.text-text-dark { color: var(--text-dark); }
+
+/* --------- CONFIGURACIÓN DE ICONOS --------- */
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
 
-body.dark-mode header {
-  background-color: #1e1e1e !important;
-  border-color: #333 !important;
+/* --------- GENERALES --------- */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-body.dark-mode a,
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4 {
-  color: #fff !important;
+h1, h2, h3 {
+  margin: 0;
 }
 
-body.dark-mode .btn-outline-dark {
-  border-color: #f1f1f1;
-  color: #f1f1f1;
+a {
+  text-decoration: none;
+  font-weight: 500;
 }
 
-body.dark-mode .btn-outline-dark:hover {
-  background-color: #f1f1f1;
-  color: #000;
+/* --------- HEADER --------- */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* ----- Espaciado del menú ----- */
+.logo-icon {
+  color: #13a4ec;
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-btn {
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.profile-pic {
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+/* --------- ESPACIADO DEL MENÚ --------- */
 nav.d-md-flex {
   gap: 1.5rem !important;
 }
@@ -46,12 +105,1600 @@ nav a {
   display: inline-block;
 }
 
-/* ----- Espaciado entre botones de IA y Manual ----- */
-.d-flex.gap-3 {
-  gap: 2rem !important; /* Cambia este valor: 1rem (pequeño), 2rem (medio), 3rem (grande) */
+/* --------- MAIN --------- */
+.main {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-/* ----- Hover del menú con color rojo ----- */
-nav a:hover {
-  color: #dc3545 !important;
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.trip-title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.trip-subtitle {
+  color: #64748b;
+  margin-top: 5px;
+}
+
+/* --------- BOTONES --------- */
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-outline, .btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  border: none;
+}
+
+.btn-outline {
+  background-color: rgba(19, 164, 236, 0.15);
+  color: #13a4ec;
+}
+
+.btn-outline:hover {
+  background-color: rgba(19, 164, 236, 0.3);
+}
+
+.btn-primary {
+  background-color: #13a4ec;
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* --------- ESPACIADO ENTRE BOTONES --------- */
+.card-body .d-flex.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.d-flex.gap-3 {
+  gap: 2rem !important;
+}
+
+/* --------- TABS --------- */
+.tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 2px solid rgba(19, 164, 236, 0.2);
+  margin-bottom: 40px;
+}
+
+.tabs a {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.tabs a.active {
+  color: #13a4ec;
+  border-bottom: 3px solid #13a4ec;
+  font-weight: 700;
+}
+
+/* --------- TIMELINE --------- */
+
+
+.day-section {
+  margin-bottom: 50px;
+  border-top: 2px solid rgba(19, 164, 236, 0.2);
+  padding-top: 2rem;
+  margin-top: 3rem;
+}
+
+.day-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.timeline {
+  list-style: none;
+  padding-left: 0;
+  position: relative;
+}
+
+.timeline li {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 30px;
+  position: relative;
+  padding-left: 50px; /* Espacio para el icono y la línea */
+}
+
+/* Icono del timeline */
+.timeline .material-symbols-outlined {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0dcaf0;
+  color: white;
+  border-radius: 50%;
+  font-size: 28px;
+  z-index: 2;
+}
+
+/* Línea vertical entre iconos */
+.timeline li::before {
+  content: '';
+  position: absolute;
+  left: 19px; /* Centrado con el icono (40px / 2 = 20px, menos 1px de grosor) */
+  top: 40px; /* Empieza después del icono */
+  bottom: -30px; /* Se extiende hasta el siguiente item */
+  width: 2px;
+  background-color: #666161;
+  z-index: 1;
+}
+
+/* Quitar línea del último elemento */
+.timeline li:last-child::before {
+  display: none;
+}
+
+/* Contenido del timeline */
+.timeline li > div {
+  flex: 1;
+}
+
+.timeline li p {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.timeline li small {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+/* ============================================
+   NOTAS Y RECORDATORIOS - SECCIÓN VACÍA
+   ============================================ */
+
+/* Contenedor de notas */
+.notes {
+  border-top: 2px solid rgba(19, 164, 236, 0.2);
+  padding-top: 2rem;
+  margin-top: 3rem;
+}
+
+.notes h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+}
+
+/* Caja vacía de notas */
+.notes-box {
+  background-color: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.notes-box p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notes {
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .notes h3 {
+    font-size: 1.25rem;
+  }
+
+  .notes-box {
+    padding: 1.5rem;
+  }
+}
+
+/* Modo oscuro (opcional) */
+@media (prefers-color-scheme: dark) {
+  .notes h3 {
+    color: #f1f5f9;
+  }
+
+  .notes-box {
+    background-color: rgba(15, 23, 42, 0.3);
+    border-color: #475569;
+    color: #94a3b8;
+  }
+}
+
+/* ============================================
+   LISTAS - ESTILOS GLOBALES (Notas, Recordatorios, Presupuestos)
+   ============================================ */
+
+/* Contenedor de listas en grid (2 columnas) */
+.list-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Contenedor de una lista individual */
+.list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Header de lista (título + botón añadir) */
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  min-height: 3rem;
+}
+
+.list-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Botón circular para añadir */
+.btn-add-circle {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-add-circle:hover {
+  background-color: #333;
+}
+
+.btn-add-circle .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Contenedor de acciones - botones en fila */
+.list-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Separación entre botones */
+  margin-left: auto; /* Empuja los botones a la derecha */
+  flex-shrink: 0;
+}
+
+/* Ajuste para el item de lista con botones */
+.budget-item,
+.list-item-with-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botón circular para ver */
+.btn-visibility-circle {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background-color: #4ECDC4; /* Color turquoise para diferenciarlo */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-visibility-circle:hover {
+  background-color: #3db8af;
+}
+
+.btn-visibility-circle .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón circular para editar */
+.btn-edit-circle {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-edit-circle:hover {
+  background-color: #333;
+}
+
+.btn-edit-circle .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón circular para eliminar */
+.btn-delete-circle {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background-color: #FF6B6B; /* Color rojo para diferenciarlo */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-delete-circle:hover {
+  background-color: #ff5252;
+}
+
+.btn-delete-circle .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .list-item-actions {
+    gap: 0.5rem; /* Menos separación en móvil */
+  }
+}
+
+
+/* Item de lista (nota, recordatorio, presupuesto) */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  
+}
+
+.list-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Icono del item */
+.list-item-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Variantes de color para iconos */
+.list-item-icon.turquoise {
+  background-color: rgba(78, 205, 196, 0.2);
+  color: #4ECDC4;
+}
+
+.list-item-icon.yellow {
+  background-color: rgba(255, 193, 102, 0.2);
+  color: #FFD166;
+}
+
+.list-item-icon.blue {
+  background-color: rgba(13, 202, 240, 0.2);
+  color: #0dcaf0;
+}
+
+.list-item-icon.green {
+  background-color: rgba(25, 135, 84, 0.2);
+  color: #198754;
+}
+
+.list-item-icon.red {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+}
+
+.list-item-icon.purple {
+  background-color: rgba(111, 66, 193, 0.2);
+  color: #6f42c1;
+}
+
+/* Contenido del item */
+.list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-item-content p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-item-date {
+  margin-top: 0.25rem !important;
+  font-size: 0.875rem !important;
+  color: #6c757d !important;
+  font-weight: 400 !important;
+}
+
+/* Box vacío (cuando no hay items) */
+.list-empty-box {
+  background-color: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.list-empty-box p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Separador superior (opcional) */
+.list-section-divider {
+  border-top: 2px solid rgba(19, 164, 236, 0.2);
+  padding-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .list-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .list-item {
+    padding: 0.875rem;
+  }
+  
+  .list-item-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.map {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Oculta los controles de Mapbox */
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+
+
+/* === Conversor === */
+.converter {
+  background-color: white;
+  max-width: 600px;
+  margin: 40px auto 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 30px;
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.input-group p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  border: 1px solid #dbe2e6;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #111618;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+select {
+  background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(97,124,137)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48-48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1.2em;
+  appearance: none;
+}
+
+/* === Botón de intercambio === */
+.swap-container {
+  position: relative;
+  height: 40px;
+  margin-bottom: 24px;
+}
+
+.divider {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background-color: #dbe2e6;
+  transform: translateY(-50%);
+}
+
+.swap-btn {
+  position: relative;
+  background-color: #f6f7f8;
+  border: 1px solid #dbe2e6;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #617c89;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.swap-btn:hover {
+  color: #13a4ec;
+  border-color: #13a4ec;
+}
+
+/* === Información de tasa === */
+.exchange-info {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.rate {
+  color: #13a4ec;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.updated {
+  color: #617c89;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Trip details */
+.trip-details {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #dbe2e6;
+}
+
+.trip-details h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.trip-details label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.trip-details input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #dbe2e6;
+}
+
+/* Day planner */
+.day-card {
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #dbe2e6;
+  margin-bottom: 16px;
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1px solid #dbe2e6;
+}
+
+.day-header h3 {
+  font-weight: bold;
+}
+
+.activities .activity {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr auto;
+  gap: 8px;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.activities input, .activities textarea {
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #dbe2e6;
+}
+
+button.add-activity, button.add-day {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #13a4ec20;
+  color: #13a4ec;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 32px 16px;
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.page-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.page-heading button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #13a4ec;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
+
+/* Counter */
+.counter {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.counter input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+.counter button {
+  border: none;
+  background: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: #666;
+}
+
+/* Interests */
+.interests h2 { margin-bottom: 12px; font-weight: bold; font-size: 1.125rem; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.buttons button {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+.buttons button.selected {
+  background: #13a4ec;
+  color: #fff;
+}
+.buttons button:not(.selected) {
+  background: #eee;
+  color: #444;
+}
+.dark .buttons button:not(.selected) {
+  background: rgba(255,255,255,0.1);
+  color: #ccc;
+}
+
+/* Submit */
+.submit-btn button {
+  width: 100%;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #13a4ec;
+  color: #fff;
+}
+.submit-btn button:hover { opacity: 0.9; }
+
+/* Form */
+form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid #dbe2e6;
+}
+.dark form { background: rgba(16,28,34,0.5); border-color: #222; }
+
+.grid { display: grid; gap: 20px; }
+.two-columns { grid-template-columns: 1fr 1fr; }
+
+label span { font-weight: 500; margin-bottom: 6px; display: block; }
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+.dark .input-with-icon { border-color: #444; background: #101c22; }
+.input-with-icon input {
+  border: none;
+  padding: 12px;
+  flex: 1;
+  background: transparent;
+  font-size: 1rem;
+}
+.input-with-icon span {
+  padding: 0 12px;
+  color: #666;
+}
+
+/* Form */
+form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid #dbe2e6;
+}
+.dark form { background: rgba(16,28,34,0.5); border-color: #222; }
+
+.grid { display: grid; gap: 20px; }
+.two-columns { grid-template-columns: 1fr 1fr; }
+
+label span { font-weight: 500; margin-bottom: 6px; display: block; }
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+.dark .input-with-icon { border-color: #444; background: #101c22; }
+.input-with-icon input {
+  border: none;
+  padding: 12px;
+  flex: 1;
+  background: transparent;
+  font-size: 1rem;
+}
+.input-with-icon span {
+  padding: 0 12px;
+  color: #666;
+}
+
+
+/* ============================================
+   FORMULARIOS - ESTILOS GLOBALES
+   ============================================ */
+
+/* Contenedor principal del formulario */
+.form-container {
+  min-height: 100vh;
+  background-color: #faf9f9;
+  padding: 3rem 0;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Título del formulario */
+.form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+/* Subtítulo del formulario */
+.form-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+/* Labels de formulario */
+.form-label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Inputs de formulario */
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.5rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control-lg {
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+}
+
+/* Grupo de formulario (label + input) */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Texto de ayuda/enlaces */
+.form-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #030303;
+}
+
+.form-link {
+  color: #030303;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.form-link:hover {
+  color: #dc3545;
+}
+
+/* Input con icono */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-right: 3rem;
+}
+
+.input-with-icon .material-symbols-outlined {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none;
+}
+
+/* Botones de intereses */
+.interests-container {
+  margin-bottom: 2rem;
+}
+
+.interests-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.interests-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.interest-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #dee2e6;
+  border-radius: 2rem;
+  background-color: #f8f9fa;
+  color: #495057;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.interest-btn:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.interest-btn.selected {
+  background-color: #0dcaf0;
+  color: #fff;
+  border-color: #0dcaf0;
+}
+
+/* Grid para layouts de 2 columnas */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-card {
+    padding: 2rem 1.5rem;
+    border-radius: 0;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-container {
+    padding: 1.5rem 0;
+  }
+}
+/* ============================================
+   ESTILOS ESPECÍFICOS PARA ITINERARIO
+   (Reutiliza form-card, form-control, etc.)
+   ============================================ */
+
+/* Header de la página */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-header .btn-dark {
+  display: flex;
+  align-items: center;
+}
+
+/* Grid para itinerario */
+.itinerary-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Contenedor de días */
+.day-planner-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header del día (usa form-card existente) */
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* Lista de actividades */
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Item de actividad */
+.activity-item {
+  position: relative;
+  padding: 1.5rem;
+  padding-right: 3.5rem; /* Espacio para el botón eliminar */
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+}
+
+/* Botón icono eliminar (reutiliza estilos base) */
+.btn-icon-delete {
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-icon-delete .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón eliminar dentro de actividad */
+.activity-delete {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Botón icono editar (reutiliza estilos base) */
+.btn-icon-edit {
+  background-color: #ffc107;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-edit:hover {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.btn-icon-edit .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón eliminar dentro de actividad */
+.activity-edit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Botón icono eliminar (reutiliza estilos base) */
+.btn-icon-visibility {
+  background-color: #0dcaf0;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-visibility:hover {
+  background-color: #0dcaf0;
+  color: #fff;
+}
+
+.btn-icon-visibility .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón eliminar dentro de actividad */
+.activity-visibility {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Botón icono agregar (reutiliza estilos base) */
+.btn-icon-add {
+  background-color: #030303;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-icon-delete .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Botón eliminar dentro de actividad */
+.activity-delete {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Botón añadir actividad (variante verde del btn-secondary) */
+.btn-add-activity {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #198754;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-add-activity:hover {
+  background-color: #157347;
+}
+
+/* Textarea (extiende form-control) */
+textarea.form-control {
+  resize: vertical;
+  min-height: 70px;
+  font-family: inherit;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .itinerary-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .page-header .btn-dark {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .day-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .activity-item {
+    padding-right: 1.5rem;
+  }
+  
+  .activity-delete {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
+/* ============================================
+   PRESUPUESTO - ESTILOS ESPECÍFICOS
+   ============================================ */
+
+/* Header de la página de presupuesto */
+.budget-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  gap: 2rem;
+}
+
+.budget-main-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: #000;
+}
+
+.budget-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Botón añadir gasto */
+.btn-add-expense {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #030303;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(88, 84, 85, 0.5);
+  white-space: nowrap;
+}
+
+.btn-add-expense:hover {
+  background-color: #030303;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(88, 84, 85, 0.5)
+}
+
+.btn-add-expense .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+/* Resumen del presupuesto (3 tarjetas) */
+.budget-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  border-top: 2px solid rgba(19, 164, 236, 0.2);
+  padding-top: 2rem;
+  margin-top: 3rem;
+}
+
+.budget-summary-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
+}
+
+.budget-card-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin: 0 0 0.75rem 0;
+}
+
+.budget-card-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0f172a;
+}
+
+.budget-card-amount.budget-remaining {
+  color: #4ECDC4;
+}
+
+/* Sección de gastos */
+.expenses-section {
+  margin-top: 2rem;
+}
+
+.expenses-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  color: #0f172a;
+}
+
+.expenses-card {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
+}
+
+/* Tabla de gastos */
+.expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expenses-table thead {
+  background-color: #f8fafc;
+}
+
+.expenses-table th {
+  padding: 1.25rem 1.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.expenses-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.expenses-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.expenses-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.expenses-table td {
+  padding: 1.5rem 1.75rem;
+}
+
+.expense-category {
+  font-weight: 500;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.expense-amount {
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.expense-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Barra de progreso */
+.progress-bar-container {
+  flex: 1;
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+  height: 6px;
+  overflow: hidden;
+  max-width: 200px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-bar-fill.red {
+  background-color: #FF6B6B;
+}
+
+.progress-bar-fill.cyan {
+  background-color: #4ECDC4;
+}
+
+.progress-bar-fill.yellow {
+  background-color: #FFD166;
+}
+
+.progress-bar-fill.pink {
+  background-color: #FF8FAB;
+}
+
+.progress-bar-fill.blue {
+  background-color: #4E9FFF;
+}
+
+/* Porcentaje */
+.progress-percentage {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+  min-width: 45px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .budget-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .budget-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 2px solid rgba(19, 164, 236, 0.2);
+    padding-top: 1.5rem;
+  }
+  
+  .btn-add-expense {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .budget-main-title {
+    font-size: 1.75rem;
+  }
+  
+  .budget-card-amount {
+    font-size: 2rem;
+  }
+  
+  .expenses-table {
+    font-size: 0.875rem;
+  }
+  
+  .expenses-table th,
+  .expenses-table td {
+    padding: 1rem 1.25rem;
+  }
+  
+  .progress-bar-container {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Tabla responsive - formato de tarjetas */
+  .expenses-table thead {
+    display: none;
+  }
+  
+  .expenses-table,
+  .expenses-table tbody,
+  .expenses-table tr {
+    display: block;
+    width: 100%;
+  }
+  
+  .expenses-table tbody tr {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #f1f5f9;
+    border-radius: 0.75rem;
+    background: #fff;
+  }
+  
+  .expenses-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border: none;
+  }
+  
+  .expenses-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .expense-progress {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .progress-bar-container {
+    max-width: 100px;
+  }
 }

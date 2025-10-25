@@ -1,0 +1,58 @@
+{{>header}}
+<body>
+    <!-- Main -->
+    <main class="main-content">
+        <div class="page-heading">
+            <h1>Conversor de Divisas</h1>
+        </div>
+        <section class="notes">
+            <div class="converter">
+                <!-- Tienes -->
+                <div class="input-group">
+                    <label>
+                        <p>Tienes</p>
+                        <input type="text" value="1,000.00" />
+                    </label>
+                    <label>
+                        <select>
+                            <option>USD - Dólar estadounidense</option>
+                            <option selected>EUR - Euro</option>
+                            <option>GBP - Libra esterlina</option>
+                            <option>JPY - Yen japonés</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Botón de intercambio -->
+                <div class="swap-container">
+                    <div class="divider"></div>
+                    <button class="swap-btn">
+                        <span class="material-symbols-outlined">swap_horiz</span>
+                    </button>
+                </div>
+
+                <!-- Recibes -->
+                <div class="input-group">
+                    <label>
+                        <p>Recibes</p>
+                        <input type="text" value="1,085.50" />
+                    </label>
+                    <label>
+                        <select>
+                            <option selected>USD - Dólar estadounidense</option>
+                            <option>EUR - Euro</option>
+                            <option>GBP - Libra esterlina</option>
+                            <option>JPY - Yen japonés</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Tasa -->
+                <div class="exchange-info">
+                    <p class="rate">1 EUR = 1.08550 USD</p>
+                    <p class="updated">Tasa de cambio actualizada hace 2 minutos.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+{{>footer}}

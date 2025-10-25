@@ -1,0 +1,54 @@
+{{>header}}
+<section class="form-container">
+  <div class="container">
+    <div class="form-card">
+      <h1 class="form-title">Nuevo Presupuesto</h1>
+
+      <form>
+        <div class="form-group">
+          <label class="form-label" for="budget">Presupuesto total</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Moneda</label>
+          <select class="form-control">
+            <option value="">Selecciona una moneda</option>
+            <option value="cultural" selected>Euros</option>
+            <option value="gastronomia">Libras</option>
+            <option value="aventura">Yenes</option>
+          </select>
+        </div>
+        <label class="form-label" for="budget">Categorias</label>
+        <div class="form-group">
+          <label class="form-label" for="budget">Alojamiento</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="budget">Comida</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="budget">Actividades</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="budget">Transporte</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="budget">Otros</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="budget">Asociar a itinerario</label>
+          <input type="text" id="budget" class="form-control form-control-lg" />
+        </div>
+
+        <a href="/budget" class="btn btn-danger btn-lg btn-block">Crear presupuesto</a>
+      </form>
+    </div>
+  </div>
+</section>
+{{>footer}}
