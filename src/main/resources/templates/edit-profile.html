@@ -1,0 +1,49 @@
+{{>header}}
+<section class="form-container">
+    <div class="container">
+        <div class="form-card">
+            <h1 class="form-title">Editar Perfil</h1>
+
+            <form>
+                <div class="form-group">
+                    <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="profile-photo-wrapper">
+                            <div class="profile-photo"style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9zYKlH8fQwLQ4kL3xcm2FX7jYG6xtEem-f_noemnYj4o6KcCf93z3syYbnOEIbMcZ43xSPOOxPtgphTpmmu_WAvK3g-t0HxBec0MuizgtANCRpneMv9uToA9m9OUF6bjCAyvFw7bFN-4vfEqMCs2lSVJfl1CJtTw7glqGXzrsAGj3OkAXkmKjf-QGGeAqvnne3DkglTWeMqcWr0Hkw-wqLwq_ICLHQ69drroF4B5EeUl3YbsyAqxqZ5OsE-JrmRFudATQmttB_Lo");'></div>
+                            <button class="edit-photo-btn">    
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" value="Juan Pérez">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" value="juanperez@gmail.com" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contraseña actual</label>
+                    <input type="password" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control" placeholder="Nueva contraseña">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmar nueva contraseña</label>
+                        <input type="password" class="form-control" placeholder="Confirmar contraseña">
+                    </div>
+                </div>
+
+                <a href="/profile" class="btn btn-danger btn-lg btn-block">Editar perfil</a>
+            </form>
+        </div>
+    </div>
+</section>
+{{>footer}}

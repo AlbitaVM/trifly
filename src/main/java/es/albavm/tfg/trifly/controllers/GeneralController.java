@@ -7,97 +7,107 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class GeneralController {
      @GetMapping("/")
     public String showIndex() {
-        return "index"; // buscará templates/index.html
+        return "index"; 
     }
 
-     @GetMapping("/detail")
+     @GetMapping("/itinerary")
     public String showdetails() {
-        return "journal-detail"; // buscará templates/index.html
+        return "itinerary-detail"; 
     }
 
-    @GetMapping("/not")
+    @GetMapping("/notes")
     public String showdnotes() {
-        return "notes"; // buscará templates/index.html
+        return "notes"; 
     }
 
     @GetMapping("/budget")
     public String showbudget() {
-        return "budget-detail"; // buscará templates/index.html
+        return "budget-detail"; 
     }
 
     @GetMapping("/login")
     public String showbLogin() {
-        return "login"; // buscará templates/index.html
+        return "login"; 
     }
 
     @GetMapping("/register")
     public String showbRegister() {
-        return "register"; // buscará templates/index.html
+        return "register"; 
     }
 
-    @GetMapping("/budget/detail")
+    @GetMapping("/budget/new")
     public String showBudgetDetail() {
-        return "createBudget"; // buscará templates/index.html
+        return "create-budget"; 
     }
 
-    @GetMapping("/journal/map/detail")
+    @GetMapping("/itinerary/detail/map")
     public String showMapDetail() {
-        return "/journal-map-detail"; // buscará templates/index.html
+        return "/journal-map-detail";  
     }
 
     @GetMapping("/foreignExchange")
     public String showForeignExchange() {
-        return "/foreign-exchange"; // buscará templates/index.html
+        return "/foreign-exchange";  
     }
 
-    @GetMapping("/newItinerary")
+    @GetMapping("/itinerary/new")
     public String showNewItinerary() {
-        return "/createItinerary"; // buscará templates/index.html
+        return "/create-itinerary";  
     }
 
-    @GetMapping("/newItinerary/IA")
+    @GetMapping("/itinerary/new/ai")
     public String showNewIAItinerary() {
-        return "/createIAItinerary"; // buscará templates/index.html
+        return "/create-itinerary-ai";  
     }
 
-    @GetMapping("/edit/journal")
+    @GetMapping("/itinerary/edit")
     public String showEditItinerary() {
-        return "/editItinerary"; // buscará templates/index.html
+        return "/edit-itinerary";  
     }
 
-     @GetMapping("/newBill")
+     @GetMapping("/bill/new")
     public String showNewBill() {
-        return "/createBill"; // buscará templates/index.html
+        return "/create-bill";  
     }
 
-     @GetMapping("/newNote")
+     @GetMapping("/note/new")
     public String showNewNote() {
-        return "/createNote"; // buscará templates/index.html
+        return "/create-note";  
     }
 
-     @GetMapping("/newReminder")
+     @GetMapping("/reminder/new")
     public String showNewReminder() {
-        return "/createReminder"; // buscará templates/index.html
+        return "/create-reminder";  
     }
 
      @GetMapping("/budgets")
     public String showBudgets() {
-        return "/budgets"; // buscará templates/index.html
+        return "/budgets";  
     }
 
-    @GetMapping("/editBudget")
+    @GetMapping("/budget/edit")
     public String showEditBudget() {
-        return "/editBudget"; // buscará templates/index.html
+        return "/edit-budget";  
     }
 
-    @GetMapping("/editNote")
+    @GetMapping("/note/edit")
     public String showEditNote() {
-        return "/editNote"; // buscará templates/index.html
+        return "/edit-note";  
     }
 
-    @GetMapping("/editReminder")
+    @GetMapping("/reminder/edit")
     public String showEditReminder() {
-        return "/editReminder"; // buscará templates/index.html
+        return "/edit-reminder";  
+    }
+
+    @GetMapping("/profile")
+    public String showProfile() {
+        return "/profile";  
+    }
+
+    @GetMapping("/profile/edit")
+    public String showFormEdit() {
+        return "/edit-profile";  
     }
 }
 

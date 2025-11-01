@@ -1,0 +1,104 @@
+{{>header}}
+    <main class="main-profile">  
+      <div class="page-header">
+        <h1 class="form-title" style="text-align: left; margin-bottom: 0;">Perfil</h1>
+      </div>
+      <div class="profile-grid">
+        <!-- Columna izquierda -->
+        <div class="profile-sidebar">
+          <div class="profile-card">
+            <div class="profile-info">
+              <div class="profile-photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9zYKlH8fQwLQ4kL3xcm2FX7jYG6xtEem-f_noemnYj4o6KcCf93z3syYbnOEIbMcZ43xSPOOxPtgphTpmmu_WAvK3g-t0HxBec0MuizgtANCRpneMv9uToA9m9OUF6bjCAyvFw7bFN-4vfEqMCs2lSVJfl1CJtTw7glqGXzrsAGj3OkAXkmKjf-QGGeAqvnne3DkglTWeMqcWr0Hkw-wqLwq_ICLHQ69drroF4B5EeUl3YbsyAqxqZ5OsE-JrmRFudATQmttB_Lo");'></div>
+              <div class="profile-text">
+                <p class="name">Juan Pérez</p>
+                <p class="username">juanperez@gmail.com</p>
+              </div>
+            </div>
+            <a class="btn btn-warning btn-lg btn-block" href="/profile/edit">
+              <span class="material-symbols-outlined">edit</span>
+              Editar Perfil
+            </a>
+
+            <div class="profile-actions">
+              <button class="btn btn-dark btn-lg btn-block">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar Sesión
+              </button>
+              <button class="btn btn-danger btn-lg btn-block">
+                <span class="material-symbols-outlined">delete</span>
+                Eliminar Cuenta
+              </button>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <h3>Notas destacadas o favoritas</h3>
+            <div class="note">
+              <span class="material-symbols-outlined">description</span>
+              <span>Mejores restaurantes en Roma</span>
+            </div>
+            <div class="note">
+              <span class="material-symbols-outlined">description</span>
+              <span>Tips para trekking en Patagonia</span>
+            </div>
+
+            <h3>Valoraciones personales de viajes</h3>
+            <div class="note">
+              <span class="material-symbols-outlined icon-star">star</span>
+              <span>Mi viaje favorito: Kioto, Japón</span>
+            </div>
+            <div class="note">
+              <span class="material-symbols-outlined icon-flag">flag</span>
+              <span>Destino pendiente: Islandia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="profile-content">
+          <div class="stats-card">
+            <h3>Tus Estadísticas de Viaje</h3>
+            <div class="stats-grid">
+              <div class="stat-box primary">
+                <div class="stat-icon-wrapper primary">
+                  <span class="material-symbols-outlined stat-icon">public</span>
+                </div>
+                <div>
+                  <p class="stat-value">12</p>
+                  <p class="stat-label">Países Visitados</p>
+                </div>
+              </div>
+
+              <div class="stat-box yellow">
+                <div class="stat-icon-wrapper yellow">
+                  <span class="material-symbols-outlined stat-icon">location_city</span>
+                </div>
+                <div>
+                  <p class="stat-value">34</p>
+                  <p class="stat-label">Ciudades Exploradas</p>
+                </div>
+              </div>
+
+              <div class="stat-box green">
+                <div class="stat-icon-wrapper green">
+                  <span class="material-symbols-outlined stat-icon">flight_takeoff</span>
+                </div>
+                <div>
+                  <p class="stat-value">5</p>
+                  <p class="stat-label">Próximos Viajes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-card">
+            <h3>Tu Mapa de Viajes</h3>
+            <div class="map-container">
+              <img alt="Mapa del mundo con pines de los lugares visitados" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5hNcnZjLl2XDmWD1dJ_jV-gHKhhXuR3v-C4kg-MzHC9WN5HM_Eilrd_fCV034XyChc85_iyjX2gwIzBCT9v0o4bqT28zacRAPJyKHzA1dIeGJTIeRrgUzJTGZKua81rywP_djO2ZIWQ7bWRnClJNlGwHWEIwFrahh-XtX8WJWbpJ6OSKt6P2eLXCj8vDCI3w68QXd2t_ZTNjWt5s2UVVJsXxLRGgw5NooRYyqp97t6BHAcseYT8LA-nDKmb9RFJAtRttolmMp3lQ" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+{{>footer}}

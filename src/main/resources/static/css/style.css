@@ -1,36 +1,68 @@
 /* --------- VARIABLES DE COLOR --------- */
 :root {
-    --primary: #030303;
-    --secondary: #4ECDC4;
-    --accent: #FFE66D;
-    --background-light: #F7FFF7;
-    --background-dark: #1A1A1A;
-    --text-light: #1A1A1A;
-    --text-dark: #F7FFF7;
+  --primary: #030303;
+  --secondary: #4ECDC4;
+  --accent: #FFE66D;
+  --background-light: #F7FFF7;
+  --background-dark: #1A1A1A;
+  --text-light: #1A1A1A;
+  --text-dark: #F7FFF7;
 }
 
 .dark {
-    --primary: #030303;
-    --secondary: #4ECDC4;
-    --accent: #FFE66D;
-    --background-light: #1A1A1A;
-    --background-dark: #F7FFF7;
-    --text-light: #F7FFF7;
-    --text-dark: #1A1A1A;
+  --primary: #030303;
+  --secondary: #4ECDC4;
+  --accent: #FFE66D;
+  --background-light: #1A1A1A;
+  --background-dark: #F7FFF7;
+  --text-light: #F7FFF7;
+  --text-dark: #1A1A1A;
 }
 
 /* --------- CLASES DE UTILIDAD --------- */
-.bg-primary { background-color: var(--primary); }
-.text-primary { color: var(--primary); }
-.border-primary { border-color: var(--primary); }
-.bg-secondary { background-color: var(--secondary); }
-.text-secondary { color: var(--secondary); }
-.bg-accent { background-color: var(--accent); }
-.text-accent { color: var(--accent); }
-.bg-background-light { background-color: var(--background-light); }
-.bg-background-dark { background-color: var(--background-dark); }
-.text-text-light { color: var(--text-light); }
-.text-text-dark { color: var(--text-dark); }
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-background-light {
+  background-color: var(--background-light);
+}
+
+.bg-background-dark {
+  background-color: var(--background-dark);
+}
+
+.text-text-light {
+  color: var(--text-light);
+}
+
+.text-text-dark {
+  color: var(--text-dark);
+}
 
 /* --------- CONFIGURACIÓN DE ICONOS --------- */
 .material-symbols-outlined {
@@ -46,7 +78,9 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
 }
 
@@ -135,7 +169,8 @@ nav a {
   gap: 10px;
 }
 
-.btn-outline, .btn-primary {
+.btn-outline,
+.btn-primary {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -220,7 +255,8 @@ nav a {
   gap: 15px;
   margin-bottom: 30px;
   position: relative;
-  padding-left: 50px; /* Espacio para el icono y la línea */
+  padding-left: 50px;
+  /* Espacio para el icono y la línea */
 }
 
 /* Icono del timeline */
@@ -244,9 +280,12 @@ nav a {
 .timeline li::before {
   content: '';
   position: absolute;
-  left: 19px; /* Centrado con el icono (40px / 2 = 20px, menos 1px de grosor) */
-  top: 40px; /* Empieza después del icono */
-  bottom: -30px; /* Se extiende hasta el siguiente item */
+  left: 19px;
+  /* Centrado con el icono (40px / 2 = 20px, menos 1px de grosor) */
+  top: 40px;
+  /* Empieza después del icono */
+  bottom: -30px;
+  /* Se extiende hasta el siguiente item */
   width: 2px;
   background-color: #666161;
   z-index: 1;
@@ -258,7 +297,7 @@ nav a {
 }
 
 /* Contenido del timeline */
-.timeline li > div {
+.timeline li>div {
   flex: 1;
 }
 
@@ -272,6 +311,7 @@ nav a {
   color: #6c757d;
   font-size: 0.875rem;
 }
+
 /* ============================================
    NOTAS Y RECORDATORIOS - SECCIÓN VACÍA
    ============================================ */
@@ -370,38 +410,14 @@ nav a {
   line-height: 1.2;
 }
 
-/* Botón circular para añadir */
-.btn-add-circle {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-  text-decoration: none;
-}
-
-.btn-add-circle:hover {
-  background-color: #333;
-}
-
-.btn-add-circle .material-symbols-outlined {
-  font-size: 1.5rem;
-}
-
 /* Contenedor de acciones - botones en fila */
 .list-item-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* Separación entre botones */
-  margin-left: auto; /* Empuja los botones a la derecha */
+  gap: 0.75rem;
+  /* Separación entre botones */
+  margin-left: auto;
+  /* Empuja los botones a la derecha */
   flex-shrink: 0;
 }
 
@@ -413,88 +429,11 @@ nav a {
   gap: 1rem;
 }
 
-/* Botón circular para ver */
-.btn-visibility-circle {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-  background-color: #4ECDC4; /* Color turquoise para diferenciarlo */
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-  text-decoration: none;
-}
-
-.btn-visibility-circle:hover {
-  background-color: #3db8af;
-}
-
-.btn-visibility-circle .material-symbols-outlined {
-  font-size: 1.25rem;
-}
-
-/* Botón circular para editar */
-.btn-edit-circle {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-  text-decoration: none;
-}
-
-.btn-edit-circle:hover {
-  background-color: #333;
-}
-
-.btn-edit-circle .material-symbols-outlined {
-  font-size: 1.25rem;
-}
-
-/* Botón circular para eliminar */
-.btn-delete-circle {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-  background-color: #FF6B6B; /* Color rojo para diferenciarlo */
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-  text-decoration: none;
-}
-
-.btn-delete-circle:hover {
-  background-color: #ff5252;
-}
-
-.btn-delete-circle .material-symbols-outlined {
-  font-size: 1.25rem;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .list-item-actions {
-    gap: 0.5rem; /* Menos separación en móvil */
+    gap: 0.5rem;
+    /* Menos separación en móvil */
   }
 }
 
@@ -511,7 +450,7 @@ nav a {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  
+
 }
 
 .list-item:hover {
@@ -615,11 +554,11 @@ nav a {
   .list-header h3 {
     font-size: 1.25rem;
   }
-  
+
   .list-item {
     padding: 0.875rem;
   }
-  
+
   .list-item-icon {
     width: 2.5rem;
     height: 2.5rem;
@@ -650,7 +589,7 @@ nav a {
   max-width: 600px;
   margin: 40px auto 0;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
 }
 
@@ -795,13 +734,15 @@ select {
   align-items: center;
 }
 
-.activities input, .activities textarea {
+.activities input,
+.activities textarea {
   padding: 6px;
   border-radius: 8px;
   border: 1px solid #dbe2e6;
 }
 
-button.add-activity, button.add-day {
+button.add-activity,
+button.add-day {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -858,6 +799,7 @@ button.add-activity, button.add-day {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
+
 .counter input {
   width: 40px;
   text-align: center;
@@ -865,6 +807,7 @@ button.add-activity, button.add-day {
   background: transparent;
   color: inherit;
 }
+
 .counter button {
   border: none;
   background: none;
@@ -874,8 +817,18 @@ button.add-activity, button.add-day {
 }
 
 /* Interests */
-.interests h2 { margin-bottom: 12px; font-weight: bold; font-size: 1.125rem; }
-.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.interests h2 {
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .buttons button {
   padding: 8px 16px;
   border-radius: 9999px;
@@ -883,16 +836,19 @@ button.add-activity, button.add-day {
   cursor: pointer;
   font-size: 0.875rem;
 }
+
 .buttons button.selected {
   background: #13a4ec;
   color: #fff;
 }
+
 .buttons button:not(.selected) {
   background: #eee;
   color: #444;
 }
+
 .dark .buttons button:not(.selected) {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #ccc;
 }
 
@@ -911,7 +867,10 @@ button.add-activity, button.add-day {
   background: #13a4ec;
   color: #fff;
 }
-.submit-btn button:hover { opacity: 0.9; }
+
+.submit-btn button:hover {
+  opacity: 0.9;
+}
 
 /* Form */
 form {
@@ -920,12 +879,26 @@ form {
   padding: 30px;
   border: 1px solid #dbe2e6;
 }
-.dark form { background: rgba(16,28,34,0.5); border-color: #222; }
 
-.grid { display: grid; gap: 20px; }
-.two-columns { grid-template-columns: 1fr 1fr; }
+.dark form {
+  background: rgba(16, 28, 34, 0.5);
+  border-color: #222;
+}
 
-label span { font-weight: 500; margin-bottom: 6px; display: block; }
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.two-columns {
+  grid-template-columns: 1fr 1fr;
+}
+
+label span {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
 
 .input-with-icon {
   display: flex;
@@ -934,7 +907,12 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
   border-radius: 8px;
   background: #fff;
 }
-.dark .input-with-icon { border-color: #444; background: #101c22; }
+
+.dark .input-with-icon {
+  border-color: #444;
+  background: #101c22;
+}
+
 .input-with-icon input {
   border: none;
   padding: 12px;
@@ -942,6 +920,7 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
   background: transparent;
   font-size: 1rem;
 }
+
 .input-with-icon span {
   padding: 0 12px;
   color: #666;
@@ -954,12 +933,26 @@ form {
   padding: 30px;
   border: 1px solid #dbe2e6;
 }
-.dark form { background: rgba(16,28,34,0.5); border-color: #222; }
 
-.grid { display: grid; gap: 20px; }
-.two-columns { grid-template-columns: 1fr 1fr; }
+.dark form {
+  background: rgba(16, 28, 34, 0.5);
+  border-color: #222;
+}
 
-label span { font-weight: 500; margin-bottom: 6px; display: block; }
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.two-columns {
+  grid-template-columns: 1fr 1fr;
+}
+
+label span {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
 
 .input-with-icon {
   display: flex;
@@ -968,7 +961,12 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
   border-radius: 8px;
   background: #fff;
 }
-.dark .input-with-icon { border-color: #444; background: #101c22; }
+
+.dark .input-with-icon {
+  border-color: #444;
+  background: #101c22;
+}
+
 .input-with-icon input {
   border: none;
   padding: 12px;
@@ -976,6 +974,7 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
   background: transparent;
   font-size: 1rem;
 }
+
 .input-with-icon span {
   padding: 0 12px;
   color: #666;
@@ -1146,15 +1145,16 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
     padding: 2rem 1.5rem;
     border-radius: 0;
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .form-container {
     padding: 1.5rem 0;
   }
 }
+
 /* ============================================
    ESTILOS ESPECÍFICOS PARA ITINERARIO
    (Reutiliza form-card, form-control, etc.)
@@ -1212,7 +1212,8 @@ label span { font-weight: 500; margin-bottom: 6px; display: block; }
 .activity-item {
   position: relative;
   padding: 1.5rem;
-  padding-right: 3.5rem; /* Espacio para el botón eliminar */
+  padding-right: 3.5rem;
+  /* Espacio para el botón eliminar */
   background-color: #f8f9fa;
   border-radius: 0.5rem;
   border: 1px solid #e9ecef;
@@ -1372,12 +1373,12 @@ textarea.form-control {
   .itinerary-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .page-header {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .page-header .btn-dark {
     width: 100%;
     justify-content: center;
@@ -1390,11 +1391,11 @@ textarea.form-control {
     align-items: flex-start;
     gap: 0.75rem;
   }
-  
+
   .activity-item {
     padding-right: 1.5rem;
   }
-  
+
   .activity-delete {
     position: static;
     margin-top: 1rem;
@@ -1618,14 +1619,14 @@ textarea.form-control {
   .budget-summary {
     grid-template-columns: 1fr;
   }
-  
+
   .budget-page-header {
     flex-direction: column;
     align-items: stretch;
     border-top: 2px solid rgba(19, 164, 236, 0.2);
     padding-top: 1.5rem;
   }
-  
+
   .btn-add-expense {
     width: 100%;
     justify-content: center;
@@ -1636,38 +1637,39 @@ textarea.form-control {
   .budget-main-title {
     font-size: 1.75rem;
   }
-  
+
   .budget-card-amount {
     font-size: 2rem;
   }
-  
+
   .expenses-table {
     font-size: 0.875rem;
   }
-  
+
   .expenses-table th,
   .expenses-table td {
     padding: 1rem 1.25rem;
   }
-  
+
   .progress-bar-container {
     max-width: 120px;
   }
 }
 
 @media (max-width: 576px) {
+
   /* Tabla responsive - formato de tarjetas */
   .expenses-table thead {
     display: none;
   }
-  
+
   .expenses-table,
   .expenses-table tbody,
   .expenses-table tr {
     display: block;
     width: 100%;
   }
-  
+
   .expenses-table tbody tr {
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -1675,7 +1677,7 @@ textarea.form-control {
     border-radius: 0.75rem;
     background: #fff;
   }
-  
+
   .expenses-table td {
     display: flex;
     justify-content: space-between;
@@ -1683,7 +1685,7 @@ textarea.form-control {
     padding: 0.5rem 0;
     border: none;
   }
-  
+
   .expenses-table td::before {
     content: attr(data-label);
     font-weight: 600;
@@ -1692,13 +1694,450 @@ textarea.form-control {
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-  
+
   .expense-progress {
     width: 100%;
     justify-content: flex-end;
   }
-  
+
   .progress-bar-container {
     max-width: 100px;
   }
+}
+
+
+/* ============================================
+   PERFIL DE USUARIO
+   ============================================ */
+
+/* --------- MAIN --------- */
+.main-profile {
+  max-width: 1300px;
+  margin: 40px auto 40px 120px;
+  /* Empuja hacia la izquierda */
+  padding: 0 40px;
+}
+
+/* ---------- Grid principal del perfil ---------- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 350px minmax(600px, 900px);
+  /* La columna derecha crece pero con límite */
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1400px) {
+  .main {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main {
+    margin-left: 40px;
+  }
+
+  .profile-grid {
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main {
+    margin: 40px auto;
+    max-width: 1000px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Tarjetas de perfil ---------- */
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.dark .profile-card {
+  background: rgba(16, 28, 34, 0.5);
+  border-color: #334155;
+}
+
+/* ---------- Información del perfil ---------- */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 3px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.dark .profile-photo {
+  border-color: #334155;
+}
+
+.profile-text {
+  width: 100%;
+}
+
+.profile-text .name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+}
+
+.dark .profile-text .name {
+  color: #f1f5f9;
+}
+
+.profile-text .username,
+.profile-text .location {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0.125rem 0;
+}
+
+.dark .profile-text .username,
+.dark .profile-text .location {
+  color: #94a3b8;
+}
+
+
+/* Botón principal de perfil */
+.profile-card .btn-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.profile-card .btn-primary .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+/* ---------- Acciones de perfil ---------- */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.profile-actions button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.95rem;
+}
+
+.profile-actions .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+
+/* ---------- Notas y valoraciones ---------- */
+.profile-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.profile-card h3:first-of-type {
+  margin-top: 0;
+}
+
+.dark .profile-card h3 {
+  color: #f1f5f9;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f1f5f9;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  color: #334155;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.note:hover {
+  background-color: #e2e8f0;
+  transform: translateX(2px);
+}
+
+.dark .note {
+  background-color: rgba(51, 65, 85, 0.3);
+  color: #cbd5e1;
+}
+
+.dark .note:hover {
+  background-color: rgba(51, 65, 85, 0.5);
+}
+
+.note .material-symbols-outlined {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.icon-note {
+  color: #6f42c1;
+}
+
+.icon-star {
+  color: #f59e0b;
+}
+
+.icon-flag {
+  color: #06b6d4;
+}
+
+/* ---------- Estadísticas ---------- */
+.stats-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.dark .stats-card {
+  background: rgba(16, 28, 34, 0.5);
+  border-color: #334155;
+}
+
+.stats-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #0f172a;
+}
+
+.dark .stats-card h3 {
+  color: #f1f5f9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  border-radius: 0.75rem;
+  padding: 1.5rem 1rem;
+  transition: transform 0.2s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-2px);
+}
+
+.stat-box.primary {
+  background-color: rgba(19, 164, 236, 0.1);
+}
+
+.stat-box.yellow {
+  background-color: rgba(234, 179, 8, 0.1);
+}
+
+.stat-box.green {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.dark .stat-box.primary {
+  background-color: rgba(19, 164, 236, 0.2);
+}
+
+.dark .stat-box.yellow {
+  background-color: rgba(234, 179, 8, 0.2);
+}
+
+.dark .stat-box.green {
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+.stat-icon-container {
+  width: 56px;
+  height: 56px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon-container.primary {
+  background-color: rgba(19, 164, 236, 0.2);
+  color: #13a4ec;
+}
+
+.stat-icon-container.yellow {
+  background-color: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
+
+.stat-icon-container.green {
+  background-color: rgba(34, 197, 84, 0.2);
+  color: #22c55e;
+}
+
+.dark .stat-icon-container.primary {
+  background-color: rgba(19, 164, 236, 0.3);
+}
+
+.dark .stat-icon-container.yellow {
+  background-color: rgba(234, 179, 8, 0.3);
+}
+
+.dark .stat-icon-container.green {
+  background-color: rgba(34, 197, 84, 0.3);
+}
+
+.stat-icon-container .material-symbols-outlined {
+  font-size: 1.75rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1;
+}
+
+.dark .stat-value {
+  color: #f1f5f9;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+  font-weight: 500;
+}
+
+.dark .stat-label {
+  color: #94a3b8;
+}
+
+/* ---------- Mapa ---------- */
+.map-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dark .map-card {
+  background: rgba(16, 28, 34, 0.5);
+  border-color: #334155;
+}
+
+.map-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #0f172a;
+}
+
+.dark .map-card h3 {
+  color: #f1f5f9;
+}
+
+.map-container {
+  background-color: #f1f5f9;
+  border-radius: 0.75rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dark .map-container {
+  background-color: rgba(15, 23, 42, 0.5);
+}
+
+.map-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.profile-photo-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.edit-photo-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-photo-btn:hover {
+  background: #13a4ec;
+  border-color: #13a4ec;
+}
+
+.edit-photo-btn .material-symbols-outlined {
+  font-size: 1.125rem;
+  color: #64748b;
+}
+
+.edit-photo-btn:hover .material-symbols-outlined {
+  color: #fff;
 }
