@@ -67,7 +67,10 @@ public class WebSecurityConfig {
 				.requestMatchers("/assets/", "/css/", "/js/", "/img/", "/images/", "/scss/", "/cdn-cgi/", "/cloudflare-static/", "/plugins/").permitAll()
 
 				// PUBLIC PAGES
-				.requestMatchers("/").permitAll()			
+				.requestMatchers("/").permitAll()		
+				.requestMatchers("/register").permitAll()
+				.requestMatchers("/login").permitAll()
+				 .requestMatchers("/signup").permitAll()	
 				// USER PAGES
 				// ADMIN PAGES
 				

@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 
 import java.util.List;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 
 @Entity
@@ -18,6 +19,7 @@ public class User {
     private Long id;
 
     private String name;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
 
@@ -37,7 +39,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reminder> reminders;
 
-
+    public User() {}
 
     public User(String name, String email, String password){
         this.name = name;

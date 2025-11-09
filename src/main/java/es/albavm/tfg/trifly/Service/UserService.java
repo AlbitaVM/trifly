@@ -43,7 +43,15 @@ public class UserService {
         return userRepository.findByEmail(username);
     }
 
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
     public UserDto getUserDto(Long id){
         return toDTO(userRepository.findById(id).orElseThrow());
+    }
+
+    public void save(User user){
+        userRepository.save(user);
     }
 }

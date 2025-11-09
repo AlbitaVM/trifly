@@ -25,15 +25,7 @@ public class GeneralController {
         return "budget-detail"; 
     }
 
-    @GetMapping("/login")
-    public String showbLogin() {
-        return "login"; 
-    }
 
-    @GetMapping("/register")
-    public String showbRegister() {
-        return "register"; 
-    }
 
     @GetMapping("/budget/new")
     public String showBudgetDetail() {
