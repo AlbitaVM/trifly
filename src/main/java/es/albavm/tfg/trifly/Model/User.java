@@ -5,8 +5,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+
 import java.util.List;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 
 @Entity
 public class User {
@@ -17,6 +20,9 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 
     // Relaciones
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -30,6 +36,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reminder> reminders;
+
+
 
     public User(String name, String email, String password){
         this.name = name;
@@ -53,6 +61,10 @@ public class User {
         return password;
     }
 
+    public List<String> getRoles() {
+		return roles;
+	}
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,4 +80,9 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
 }
