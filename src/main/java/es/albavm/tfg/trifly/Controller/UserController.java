@@ -1,5 +1,7 @@
 package es.albavm.tfg.trifly.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -46,6 +48,7 @@ public class UserController {
             return "register";
         }else{
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("USER"));
             userService.save(user);
              return "redirect:/login";
         }

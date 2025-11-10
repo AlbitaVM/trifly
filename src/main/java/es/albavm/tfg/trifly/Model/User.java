@@ -23,6 +23,8 @@ public class User {
     private String email;
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 
     // Relaciones
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -61,7 +63,9 @@ public class User {
         return password;
     }
 
-
+    public List<String> getRoles() {
+        return roles;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -79,5 +83,7 @@ public class User {
         this.password = password;
     }
 
-    
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 }

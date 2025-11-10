@@ -24,10 +24,13 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 		 User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
         
-        return new org.springframework.security.core.userdetails.User(
-            user.getEmail(), 
-            user.getPassword(), 
-            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
-        );
+
+		List<GrantedAuthority> roles = new ArrayList<>();
+		for (String role : user.getRoles()) {
+			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
+		}
+
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
+	
 	}
 }

@@ -16,6 +16,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true) 
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "roles", ignore = true) 
 
     User toDomain(NewUserDto newUserDto);
     void updateUserFromDto(UserUpdateDto dto, @MappingTarget User user);
