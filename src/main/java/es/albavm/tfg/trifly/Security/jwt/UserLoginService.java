@@ -1,5 +1,7 @@
 package es.albavm.tfg.trifly.Security.jwt;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -101,7 +103,7 @@ public class UserLoginService {
 		return cookie;
 	}
 
-	public User findByEmail(String email) {
+	public Optional<User> findByEmail(String email) {
         return userService.findByEmail(email);
     }
 

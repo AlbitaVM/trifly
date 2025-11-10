@@ -63,9 +63,7 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {		
 		http.authenticationProvider(authenticationProvider());
 		http.authorizeHttpRequests(authorize -> authorize
-				// STATIC RESOURCES
-				.requestMatchers("/assets/", "/css/", "/js/", "/img/", "/images/", "/scss/", "/cdn-cgi/", "/cloudflare-static/", "/plugins/").permitAll()
-
+				
 				// PUBLIC PAGES
 				.requestMatchers("/").permitAll()		
 				.requestMatchers("/register").permitAll()
@@ -79,8 +77,9 @@ public class WebSecurityConfig {
 				// LOGIN
 				.formLogin(formLogin -> formLogin
 					.loginPage("/login")
-					.failureUrl("/loginError")
-					.defaultSuccessUrl("/")
+					.usernameParameter("email") 
+					.failureUrl("/login?error=true")
+					.defaultSuccessUrl("/",true)
 					.permitAll())
 				// LOGOUT
 				.logout(logout -> logout

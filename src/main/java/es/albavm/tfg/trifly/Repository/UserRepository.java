@@ -9,7 +9,7 @@ import es.albavm.tfg.trifly.Model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
     Optional<User> findById(Long id);
 }

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Service.UserService;
@@ -25,7 +26,10 @@ public class UserController {
     }
     
     @GetMapping("/login")
-    public String showbLogin() {
+    public String showbLogin(@RequestParam(value = "error", required = false) String error,Model model) {
+         if (error != null) {
+            model.addAttribute("error", "Usuario o contraseña incorrectos");
+        }
         return "login"; 
     }
 
@@ -39,9 +43,8 @@ public class UserController {
 
         if(userService.existsByEmail(user.getEmail())){
              model.addAttribute("error", "Este email ya está registrado");
-            return "/register";
+            return "register";
         }else{
-            user.setEmail(user.getEmail());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.save(user);
              return "redirect:/login";

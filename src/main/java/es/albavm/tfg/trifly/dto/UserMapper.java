@@ -15,7 +15,6 @@ public interface UserMapper {
     List<UserDto> toDTOs(Collection<User> users);
 
     @Mapping(target = "id", ignore = true) 
-    @Mapping(target = "roles", ignore = true) 
     @Mapping(target = "password", ignore = true)
 
     User toDomain(NewUserDto newUserDto);

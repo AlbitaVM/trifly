@@ -1,6 +1,7 @@
 package es.albavm.tfg.trifly.Security;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,13 +21,13 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		User user = userRepository.findByEmail(email);
-
-		List<GrantedAuthority> roles = new ArrayList<>();
-		for (String role : user.getRoles()) {
-			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
-		}
-
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
+		 User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
+        
+        return new org.springframework.security.core.userdetails.User(
+            user.getEmail(), 
+            user.getPassword(), 
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
+        );
 	}
 }

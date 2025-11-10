@@ -1,6 +1,7 @@
 package es.albavm.tfg.trifly.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,7 +40,7 @@ public class UserService {
 	}
 
 
-    public User findByEmail(String username) {
+    public Optional<User> findByEmail(String username) {
         return userRepository.findByEmail(username);
     }
 
