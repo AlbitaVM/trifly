@@ -2060,6 +2060,31 @@ textarea.form-control {
   color: #94a3b8;
 }
 
+.card-details {
+  border-top: 1px solid #ddd;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-details div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card-details span {
+  color: #777;
+}
+
+.card-details strong {
+  color: #111;
+}
+
 /* ---------- Mapa ---------- */
 .map-card {
   background: #ffffff;
