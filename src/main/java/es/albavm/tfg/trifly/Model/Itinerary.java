@@ -2,12 +2,16 @@ package es.albavm.tfg.trifly.Model;
 
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.sql.Blob;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -19,9 +23,15 @@ public class Itinerary {
     private Long id;
 
     private String itineraryName;
+    private String destination;
     private Date startDate;
     private Date finishDate;
     private String state;
+
+    @Lob
+	@JsonIgnore
+	private Blob imageFile;
+	private boolean imageBoolean;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -36,12 +46,28 @@ public class Itinerary {
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL)
     private List<Reminder> reminders;
 
+    public Itinerary(){
+
+    }
+
+    public Itinerary(String itineraryName,String destination,Date startDate,Date finishDate,String state){
+        this.itineraryName = itineraryName;
+        this.destination = destination;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.state = state;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getItineraryName() {
         return itineraryName;
+    }
+
+    public String getDestination() {
+        return destination;
     }
 
     public Date getStartDate() {
@@ -62,6 +88,10 @@ public class Itinerary {
 
     public void setItineraryName(String itineraryName) {
         this.itineraryName = itineraryName;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public void setStartDate(Date startDate) {

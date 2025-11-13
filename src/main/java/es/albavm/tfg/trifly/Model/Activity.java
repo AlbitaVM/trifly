@@ -3,6 +3,7 @@ package es.albavm.tfg.trifly.Model;
 import java.time.LocalTime;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
@@ -20,6 +21,13 @@ public class Activity {
     private LocalTime startTime;
     private LocalTime finishTime;
     private String activityDescription;
+
+   // @Enumerated(EnumType.STRING)
+   // private TipoActividad tipoActividad;
+
+    private Double latitud;  
+    private Double longitud;
+
 
     @ManyToOne
     @JoinColumn(name = "day_id")
@@ -49,6 +57,14 @@ public class Activity {
         return activityDescription;
     }
 
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -71,5 +87,13 @@ public class Activity {
 
     public void setActivityDescription(String activityDescription) {
         this.activityDescription = activityDescription;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 }
