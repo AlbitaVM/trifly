@@ -1,4 +1,4 @@
-package es.albavm.tfg.trifly.dto;
+package es.albavm.tfg.trifly.dto.User;
 
 import java.util.Collection;
 import java.util.List;

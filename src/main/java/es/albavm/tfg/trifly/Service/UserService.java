@@ -8,9 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.UserRepository;
-import es.albavm.tfg.trifly.dto.UserDto;
-import es.albavm.tfg.trifly.dto.UserMapper;
 import es.albavm.tfg.trifly.Security.CSRFHandlerConfiguration;
+import es.albavm.tfg.trifly.dto.User.UserDto;
+import es.albavm.tfg.trifly.dto.User.UserMapper;
 
 @Service
 public class UserService {

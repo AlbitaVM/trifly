@@ -5,8 +5,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Blob;
+import java.time.LocalDate;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,15 +28,15 @@ public class Itinerary {
 
     private String itineraryName;
     private String destination;
-    private Date startDate;
-    private Date finishDate;
+    private LocalDate startDate;
+    private LocalDate finishDate;
     private String state;
 
     @Lob
-	@JsonIgnore
+	@Basic(fetch = FetchType.LAZY)
 	private Blob imageFile;
 	private boolean imageBoolean;
-
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -50,12 +54,10 @@ public class Itinerary {
 
     }
 
-    public Itinerary(String itineraryName,String destination,Date startDate,Date finishDate,String state){
+    public Itinerary(String itineraryName,String destination){
         this.itineraryName = itineraryName;
         this.destination = destination;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.state = state;
+        
     }
 
     public Long getId() {
@@ -70,16 +72,24 @@ public class Itinerary {
         return destination;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getFinishDate() {
+    public LocalDate getFinishDate() {
         return finishDate;
     }
 
     public String getState() {
         return state;
+    }
+
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public boolean getImageBoolean() {
+        return imageBoolean;
     }
 
     public void setId(Long id) {
@@ -94,15 +104,24 @@ public class Itinerary {
         this.destination = destination;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public void setFinishDate(Date finishDate) {
+    public void setFinishDate(LocalDate finishDate) {
         this.finishDate = finishDate;
     }
 
     public void setState(String state) {
         this.state = state;
     }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public void setImageBoolean(boolean imageBoolean) {
+        this.imageBoolean = imageBoolean;
+    }
+
 }

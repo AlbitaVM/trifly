@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import es.albavm.tfg.trifly.Model.User;
-import es.albavm.tfg.trifly.dto.UserDto;
 import es.albavm.tfg.trifly.Service.UserService;
+import es.albavm.tfg.trifly.dto.User.UserDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 

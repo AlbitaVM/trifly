@@ -18,14 +18,17 @@
       </div>
 
       <div class="row g-4">
-        <!-- Tarjeta 1 -->
-        <div class="col-md-6 col-lg-4">
+        {{#itineraries}}
+        <div class="col-md-6 col-lg-4 itinerary-card mb-4">
           <div class="card shadow-sm h-100">
-            <img src="https://picsum.photos/id/1015/600/400" class="card-img-top" alt="Aventura Europea">
+            <img src="/itineraries/{{id}}/image" 
+             class="card-img-top" 
+             alt="{{itineraryName}}"
+             style="height: 250px; object-fit: cover; object-position: center;">
             <div class="card-body">
-              <h4 class="card-title fw-bold">Aventura Europea</h4>
-              <p class="text-muted">París, Roma, Berlín</p>
-              <p class="text-secondary small mb-3">📅 15 Jul, 2024 - 15 Ago, 2024</p>
+              <h4 class="card-title fw-bold">{{itineraryName}}</h4>
+              <p class="text-muted">{{destination}}</p>
+              <p class="text-secondary small mb-3">{{startDate}} - {{finishDate}}</p>
               <div class="d-flex justify-content-end gap-2">
                 <a class="btn btn-info btn-sm" href="/itinerary">Ver</a>
                 <a class="btn btn-warning btn-sm" href="/itinerary/edit">Editar</a>
@@ -34,39 +37,39 @@
             </div>
           </div>
         </div>
+        {{/itineraries}}
+      </div>
+      <!-- Paginación con números -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <nav aria-label="Paginación de itinerarios">
+            <ul class="pagination justify-content-center">
+              
+              <!-- Botón Anterior -->
+              {{#hasPrevious}}
+              <li class="page-item">
+                <a class="page-link" href="/?page={{previousPage}}">&laquo;</a>
+              </li>
+              {{/hasPrevious}}
+              
 
-        <!-- Tarjeta 2 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <img src="https://picsum.photos/id/1021/600/400" class="card-img-top" alt="Escapada Sudamericana">
-            <div class="card-body">
-              <h4 class="card-title fw-bold">Escapada Sudamericana</h4>
-              <p class="text-muted">Río, Buenos Aires...</p>
-              <p class="text-secondary small mb-3">📅 01 Sep, 2024 - 30 Sep, 2024</p>
-              <div class="d-flex justify-content-end gap-2">
-                <a class="btn btn-info btn-sm" href="/itinerary">Ver</a>
-                <a class="btn btn-warning btn-sm" href="/itinerary/edit">Editar</a>
-                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+              <!-- Números de página (necesitarás pasar una lista desde el controlador) -->
+              {{#pageNumbers}}
+              <li class="page-item {{#active}}active{{/active}}">
+                <a class="page-link" href="/?page={{number}}">{{display}}</a>
+              </li>
+              {{/pageNumbers}}
 
-        <!-- Tarjeta 3 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <img src="https://picsum.photos/id/1035/600/400" class="card-img-top" alt="Exploración Asiática">
-            <div class="card-body">
-              <h4 class="card-title fw-bold">Exploración Asiática</h4>
-              <p class="text-muted">Tokio, Seúl, Bangkok</p>
-              <p class="text-secondary small mb-3">📅 10 Oct, 2024 - 10 Nov, 2024</p>
-              <div class="d-flex justify-content-end gap-2">
-                <a class="btn btn-info btn-sm" href="/itinerary">Ver</a>
-                <a class="btn btn-warning btn-sm" href="/itinerary/edit">Editar</a>
-                <button class="btn btn-outline-danger btn-sm">Eliminar</button>
-              </div>
-            </div>
-          </div>
+              <!-- Botón Siguiente -->
+              {{#hasNext}}
+              <li class="page-item">
+                <a class="page-link" href="/?page={{nextPage}}">&raquo;</a>
+              </li>
+              {{/hasNext}}
+              
+
+            </ul>
+          </nav>
         </div>
       </div>
     </section>

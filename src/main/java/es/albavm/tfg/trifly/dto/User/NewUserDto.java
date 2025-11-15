@@ -1,4 +1,4 @@
-package es.albavm.tfg.trifly.dto;
+package es.albavm.tfg.trifly.dto.User;
 
 public record NewUserDto (
     String name,          
