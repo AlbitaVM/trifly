@@ -68,7 +68,8 @@ public class WebSecurityConfig {
 				.requestMatchers("/").permitAll()		
 				.requestMatchers("/register").permitAll()
 				.requestMatchers("/login").permitAll()
-				 .requestMatchers("/signup").permitAll()	
+				.requestMatchers("/signup").permitAll()
+				.requestMatchers("/itineraries/{id}/image").permitAll()
 				// USER PAGES
 				// ADMIN PAGES
 				
