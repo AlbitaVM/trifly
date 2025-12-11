@@ -101,5 +101,14 @@ public class ItineraryController {
         return "redirect:/";
     }
     
-    
+    @PostMapping("/itinerary/{id}/delete")
+    public String deleteItinerary(@PathVariable Long id, Model model) {
+         try {
+            itineraryService.deleteItinerary(id);
+            return "redirect:/"; 
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "El itinerario no coincide con el id");
+            return "redirect:/"; 
+        }
+    }
 }

@@ -95,4 +95,13 @@ public class ItineraryService {
         itineraryRepository.save(itinerary);
     }
 
+    public void deleteItinerary(Long id){
+        Optional<Itinerary> optionalItinerary = itineraryRepository.findById(id);
+        if(optionalItinerary.isPresent()){
+            itineraryRepository.delete(optionalItinerary.get());
+        }else{
+            throw new RuntimeException("Itinerary not found");
+        }
+    }
+
 }
