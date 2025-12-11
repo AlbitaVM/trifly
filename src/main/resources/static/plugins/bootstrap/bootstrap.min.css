@@ -2759,6 +2759,7 @@ textarea.form-control.is-invalid {
     width: 100%
 }
 
+
 @media (min-width:576px) {
     .form-inline label {
         display: -ms-flexbox;

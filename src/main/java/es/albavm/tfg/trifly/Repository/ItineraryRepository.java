@@ -12,5 +12,6 @@ import es.albavm.tfg.trifly.Model.Itinerary;
 public interface ItineraryRepository extends JpaRepository<Itinerary,Long> {
     
     Optional<Itinerary> findById(Long id);
+    boolean existsByItineraryName(String itineraryName);
     Page<Itinerary> findAll(Pageable pageable);
 }

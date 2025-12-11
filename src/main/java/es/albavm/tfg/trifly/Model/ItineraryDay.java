@@ -43,4 +43,12 @@ public class ItineraryDay {
     public void setNumberDay(int numberDay) {
         this.numberDay = numberDay;
     }
+
+    public void setItinerary(Itinerary itinerary) {
+        this.itinerary = itinerary;
+    }
+
+    public void setActivity(List<Activity> activity) {
+        this.activity = activity;
+    }
 }

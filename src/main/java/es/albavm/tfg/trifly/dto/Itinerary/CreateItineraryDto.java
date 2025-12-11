@@ -1,21 +1,16 @@
 package es.albavm.tfg.trifly.dto.Itinerary;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItineraryDto {
-    private Long id;
+public class CreateItineraryDto {
     private String itineraryName;
     private String destination;
     private LocalDate startDate;
     private LocalDate finishDate;
     private String state;
-    private boolean imageBoolean;
-    private List<ItineraryDayDto> days;
-
-    public Long getId() {
-        return id;
-    }
+    private List<CreateItineraryDayDto> days = new ArrayList<>();
 
     public String getItineraryName() {
         return itineraryName;
@@ -37,12 +32,8 @@ public class ItineraryDto {
         return state;
     }
 
-    public List<ItineraryDayDto> getDays() {
+    public List<CreateItineraryDayDto> getDays() {
         return days;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setItineraryName(String itineraryName) {
@@ -61,15 +52,11 @@ public class ItineraryDto {
         this.finishDate = finishDate;
     }
 
-    public void setImageBoolean(boolean imageBoolean) {
-        this.imageBoolean = imageBoolean;
-    }
-
     public void setState(String state) {
         this.state = state;
     }
 
-    public void setDays(List<ItineraryDayDto> days) {
+    public void setDays(List<CreateItineraryDayDto> days) {
         this.days = days;
     }
 }

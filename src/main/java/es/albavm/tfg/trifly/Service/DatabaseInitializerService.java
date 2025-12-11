@@ -35,81 +35,74 @@ public class DatabaseInitializerService {
 	private PasswordEncoder passwordEncoder;
 
     @PostConstruct
-    public void init()throws IOException, URISyntaxException, SQLException{
-        User user1 = new User("Alba","alba@gmail.com",passwordEncoder.encode("1234"));
-        userRepository.save(user1);
+    public void init() throws IOException, SQLException {
+        // Crear usuario de prueba si no existe
+        if (!userRepository.existsByEmail("alba@gmail.com")) {
+            User user = new User();
+            user.setEmail("alba@gmail.com");
+            user.setName("Alba");
+            user.setPassword(passwordEncoder.encode("1234")); // Mejor encriptar la contraseña
+            userRepository.save(user);
+        }
 
-        Itinerary itinerary1 = new Itinerary("Viaje a Paris","Paris,Francia");
-        itinerary1.setStartDate(LocalDate.of(2025, 5, 10));
-        itinerary1.setFinishDate(LocalDate.of(2025, 5, 12));
-        setItineraryImage(itinerary1,"static/img/itineraries/itinerary1.jpg");
+        // Crear itinerarios de prueba si no existen
+        createItineraryIfNotExists("Viaje a Paris", "Paris, Francia", 
+                LocalDate.of(2025, 5, 10), LocalDate.of(2025, 5, 12), 
+                "static/img/itineraries/itinerary1.jpg");
 
-        itineraryRepository.save(itinerary1);
+        createItineraryIfNotExists("Viaje a Madrid", "Madrid, España", 
+                LocalDate.of(2025, 7, 8), LocalDate.of(2025, 8, 9), 
+                "static/img/itineraries/itinerary2.jpg");
 
-        Itinerary itinerary2 = new Itinerary("Viaje a Madrid","Madrid,España");
-        itinerary2.setStartDate(LocalDate.of(2025, 7, 8));
-        itinerary2.setFinishDate(LocalDate.of(2025, 8, 9));
-        setItineraryImage(itinerary2,"/static/img/itineraries/itinerary2.jpg");
+        createItineraryIfNotExists("Viaje a Portugal", "Portugal", 
+                LocalDate.of(2025, 2, 11), LocalDate.of(2025, 5, 12), 
+                "static/img/itineraries/itinerary3.jpg");
 
-        itineraryRepository.save(itinerary2);
+        createItineraryIfNotExists("Viaje a Colombia", "Bogota, Colombia", 
+                LocalDate.of(2025, 1, 2), LocalDate.of(2025, 3, 2), 
+                "static/img/itineraries/itinerary4.jpg");
 
-        Itinerary itinerary3 = new Itinerary("Viaje a Portugal","Portugal");
-        itinerary3.setStartDate(LocalDate.of(2025, 2, 11));
-        itinerary3.setFinishDate(LocalDate.of(2025, 5, 12));
-        setItineraryImage(itinerary3,"/static/img/itineraries/itinerary3.jpg");
+        createItineraryIfNotExists("Viaje a Suecia", "Suecia", 
+                LocalDate.of(2025, 5, 10), LocalDate.of(2025, 5, 12), 
+                "static/img/itineraries/itinerary5.jpg");
 
-        itineraryRepository.save(itinerary3);
+        createItineraryIfNotExists("Viaje a Holanda", "Amsterdam, Holanda", 
+                LocalDate.of(2025, 5, 10), LocalDate.of(2025, 5, 12), 
+                "static/img/itineraries/itinerary6.jpg");
 
-        Itinerary itinerary4 = new Itinerary("Viaje a Colombia","Bogota,Colombia");
-        itinerary4.setStartDate(LocalDate.of(2025, 1, 2));
-        itinerary4.setFinishDate(LocalDate.of(2025, 3, 2));
-        setItineraryImage(itinerary4,"/static/img/itineraries/itinerary4.jpg");
-
-        itineraryRepository.save(itinerary4);
-
-        Itinerary itinerary5 = new Itinerary("Viaje a Suecia","Suecia");
-        itinerary5.setStartDate(LocalDate.of(2025, 5, 10));
-        itinerary5.setFinishDate(LocalDate.of(2025, 5, 12));
-        setItineraryImage(itinerary5,"/static/img/itineraries/itinerary5.jpg");
-
-        itineraryRepository.save(itinerary5);
-
-        Itinerary itinerary6 = new Itinerary("Viaje a Holanda","Amsterdam,Holanda");
-        itinerary6.setStartDate(LocalDate.of(2025, 5, 10));
-        itinerary6.setFinishDate(LocalDate.of(2025, 5, 12));
-        setItineraryImage(itinerary6,"/static/img/itineraries/itinerary6.jpg");
-
-        itineraryRepository.save(itinerary6);
-
-        Itinerary itinerary7 = new Itinerary("Viaje a Egipto","Egipto");
-        itinerary7.setStartDate(LocalDate.of(2025, 5, 10));
-        itinerary7.setFinishDate(LocalDate.of(2025, 5, 12));
-        setItineraryImage(itinerary7,"/static/img/itineraries/itinerary7.jpg");
-
-        itineraryRepository.save(itinerary7);
+        createItineraryIfNotExists("Viaje a Egipto", "Egipto", 
+                LocalDate.of(2025, 5, 10), LocalDate.of(2025, 5, 12), 
+                "static/img/itineraries/itinerary7.jpg");
     }
 
-   public void setItineraryImage(Itinerary itinerary, String classpathResource) throws IOException, SQLException {
-    itinerary.setImageBoolean(true);
-    
-    // Prueba diferentes formas de cargar el recurso
-    System.out.println("Intentando cargar: " + classpathResource);
-    
-    // Opción 1: ClassPathResource
-    Resource resource = new ClassPathResource(classpathResource);
-    System.out.println("Resource exists: " + resource.exists());
-    System.out.println("Resource path: " + resource.getURL());
-    
-    if (!resource.exists()) {
-        // Listar recursos disponibles para debug
-        System.out.println("El recurso no existe. Verifica la estructura de carpetas.");
-        throw new FileNotFoundException("No se encontró el recurso: " + classpathResource);
+    private void createItineraryIfNotExists(String name, String destination, LocalDate start, LocalDate finish, String imagePath) throws IOException, SQLException {
+        // Comprobar si el itinerario ya existe por nombre
+        if (itineraryRepository.existsByItineraryName(name)) {
+            return; // Ya existe, no hacer nada
+        }
+
+        Itinerary itinerary = new Itinerary(name, destination);
+        itinerary.setStartDate(start);
+        itinerary.setFinishDate(finish);
+
+        setItineraryImage(itinerary, imagePath);
+
+        itineraryRepository.save(itinerary);
     }
 
-    try (InputStream inputStream = resource.getInputStream()) {
-        byte[] data = inputStream.readAllBytes();
-        SerialBlob blob = new SerialBlob(data);
-        itinerary.setImageFile(blob);
+    private void setItineraryImage(Itinerary itinerary, String classpathResource) throws IOException, SQLException {
+        itinerary.setImageBoolean(true);
+
+        // Cargar recurso desde classpath
+        Resource resource = new ClassPathResource(classpathResource);
+
+        if (!resource.exists()) {
+            throw new FileNotFoundException("No se encontró el recurso: " + classpathResource);
+        }
+
+        try (InputStream inputStream = resource.getInputStream()) {
+            byte[] data = inputStream.readAllBytes();
+            itinerary.setImageFile(new SerialBlob(data));
+        }
     }
-}
 }

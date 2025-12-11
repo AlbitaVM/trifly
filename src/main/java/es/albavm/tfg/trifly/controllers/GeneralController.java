@@ -39,10 +39,7 @@ public class GeneralController {
         return "/foreign-exchange";  
     }
 
-    @GetMapping("/itinerary/new")
-    public String showNewItinerary() {
-        return "/create-itinerary";  
-    }
+   
 
     @GetMapping("/itinerary/new/ai")
     public String showNewIAItinerary() {

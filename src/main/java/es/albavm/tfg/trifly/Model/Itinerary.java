@@ -124,4 +124,11 @@ public class Itinerary {
         this.imageBoolean = imageBoolean;
     }
 
+    public void setDays(List<ItineraryDay> days) {
+        this.days = days;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
