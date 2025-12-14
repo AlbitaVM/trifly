@@ -4,21 +4,28 @@
     <div class="form-card">
       <h1 class="form-title">Nueva Nota</h1>
 
-      <form>
+      <form method="post" action="/note/new">
+        <input type="hidden" name="_csrf" value="{{token}}">
         <div class="form-group">
-          <label class="form-label" for="budget">Título</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="noteTitle">Título</label>
+          <input type="text" id="noteTitle" name="noteTitle" class="form-control form-control-lg" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="budget">Descripción</label>
-          <textarea type="text" id="budget" class="form-control form-control-lg" ></textarea>
+          <label class="form-label" for="noteDescription">Descripción</label>
+          <textarea type="text" id="noteDescription" name="noteDescription"
+            class="form-control form-control-lg"></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" for="budget">Asociar a itinerario</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="itineraryId">Asociar a itinerario</label>
+           <select id="itineraryId" name="itineraryId" class="form-control form-control-lg">
+            <option value="">-- Ninguno --</option>
+            {{#itineraries}}
+              <option value="{{id}}">{{itineraryName}}</option>
+            {{/itineraries}}
+          </select>
         </div>
 
-        <a href="/notes" class="btn btn-danger btn-lg btn-block">Crear nota</a>
+        <button type="submit" class="btn btn-danger btn-lg btn-block">Crear nota</button>
       </form>
     </div>
   </div>

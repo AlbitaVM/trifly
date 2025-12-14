@@ -36,6 +36,14 @@ public class Note {
         return noteDescription;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Itinerary getItinerary() {
+        return itinerary;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -46,5 +54,13 @@ public class Note {
 
     public void setNoteDescription(String noteDescription) {
         this.noteDescription = noteDescription;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setItinerary(Itinerary itinerary) {
+        this.itinerary = itinerary;
     }
 }
