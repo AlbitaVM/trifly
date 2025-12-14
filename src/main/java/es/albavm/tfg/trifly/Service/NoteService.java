@@ -1,6 +1,7 @@
 package es.albavm.tfg.trifly.Service;
 
 import java.security.Principal;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,14 @@ public class NoteService {
                 note.getNoteDescription(),
                 note.getItinerary() != null ? note.getItinerary().getItineraryName() : null
             ));
+    }
+
+    public void deleteNote(Long id){
+        Optional<Note> optionalNote = noteRepository.findById(id);
+        if(optionalNote.isPresent()){
+            noteRepository.delete(optionalNote.get());
+        }else {
+            throw new RuntimeException("Note not found");
+        }
     }
 }

@@ -13,6 +13,12 @@
         </a>
       </div>
 
+      {{#errorMessage}}
+      <div class="alert alert-danger text-center" role="alert">
+        {{errorMessage}}
+      </div>
+      {{/errorMessage}}
+
       <div class="notes-grid">
         {{#notes}}
         <!-- Nota 1 -->
@@ -38,9 +44,12 @@
             <a href="/note/edit" class="btn-icon-edit" title="Editar">
               <span class="material-symbols-outlined">edit</span>
             </a>
-            <button type="button" class="btn-icon-delete" title="Eliminar">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
+            <form method="post" action="/note/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
+              <input type="hidden" name="_csrf" value="{{token}}">
+              <button type="submit" class="btn-icon-delete" title="Eliminar">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </form>
           </div>
         </div>
         {{/notes}}
