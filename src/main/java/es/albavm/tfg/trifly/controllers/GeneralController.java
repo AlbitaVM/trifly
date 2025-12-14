@@ -12,10 +12,7 @@ public class GeneralController {
         return "itinerary-detail"; 
     }
 
-    @GetMapping("/notes")
-    public String showdnotes() {
-        return "notes"; 
-    }
+
 
     @GetMapping("/budget")
     public String showbudget() {
