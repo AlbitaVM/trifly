@@ -46,20 +46,14 @@ public class GeneralController {
         return "/create-itinerary-ai";  
     }
 
-    @GetMapping("/itinerary/edit")
-    public String showEditItinerary() {
-        return "/edit-itinerary";  
-    }
+    
 
      @GetMapping("/bill/new")
     public String showNewBill() {
         return "/create-bill";  
     }
 
-     @GetMapping("/note/new")
-    public String showNewNote() {
-        return "/create-note";  
-    }
+   
 
      @GetMapping("/reminder/new")
     public String showNewReminder() {

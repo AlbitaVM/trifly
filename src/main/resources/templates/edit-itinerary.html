@@ -1,220 +1,344 @@
 {{>header}}
 <main class="form-container">
-  <div class="container" style="max-width: 1200px;">
-    <!-- Header con título y botón guardar -->
-    <div class="page-header">
-      <h1 class="form-title" style="text-align: center; margin-bottom: 0;">Editar Itinerario</h1>
-      <a type="button" class="btn btn-danger btn-lg fw-bold" href="/itinerary">
-        <span class="material-symbols-outlined" style="margin-right: 0.5rem;">save</span>
-        Guardar Itinerario
-      </a>
-    </div>
-
-    <!-- Grid de 2 columnas -->
-    <div class="itinerary-grid">
-      <!-- Columna Izquierda: Detalles del Viaje -->
-      <div class="form-card">
-        <h2 class="interests-title">Detalles del Viaje</h2>
-        
-        <div class="form-group">
-          <label class="form-label">Nombre del viaje</label>
-          <input type="text" class="form-control" placeholder="Viaje a París"/>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Destino</label>
-          <input type="text" class="form-control" placeholder="Paris, Francia"/>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Fecha Inicio</label>
-          <div class="input-with-icon">
-            <input type="text" class="form-control" placeholder="25 Oct, 2024"/>
-            <span class="material-symbols-outlined">calendar_today</span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Fecha Fin</label>
-          <div class="input-with-icon">
-            <input type="text" class="form-control" placeholder="28 Oct, 2024"/>
-            <span class="material-symbols-outlined">calendar_today</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Columna Derecha: Planificador de Días -->
-      <div class="day-planner-container">
-        <!-- Día 1 -->
-        <div class="form-card">
-          <div class="day-header">
-            <h3 class="interests-title" style="margin-bottom: 0;">Día 1: 25 de Octubre, 2024</h3>
-            <button type="button" class="btn-icon-delete">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
-          </div>
-
-          <div class="activities-list">
-            <!-- Actividad 1 -->
-            <div class="activity-item">
-              <div class="form-group">
-                <label class="form-label">Nombre de actividad</label>
-                <input type="text" class="form-control" value="Llegada y visita a la Torre Eiffel"/>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" rows="2" placeholder=""></textarea>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Tipo de actividad</label>
-                <select class="form-control">
-                  <option value="">Selecciona un tipo</option>
-                  <option value="cultural" selected>Cultural</option>
-                  <option value="gastronomia">Gastronomía</option>
-                  <option value="aventura">Aventura</option>
-                  <option value="naturaleza">Naturaleza</option>
-                  <option value="compras">Compras</option>
-                  <option value="relax">Relax</option>
-                  <option value="vida-nocturna">Vida Nocturna</option>
-                  <option value="transporte">Transporte</option>
-                  <option value="alojamiento">Alojamiento</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Ubicación</label>
-                <input type="text" class="form-control" value="Calle"/>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">Hora</label>
-                <input type="time" class="form-control" value="10:00"/>
-              </div>
-              
-              <button type="button" class="btn-icon-delete activity-delete">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-
-            <!-- Actividad 2 -->
-            <div class="activity-item">
-              <div class="form-group">
-                <label class="form-label">Nombre de actividad</label>
-                <input type="text" class="form-control" value="Check-in en el hotel"/>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" rows="2" placeholder=""></textarea>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Tipo de actividad</label>
-                <select class="form-control">
-                  <option value="">Selecciona un tipo</option>
-                  <option value="cultural" selected>Cultural</option>
-                  <option value="gastronomia">Gastronomía</option>
-                  <option value="aventura">Aventura</option>
-                  <option value="naturaleza">Naturaleza</option>
-                  <option value="compras">Compras</option>
-                  <option value="relax">Relax</option>
-                  <option value="vida-nocturna">Vida Nocturna</option>
-                  <option value="transporte">Transporte</option>
-                  <option value="alojamiento">Alojamiento</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Ubicación</label>
-                <input type="text" class="form-control" value="Calle"/>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">Hora</label>
-                <input type="time" class="form-control" value="12:00"/>
-              </div>
-              
-              <button type="button" class="btn-icon-delete activity-delete">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-
-          <button type="button" class="btn btn-info btn-lg text-white btn-block">
-            <span class="material-symbols-outlined">add_circle</span>
-            Añadir Actividad
-          </button>
-
-
-        <!-- Día 2 -->
-        <div class="form-card">
-          <div class="day-header">
-            <h3 class="interests-title" style="margin-bottom: 0;">Día 2: 26 de Octubre, 2024</h3>
-            <button type="button" class="btn-icon-delete">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
-          </div>
-
-          <div class="activity-item">
-              <div class="form-group">
-                <label class="form-label">Nombre de actividad</label>
-                <input type="text" class="form-control" value="Visita al Museo del Louvre"/>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" rows="2" placeholder=""></textarea>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Tipo de actividad</label>
-                <select class="form-control">
-                  <option value="">Selecciona un tipo</option>
-                  <option value="cultural" selected>Cultural</option>
-                  <option value="gastronomia">Gastronomía</option>
-                  <option value="aventura">Aventura</option>
-                  <option value="naturaleza">Naturaleza</option>
-                  <option value="compras">Compras</option>
-                  <option value="relax">Relax</option>
-                  <option value="vida-nocturna">Vida Nocturna</option>
-                  <option value="transporte">Transporte</option>
-                  <option value="alojamiento">Alojamiento</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Ubicación</label>
-                <input type="text" class="form-control" value="Calle"/>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">Hora</label>
-                <input type="time" class="form-control" value="09:00"/>
-              </div>
-              
-              <button type="button" class="btn-icon-delete activity-delete">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-
-
-          <button type="button" class="btn btn-info btn-lg text-white btn-block">
-            <span class="material-symbols-outlined">add_circle</span>
-            Añadir Actividad
-          </button>
-        </div>
-
-        <!-- Botón añadir día -->
-        <button type="button" class="btn btn-danger btn-lg btn-block">
-          <span class="material-symbols-outlined">add</span>
-          Añadir Día
+  <form action="/itinerary/{{itinerary.id}}/edit" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{token}}">
+    <div class="container" style="max-width: 1200px;">
+      <!-- Header con título y botón guardar -->
+      <div class="page-header">
+        <h1 class="form-title" style="text-align: center; margin-bottom: 0;">Edita tu Itinerario</h1>
+        <button type="submit" class="btn btn-danger btn-lg fw-bold">
+          <span class="material-symbols-outlined">save</span>
+          Guardar Cambios
         </button>
       </div>
+
+      <!-- Grid de 2 columnas -->
+      <div class="itinerary-grid">
+        <!-- Columna Izquierda: Detalles del Viaje -->
+        <div class="form-card">
+          <h2 class="interests-title">Detalles del Viaje</h2>
+
+          <div class="form-group">
+            <label class="form-label">Nombre del viaje</label>
+            <input type="text" class="form-control" name="itineraryName" value="{{itinerary.itineraryName}}" placeholder="Nombre de itinerario" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Destino</label>
+            <input type="text" class="form-control" name="destination" value="{{itinerary.destination}}" placeholder="Destino" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Fecha Inicio</label>
+            <input type="date" class="form-control" name="startDate" value="{{itinerary.startDate}}" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Fecha Fin</label>
+            <input type="date" class="form-control" name="finishDate" value="{{itinerary.finishDate}}" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Foto del itinerario</label>
+            <input type="file" class="form-control" name="imageFile" accept="image/*">
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Planificador de Días -->
+        <div class="day-planner-container" id="dayContainer">
+          {{#itinerary.days}}
+          <div class="form-card day-card" data-day-index="{{numberDay}}">
+            <input type="hidden" name="days[{{numberDay}}].numberDay" value="{{numberDay}}">
+            <div class="day-header">
+              <h3 class="day-title">Día {{numberDay}}</h3>
+              <button type="button" class="btn-icon-delete" onclick="deleteDay(this)">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+
+            <div class="activities-list">
+              {{#activities}}
+              <div class="activity-item">
+                <div class="form-group">
+                  <label class="form-label">Nombre de actividad</label>
+                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityName" placeholder="Nombre actividad" value="{{activityName}}" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Descripción</label>
+                  <textarea class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityDescription" placeholder="Descripción">{{activityDescription}}</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Tipo de actividad</label>
+                  <select class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityType">
+                    {{#activityTypeOptions}}
+                    <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+                    {{/activityTypeOptions}}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Ubicación</label>
+                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].location" value="{{location}}" placeholder="Ubicación">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Hora inicio</label>
+                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].startTime" value="{{startTime}}">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Hora fin</label>
+                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].finishTime" value="{{finishTime}}">
+                </div>
+
+                <button type="button" class="btn-icon-delete activity-delete" onclick="deleteActivity(this)">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+              {{/activities}}
+
+              <button type="button" class="btn btn-info btn-lg text-white btn-block" onclick="addActivity(this)">
+                <span class="material-symbols-outlined">add</span>
+                Añadir Actividad
+              </button>
+            </div>
+
+            <!-- Botón añadir día -->
+            <button type="button" class="btn btn-danger btn-lg btn-block" onclick="addDay()">
+              <span class="material-symbols-outlined">add</span>
+              Añadir Día
+            </button>
+          </div>
+          {{/itinerary.days}}
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </main>
 {{>footer}}
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+  const activityOptions = `
+  {{#activityTypes}}
+    <option value="{{name}}">{{displayName}}</option>
+  {{/activityTypes}}
+`;
+
+  /*Inicializar Sortable para días y actividades*/
+  document.addEventListener("DOMContentLoaded", () => {
+    initDaysSortable();
+    initAllActivitiesSortable();
+    // Asegurar que data-day-index coincida con los índices reales
+    reindexDays();
+  });
+
+  /* ========== DRAG & DROP DE DÍAS ========== */
+  function initDaysSortable() {
+    const dayContainer = document.getElementById("dayContainer");
+
+    Sortable.create(dayContainer, {
+      animation: 150,
+      handle: ".day-header",
+      ghostClass: "sortable-ghost",
+      onEnd: () => reindexDays()
+    });
+  }
+
+  /* ========== DRAG & DROP PARA TODAS LAS ACTIVIDADES EXISTENTES ========== */
+  function initAllActivitiesSortable() {
+    const lists = document.querySelectorAll(".activities-list");
+    lists.forEach(list => initActivitiesSortable(list));
+  }
+
+  /* ========== DRAG & DROP ACTIVIDADES (DENTRO Y ENTRE DÍAS) ========== */
+  function initActivitiesSortable(listElement) {
+    Sortable.create(listElement, {
+      group: "activities",
+      animation: 150,
+      handle: ".activity-item",
+      ghostClass: "sortable-ghost",
+
+      onEnd: () => {
+        const dayCard = listElement.closest(".day-card");
+        const dayIndex = parseInt(dayCard.getAttribute("data-day-index"));
+        reindexActivities(dayCard, dayIndex);
+        reindexDays(); // por si se movieron entre días
+      }
+    });
+  }
+
+  function addDay() {
+    const container = document.getElementById("dayContainer");
+    const dayCards = container.querySelectorAll(".day-card");
+    const newDayIndex = dayCards.length;
+    const newDayNumber = newDayIndex + 1;
+
+    const html = `
+    <div class="form-card day-card" data-day-index="${newDayIndex}">
+      <div class="day-header">
+        <h3 class="day-title">Día ${newDayNumber}</h3>
+        <button type="button" class="btn-icon-delete" onclick="deleteDay(this)">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </div>
+
+      <input type="hidden" name="days[${newDayIndex}].numberDay" value="${newDayNumber}">
+
+      <div class="activities-list">
+        
+      </div>
+
+      <button type="button" class="btn btn-info btn-lg text-white btn-block"
+        onclick="addActivity(this)">
+        <span class="material-symbols-outlined">add</span>
+        Añadir Actividad
+      </button>
+
+      <button type="button" class="btn btn-danger btn-lg btn-block" onclick="addDay()">
+        <span class="material-symbols-outlined">add</span>
+        Añadir Día
+      </button>
+    </div>
+  `;
+
+    container.insertAdjacentHTML("beforeend", html);
+
+    // Inicializar sortable para esta nueva lista de actividades
+    const newList = container.lastElementChild.querySelector(".activities-list");
+    initActivitiesSortable(newList);
+
+    // Incluir una actividad inicial
+    newList.insertAdjacentHTML("beforeend", createActivity(newDayIndex, 0));
+  }
+
+  function deleteDay(button) {
+    const dayCard = button.closest(".day-card");
+    const container = document.getElementById("dayContainer");
+    const dayCards = container.querySelectorAll(".day-card");
+
+    if (dayCards.length <= 1) {
+      alert("Debe haber al menos un día en el itinerario");
+      return;
+    }
+
+    dayCard.remove();
+    reindexDays();
+  }
+
+  function reindexDays() {
+    const container = document.getElementById("dayContainer");
+    const dayCards = container.querySelectorAll(".day-card");
+
+    dayCards.forEach((dayCard, newIndex) => {
+      const newDayNumber = newIndex + 1;
+
+      dayCard.setAttribute("data-day-index", newIndex);
+      dayCard.querySelector(".day-title").textContent = `Día ${newDayNumber}`;
+
+      const hiddenInput = dayCard.querySelector('input[type="hidden"]');
+      hiddenInput.name = `days[${newIndex}].numberDay`;
+      hiddenInput.value = newDayNumber;
+
+      reindexActivities(dayCard, newIndex);
+    });
+  }
+
+  function addActivity(button) {
+    const dayCard = button.closest(".day-card");
+    const dayIndex = parseInt(dayCard.getAttribute("data-day-index"));
+    const activitiesList = dayCard.querySelector(".activities-list");
+    const activityItems = activitiesList.querySelectorAll(".activity-item");
+    const newActivityIndex = activityItems.length;
+
+    activitiesList.insertAdjacentHTML("beforeend", createActivity(dayIndex, newActivityIndex));
+  }
+
+  function createActivity(dayIdx, actIdx) {
+    return `
+    <div class="activity-item">
+      <div class="form-group">
+        <label class="form-label">Nombre de actividad</label>
+        <input type="text" class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].activityName"
+          placeholder="Nombre actividad" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].activityDescription"
+          placeholder="Descripción"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tipo de actividad</label>
+        <select class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].activityType">
+          ${activityOptions}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Ubicación</label>
+        <input type="text" class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].location">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Hora inicio</label>
+        <input type="time" class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].startTime">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Hora fin</label>
+        <input type="time" class="form-control"
+          name="days[${dayIdx}].activities[${actIdx}].finishTime">
+      </div>
+
+      <button type="button" class="btn-icon-delete activity-delete"
+        onclick="deleteActivity(this)">
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+    </div>`;
+  }
+
+  function deleteActivity(button) {
+    const activityItem = button.closest(".activity-item");
+    const dayCard = activityItem.closest(".day-card");
+    const activitiesList = dayCard.querySelector(".activities-list");
+    const activityItems = activitiesList.querySelectorAll(".activity-item");
+
+    if (activityItems.length <= 1) {
+      alert("Debe haber al menos una actividad por día");
+      return;
+    }
+
+    activityItem.remove();
+
+    const dayIndex = parseInt(dayCard.getAttribute("data-day-index"));
+    reindexActivities(dayCard, dayIndex);
+  }
+
+  function reindexActivities(dayCard, dayIndex) {
+    const activityItems = dayCard.querySelectorAll(".activity-item");
+
+    activityItems.forEach((activityItem, newActivityIndex) => {
+      const inputs = activityItem.querySelectorAll("input, textarea, select");
+
+      inputs.forEach(input => {
+        const nameParts = input.name.split(".");
+        const field = nameParts[2];
+        input.name = `days[${dayIndex}].activities[${newActivityIndex}].${field}`;
+      });
+      const nameInput = activityItem.querySelector('input[name$=".activityName"]');
+      if(nameInput) {
+        nameInput.placeholder = `Actividad ${newActivityIndex + 1}`;
+      }
+    });
+  }
+</script>

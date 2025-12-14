@@ -44,6 +44,10 @@ public class Activity {
         return activityName;
     }
 
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+    
     public String getLocation() {
         return location;
     }

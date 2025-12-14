@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -21,6 +23,7 @@ import es.albavm.tfg.trifly.Model.ActivityType;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Itinerary.CreateItineraryDto;
+import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.SummaryItineraryDto;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,6 +88,7 @@ public class ItineraryController {
             .contentType(mediaType)
             .body(imageBytes);
     }
+    
 
     @GetMapping("/itinerary/new")
     public String showNewItinerary() {
@@ -111,4 +115,18 @@ public class ItineraryController {
             return "redirect:/"; 
         }
     }
+
+    @Transactional
+    @GetMapping("/itinerary/{id}/edit")
+    public String showEditItinerary(@PathVariable Long id,Model model) {
+        try{
+            EditItineraryDto editItinerary = itineraryService.getEditItineraryDto(id);
+            model.addAttribute("itinerary", editItinerary);
+            return "edit-itinerary";
+        }catch (RuntimeException e){
+            model.addAttribute("errorMessage", "El itinerario no existe");
+            return "redirect:/"; 
+        }       
+    }
+
 }

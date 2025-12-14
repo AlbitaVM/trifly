@@ -71,6 +71,8 @@ public class WebSecurityConfig {
 				.requestMatchers("/signup").permitAll()
 				.requestMatchers("/itineraries/{id}/image").permitAll()
 				// USER PAGES
+				
+				
 				// ADMIN PAGES
 				
 				.anyRequest().authenticated())

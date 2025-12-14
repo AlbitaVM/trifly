@@ -36,6 +36,10 @@ public class ItineraryDay {
         return numberDay;
     }
 
+    public List<Activity> getActivity() {
+        return activity;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

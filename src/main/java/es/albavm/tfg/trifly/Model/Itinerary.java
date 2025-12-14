@@ -92,6 +92,11 @@ public class Itinerary {
         return imageBoolean;
     }
 
+    public List<ItineraryDay> getDays() {
+        return days;
+    }
+
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -131,4 +136,6 @@ public class Itinerary {
     public void setUser(User user) {
         this.user = user;
     }
+
+    
 }
