@@ -64,10 +64,7 @@ public class GeneralController {
         return "/edit-budget";  
     }
 
-    @GetMapping("/note/edit")
-    public String showEditNote() {
-        return "/edit-note";  
-    }
+    
 
     @GetMapping("/reminder/edit")
     public String showEditReminder() {

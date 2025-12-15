@@ -4,21 +4,31 @@
     <div class="form-card">
       <h1 class="form-title">Editar Nota</h1>
 
-      <form>
+      <form method="post" action="/note/{{id}}/edit">
+        <input type="hidden" name="_csrf" value="{{token}}">
+        <input type="hidden" name="id" value="{{note.id}}">
         <div class="form-group">
-          <label class="form-label" for="budget">Título</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="noteTitle">Título</label>
+          <input type="text" id="noteTitle" value="{{note.noteTitle}}" name="noteTitle" class="form-control form-control-lg" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="budget">Descripción</label>
-          <textarea type="text" id="budget" class="form-control form-control-lg" ></textarea>
+          <label class="form-label" for="noteDescription">Descripción</label>
+          <textarea type="text" id="noteDescription"  name="noteDescription"
+            class="form-control form-control-lg">{{note.noteDescription}}</textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" for="budget">Asociar a itinerario</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="itineraryId">Asociar a itinerario</label>
+          <select id="itineraryId"
+                  name="itineraryId"
+                  class="form-control form-control-lg">
+            <option value="">-- Ninguno --</option>
+            {{#itineraries}}
+             <option value="{{id}}" {{#selected}}selected{{/selected}}>{{itineraryName}}</option>
+            {{/itineraries}}
+          </select>
         </div>
 
-        <a href="/not" class="btn btn-danger btn-lg btn-block">Editar nota</a>
+        <button type="submit" class="btn btn-danger btn-lg btn-block">Editar nota</button>
       </form>
     </div>
   </div>

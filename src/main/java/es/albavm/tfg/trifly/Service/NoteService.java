@@ -17,6 +17,7 @@ import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.NoteRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Note.CreateNoteDto;
+import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 import es.albavm.tfg.trifly.dto.Note.SummaryNoteDto;
 
 @Service
@@ -68,5 +69,43 @@ public class NoteService {
         }else {
             throw new RuntimeException("Note not found");
         }
+    }
+
+    public EditNoteDto getNoteForEdit(Long id, String email){
+        userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota no encontrado"));
+        
+        return new EditNoteDto (
+            note.getId(),
+            note.getNoteTitle(),
+            note.getNoteDescription(),
+            note.getItinerary() != null ? note.getItinerary().getId() : null
+        );
+    }
+
+    public void updateNote(String email, EditNoteDto updatedNote){
+        Note note = noteRepository.findById(updatedNote.getId())
+            .orElseThrow(() -> new RuntimeException("Nota no encontrada"));
+
+        if (!note.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        note.setNoteTitle(updatedNote.getNoteTitle());
+        note.setNoteDescription(updatedNote.getNoteDescription());
+
+         if (updatedNote.getItineraryId() != null) {
+            Itinerary it = itineraryRepository
+                    .findById(updatedNote.getItineraryId())
+                    .orElseThrow();
+            note.setItinerary(it);
+        } else {
+            note.setItinerary(null);
+        }
+
+        noteRepository.save(note);
     }
 }
