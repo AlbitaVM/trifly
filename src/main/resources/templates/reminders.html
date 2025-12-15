@@ -44,11 +44,12 @@
             <a href="/note/edit" class="btn-icon-edit" title="Editar">
               <span class="material-symbols-outlined">edit</span>
             </a>
-
+            <form method="post" action="/reminder/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
+              <input type="hidden" name="_csrf" value="{{token}}">
             <button type="submit" class="btn-icon-delete" title="Eliminar">
               <span class="material-symbols-outlined">delete</span>
             </button>
-
+            </form>
           </div>
         </div>
         {{/reminders}}

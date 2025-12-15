@@ -1,11 +1,14 @@
 package es.albavm.tfg.trifly.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.albavm.tfg.trifly.Model.Itinerary;
+import es.albavm.tfg.trifly.Model.Note;
 import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
@@ -55,5 +58,14 @@ public class ReminderService {
             reminder.getDateTime(),
             reminder.getItinerary() != null ? reminder.getItinerary().getItineraryName() : null
         ));
+    }
+
+     public void deleteReminder(Long id){
+        Optional<Reminder> optionalReminder = reminderRepository.findById(id);
+        if(optionalReminder.isPresent()){
+            reminderRepository.delete(optionalReminder.get());
+        }else {
+            throw new RuntimeException("Reminder not found");
+        }
     }
 }

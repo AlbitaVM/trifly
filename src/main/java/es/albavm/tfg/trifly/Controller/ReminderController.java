@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.albavm.tfg.trifly.Service.ItineraryService;
@@ -69,4 +70,14 @@ public class ReminderController {
         return "reminders";
     }
     
+    @PostMapping("/reminder/{id}/delete")
+    public String deleteReminder(@PathVariable Long id, Model model) {
+       try{
+            reminderService.deleteReminder(id);
+            return "redirect:/reminders";
+       }catch (RuntimeException e){
+            model.addAttribute("errorMessage", "El recordatorio no coincide con el id");
+            return "redirect:/reminders";
+       }
+    }
 }
