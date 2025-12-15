@@ -1,6 +1,8 @@
 package es.albavm.tfg.trifly.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.albavm.tfg.trifly.Model.Itinerary;
@@ -10,6 +12,7 @@ import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.ReminderRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Reminder.CreateReminderDto;
+import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 @Service
 public class ReminderService {
@@ -28,7 +31,7 @@ public class ReminderService {
         
         Reminder reminder = new Reminder();
         reminder.setReminderTitle(dto.getReminderTitle());
-        reminder.setReminderDescripcion(dto.getReminderDescripcion());
+        reminder.setReminderDescription(dto.getReminderDescription());
         reminder.setDateTime(dto.getDateTime());
         reminder.setUser(user);
 
@@ -39,5 +42,18 @@ public class ReminderService {
         }
 
         reminderRepository.save(reminder);
+    }
+
+    public Page<SummaryReminderDto> getAllRemindersPaginated(String email, Pageable pageable){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return reminderRepository.findByUser(user, pageable).map(reminder -> new SummaryReminderDto(
+            reminder.getId(),
+            reminder.getReminderTitle(),
+            reminder.getReminderDescription(),
+            reminder.getDateTime(),
+            reminder.getItinerary() != null ? reminder.getItinerary().getItineraryName() : null
+        ));
     }
 }

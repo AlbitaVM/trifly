@@ -1,31 +1,21 @@
-package es.albavm.tfg.trifly.Model;
+package es.albavm.tfg.trifly.dto.Reminder;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-@Entity
-public class Reminder {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SummaryReminderDto {
     private Long id;
-
     private String reminderTitle;
     private String reminderDescription;
     private LocalDateTime dateTime;
+    private String itineraryName;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "itinerary_id", nullable = true)
-    private Itinerary itinerary;
+    public SummaryReminderDto(Long id, String reminderTitle, String reminderDescription, LocalDateTime dateTime, String itineraryName) {
+        this.id = id;
+        this.reminderTitle = reminderTitle;
+        this.reminderDescription = reminderDescription != null ? reminderDescription : "Sin descripción";
+        this.dateTime = dateTime;
+        this.itineraryName = itineraryName;
+    }
 
     public Long getId() {
         return id;
@@ -43,12 +33,8 @@ public class Reminder {
         return dateTime;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public Itinerary getItinerary() {
-        return itinerary;
+    public String getItineraryName() {
+        return itineraryName;
     }
 
     public void setId(Long id) {
@@ -67,11 +53,7 @@ public class Reminder {
         this.dateTime = dateTime;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setItinerary(Itinerary itinerary) {
-        this.itinerary = itinerary;
+    public void setItineraryName(String itineraryName) {
+        this.itineraryName = itineraryName;
     }
 }

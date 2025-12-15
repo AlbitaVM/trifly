@@ -19,6 +19,7 @@ import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.Service.ReminderService;
 import es.albavm.tfg.trifly.dto.Note.SummaryNoteDto;
 import es.albavm.tfg.trifly.dto.Reminder.CreateReminderDto;
+import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,11 +32,6 @@ public class ReminderController {
 
     @Autowired
     private ItineraryService itineraryService;
-
-    @GetMapping("/reminders")
-    public String showNotes() {
-        return "reminders";
-    }
 
     @GetMapping("/reminder/new")
     public String showNewReminder(Principal principal, Model model) {
@@ -50,6 +46,27 @@ public class ReminderController {
         String email = principal.getName();
         reminderService.createReminder(createReminder, email);
         return "redirect:/reminders";
+    }
+
+    @GetMapping("/reminders")
+    public String showReminder(Model model, @RequestParam(defaultValue = "0") int page, Principal principal) {
+
+        String email = principal.getName();
+
+        Page<SummaryReminderDto> reminders= reminderService.getAllRemindersPaginated(email, PageRequest.of(page, 3));
+
+        List<Map<String, Object>> pageNumbers = new ArrayList<>();
+        for (int i = 0; i < reminders.getTotalPages(); i++) {
+            Map<String, Object> pageInfo = new HashMap<>();
+            pageInfo.put("number", i);
+            pageInfo.put("display", i + 1);
+            pageInfo.put("active", i == page);
+            pageNumbers.add(pageInfo);
+        }
+        model.addAttribute("pageNumbers", pageNumbers);
+
+        model.addAttribute("reminders", reminders.getContent());
+        return "reminders";
     }
     
 }

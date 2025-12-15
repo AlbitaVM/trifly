@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class CreateReminderDto {
     private String reminderTitle;
-    private String reminderDescripcion;
+    private String reminderDescription;
     private LocalDateTime dateTime;
     private Long itineraryId;
 
@@ -12,8 +12,8 @@ public class CreateReminderDto {
         return reminderTitle;
     }
 
-    public String getReminderDescripcion() {
-        return reminderDescripcion;
+    public String getReminderDescription() {
+        return reminderDescription;
     }
 
     public LocalDateTime getDateTime() {
@@ -28,8 +28,8 @@ public class CreateReminderDto {
         this.reminderTitle = reminderTitle;
     }
 
-    public void setReminderDescripcion(String reminderDescripcion) {
-        this.reminderDescripcion = reminderDescripcion;
+    public void setReminderDescription(String reminderDescription) {
+        this.reminderDescription = reminderDescription;
     }
 
     public void setDateTime(LocalDateTime dateTime) {

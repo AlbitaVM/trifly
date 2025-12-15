@@ -708,7 +708,21 @@ select {
   font-size: 0.9rem;
   margin-top: 4px;
 }
-
+.reminder-datetime {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: rgba(255, 209, 102, 0.15);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+  }
+  
+  .reminder-datetime .material-symbols-outlined {
+    font-size: 1.125rem;
+    color: #FFD166;
+  }
 /* Trip details */
 .trip-details {
   background-color: white;
