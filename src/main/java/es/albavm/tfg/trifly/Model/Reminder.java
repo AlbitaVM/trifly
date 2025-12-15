@@ -43,6 +43,14 @@ public class Reminder {
         return dateTime;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Itinerary getItinerary() {
+        return itinerary;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,5 +65,13 @@ public class Reminder {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setItinerary(Itinerary itinerary) {
+        this.itinerary = itinerary;
     }
 }

@@ -52,10 +52,7 @@ public class GeneralController {
 
    
 
-     @GetMapping("/reminder/new")
-    public String showNewReminder() {
-        return "/create-reminder";  
-    }
+   
 
      @GetMapping("/budgets")
     public String showBudgets() {

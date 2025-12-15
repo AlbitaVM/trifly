@@ -4,21 +4,37 @@
     <div class="form-card">
       <h1 class="form-title">Nuevo Recordatorio</h1>
 
-      <form>
+      <form action="/reminder/new" method="post">
+        <input type="hidden" name="_csrf" value="{{token}}">
         <div class="form-group">
-          <label class="form-label" for="budget">Título</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="reminderTitle">Título</label>
+          <input type="text" id="reminderTitle" name="reminderTitle" class="form-control form-control-lg" required/>
         </div>
         <div class="form-group">
-          <label class="form-label" for="budget">Descripción</label>
-          <textarea type="text" id="budget" class="form-control form-control-lg" ></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="budget">Asociar a itinerario</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="reminderDescripcion">Descripción</label>
+          <textarea type="text" id="reminderDescripcion" name="reminderDescripcion" class="form-control form-control-lg"></textarea>
         </div>
 
-        <a href="/not" class="btn btn-danger btn-lg btn-block">Crear recordatorio</a>
+         <div class="form-group">
+          <label class="form-label" for="dateTime">
+            <span class="material-symbols-outlined"
+              style="vertical-align: middle; margin-right: 0.25rem;">schedule</span>
+            Seleccionar fecha y hora de recordatorio
+          </label>
+          <input type="datetime-local" id="dateTime" name="dateTime" class="form-control form-control-lg" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="itineraryId">Asociar a itinerario</label>
+           <select id="itineraryId" name="itineraryId" class="form-control form-control-lg">
+            <option value="">-- Ninguno --</option>
+            {{#itineraries}}
+              <option value="{{id}}">{{itineraryName}}</option>
+            {{/itineraries}}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-danger btn-lg btn-block">Crear recordatorio</button>
       </form>
     </div>
   </div>
