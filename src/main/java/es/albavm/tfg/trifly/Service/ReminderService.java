@@ -15,6 +15,7 @@ import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.ReminderRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Reminder.CreateReminderDto;
+import es.albavm.tfg.trifly.dto.Reminder.EditReminderDto;
 import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 @Service
@@ -67,5 +68,42 @@ public class ReminderService {
         }else {
             throw new RuntimeException("Reminder not found");
         }
+    }
+
+    public EditReminderDto getReminderForEdit(Long id, String email){
+        userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Reminder reminder = reminderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Recordatorio no encontrado"));
+
+        return new EditReminderDto(
+        reminder.getId(),
+        reminder.getReminderTitle(),
+        reminder.getReminderDescription(),
+        reminder.getDateTime(),
+        reminder.getItinerary() != null ? reminder.getItinerary().getId() : null);
+    }
+
+    public void updateReminder(String email, EditReminderDto updatedReminder){
+        Reminder reminder = reminderRepository.findById(updatedReminder.getId())
+            .orElseThrow(() -> new RuntimeException("Recordatorio no encontrada"));
+
+        if (!reminder.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        reminder.setReminderTitle(updatedReminder.getReminderTitle());
+        reminder.setReminderDescription(updatedReminder.getReminderDescription());
+        reminder.setDateTime(updatedReminder.getDateTime());
+        if (updatedReminder.getItineraryId() != null) {
+            Itinerary it = itineraryRepository
+                    .findById(updatedReminder.getItineraryId())
+                    .orElseThrow();
+            reminder.setItinerary(it);
+        } else {
+            reminder.setItinerary(null);
+        }
+         reminderRepository.save(reminder);
     }
 }

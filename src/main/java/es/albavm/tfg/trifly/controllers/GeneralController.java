@@ -66,10 +66,7 @@ public class GeneralController {
 
     
 
-    @GetMapping("/reminder/edit")
-    public String showEditReminder() {
-        return "/edit-reminder";  
-    }
+   
 
     @GetMapping("/profile")
     public String showProfile() {

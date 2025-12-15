@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.PrinterName;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.Service.ReminderService;
 import es.albavm.tfg.trifly.dto.Note.SummaryNoteDto;
 import es.albavm.tfg.trifly.dto.Reminder.CreateReminderDto;
+import es.albavm.tfg.trifly.dto.Reminder.EditReminderDto;
 import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,4 +83,35 @@ public class ReminderController {
             return "redirect:/reminders";
        }
     }
+
+    @GetMapping("/reminder/{id}/edit")
+    public String showEditReminder(Principal principal, @PathVariable Long id, Model model){
+        String email = principal.getName();
+        EditReminderDto reminder = reminderService.getReminderForEdit(id, email);
+
+        List<Map<String, Object>> itineraries = itineraryService
+                .getItinerariesByUser(email)
+                .stream()
+                .map(it -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("id", it.getId());
+                    m.put("itineraryName", it.getItineraryName());
+                    m.put("selected",
+                            it.getId().equals(reminder.getItineraryId()));
+                    return m;
+                }).toList();
+
+        model.addAttribute("itineraries", itineraries);
+        model.addAttribute("reminder", reminder);
+        return "/edit-reminder";  
+    }
+
+    @PostMapping("/reminder/{id}/edit")
+    public String updateReminder(@ModelAttribute EditReminderDto dto, Principal principal) {
+        String email = principal.getName();
+        reminderService.updateReminder(email, dto);
+        
+        return "redirect:/reminders";
+    }
+    
 }
