@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import es.albavm.tfg.trifly.Model.Budget;
 import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
+import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 
@@ -81,6 +83,14 @@ public class BudgetController {
             model.addAttribute("errorMessage", "El presupuesto no coincide con el id");
             return "redirect:/budgets";
        }
+    }
+
+    @GetMapping("/budget/{id}/detail")
+    public String showBudgetDetail(@PathVariable Long id, Principal principal, Model model) {
+        String email = principal.getName();
+        BudgetDetailDto budget = budgetService.getBudgetDetail(id, email);
+        model.addAttribute("budgetDetail", budget);
+        return "budget-detail"; 
     }
 }
 

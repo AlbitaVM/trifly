@@ -1646,23 +1646,23 @@ textarea.form-control {
   transition: width 0.5s ease-in-out;
 }
 
-.progress-bar-fill.red {
+.progress-bar-fill.Alojamiento {
   background-color: #FF6B6B;
 }
 
-.progress-bar-fill.cyan {
+.progress-bar-fill.Transporte {
   background-color: #4ECDC4;
 }
 
-.progress-bar-fill.yellow {
+.progress-bar-fill.Comida  {
   background-color: #FFD166;
 }
 
-.progress-bar-fill.pink {
+.progress-bar-fill.Actividades  {
   background-color: #FF8FAB;
 }
 
-.progress-bar-fill.blue {
+.progress-bar-fill.Otros  {
   background-color: #4E9FFF;
 }
 

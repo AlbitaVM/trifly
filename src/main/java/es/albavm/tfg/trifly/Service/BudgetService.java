@@ -2,19 +2,24 @@ package es.albavm.tfg.trifly.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import es.albavm.tfg.trifly.Model.Budget;
+import es.albavm.tfg.trifly.Model.Expenditure;
 import es.albavm.tfg.trifly.Model.ExpenditureCategory;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.BudgetRepository;
+import es.albavm.tfg.trifly.Repository.ExpenditureRepository;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
+import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
+import es.albavm.tfg.trifly.dto.Budget.CategorySummaryDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
@@ -26,14 +31,17 @@ public class BudgetService {
     private BudgetRepository budgetRepository;
 
     @Autowired
+    private ExpenditureRepository expenditureRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private ItineraryRepository itineraryRepository;
 
-    public void createBudget(CreateBudgetDto dto, String email){
+    public void createBudget(CreateBudgetDto dto, String email) {
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         Budget budget = new Budget();
         budget.setBudgetName(dto.getBudgetName());
@@ -41,9 +49,9 @@ public class BudgetService {
         budget.setCurrency(dto.getCurrency());
         budget.setUser(user);
 
-        if(dto.getItineraryId() != null){
+        if (dto.getItineraryId() != null) {
             Itinerary itinerary = itineraryRepository.findById(dto.getItineraryId())
-                .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
             budget.setItinerary(itinerary);
         }
 
@@ -59,26 +67,74 @@ public class BudgetService {
         budgetRepository.save(budget);
     }
 
-    public Page<SummaryBudgetDto> getAllBudgetsPaginated(String email, Pageable pageable){
+    public Page<SummaryBudgetDto> getAllBudgetsPaginated(String email, Pageable pageable) {
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         return budgetRepository.findByUser(user, pageable).map(budget -> new SummaryBudgetDto(
-            budget.getId(),
-            budget.getBudgetName(),
-            budget.getTotal(),
-            budget.getCurrency(),
-            budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null
-        ));
+                budget.getId(),
+                budget.getBudgetName(),
+                budget.getTotal(),
+                budget.getCurrency(),
+                budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null));
     }
 
-    public void deleteBudget(Long id){
+    public void deleteBudget(Long id) {
         Optional<Budget> optionalBudget = budgetRepository.findById(id);
-        if(optionalBudget.isPresent()){
+        if (optionalBudget.isPresent()) {
             budgetRepository.delete(optionalBudget.get());
-        }else {
+        } else {
             throw new RuntimeException("Reminder not found");
         }
     }
 
+    public double calculateTotalSpent(Long budgetId) {
+        return expenditureRepository.sumAmountByBudgetId(budgetId);
+    }
+
+    public double calculateRemaining(Budget budget) {
+        return budget.getTotal() - calculateTotalSpent(budget.getId());
+    }
+
+    private List<CategorySummaryDto> buildCategorySummaries(Budget budget) {
+        List<String> colors = List.of("red", "cyan", "yellow", "pink", "blue");
+        AtomicInteger index = new AtomicInteger(0);
+        return budget.getCategories().stream()
+                .map(cat -> {
+                    double totalSpent = cat.getExpenditure().stream().mapToDouble(Expenditure::getAmount).sum();
+                    double percentage = budget.getTotal() > 0 ? (totalSpent / budget.getTotal()) * 100 : 0;
+                    String colorClass = colors.get(index.getAndIncrement() % colors.size());
+                    return new CategorySummaryDto(
+            cat.getCategoryName(),
+            totalSpent,
+            Math.round(percentage),
+            colorClass // <-- aquí asignas categoryClass
+        );
+        }).toList();
+    }
+
+    public BudgetDetailDto getBudgetDetail(Long budgetId, String email) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado"));
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        double totalSpent = calculateTotalSpent(budget.getId());
+        double remaining = calculateRemaining(budget);
+
+        List<CategorySummaryDto> categories = buildCategorySummaries(budget);
+
+        return new BudgetDetailDto(
+                budget.getId(),
+                budget.getBudgetName(),
+                budget.getTotal(),
+                totalSpent,
+                remaining,
+                budget.getCurrency(),
+                budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null,
+                categories);
+
+    }
 }

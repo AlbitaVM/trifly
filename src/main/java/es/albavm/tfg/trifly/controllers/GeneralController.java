@@ -12,13 +12,6 @@ public class GeneralController {
         return "itinerary-detail"; 
     }
 
-
-
-    @GetMapping("/budget")
-    public String showbudget() {
-        return "budget-detail"; 
-    }
-
     @GetMapping("/itinerary/detail/map")
     public String showMapDetail() {
         return "/journal-map-detail";  

@@ -37,6 +37,14 @@ public class ExpenditureCategory {
         return categoryName;
     }
 
+    public List<Expenditure> getExpenditure() {
+        return expenditure;
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,5 +55,9 @@ public class ExpenditureCategory {
 
     public void setBudget(Budget budget) {
         this.budget = budget;
+    }
+
+    public void setExpenditure(List<Expenditure> expenditure) {
+        this.expenditure = expenditure;
     }
 }
