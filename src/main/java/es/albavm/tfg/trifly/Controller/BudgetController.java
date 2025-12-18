@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
@@ -70,4 +71,16 @@ public class BudgetController {
         model.addAttribute("budgets", budgets.getContent());
         return "/budgets";  
     }
+
+    @PostMapping("/budget/{id}/delete")
+    public String deleteBudget(@PathVariable Long id, Model model) {
+       try{
+            budgetService.deleteBudget(id);
+            return "redirect:/budgets";
+       }catch (RuntimeException e){
+            model.addAttribute("errorMessage", "El presupuesto no coincide con el id");
+            return "redirect:/budgets";
+       }
+    }
 }
+

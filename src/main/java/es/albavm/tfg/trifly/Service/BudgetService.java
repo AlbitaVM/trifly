@@ -1,6 +1,7 @@
 package es.albavm.tfg.trifly.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import es.albavm.tfg.trifly.Model.Budget;
 import es.albavm.tfg.trifly.Model.ExpenditureCategory;
 import es.albavm.tfg.trifly.Model.Itinerary;
+import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.BudgetRepository;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
@@ -68,6 +70,15 @@ public class BudgetService {
             budget.getCurrency(),
             budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null
         ));
+    }
+
+    public void deleteBudget(Long id){
+        Optional<Budget> optionalBudget = budgetRepository.findById(id);
+        if(optionalBudget.isPresent()){
+            budgetRepository.delete(optionalBudget.get());
+        }else {
+            throw new RuntimeException("Reminder not found");
+        }
     }
 
 }
