@@ -44,4 +44,8 @@ public class ExpenditureCategory {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
 }

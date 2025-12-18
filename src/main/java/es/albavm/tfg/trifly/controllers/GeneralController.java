@@ -19,13 +19,6 @@ public class GeneralController {
         return "budget-detail"; 
     }
 
-
-
-    @GetMapping("/budget/new")
-    public String showBudgetDetail() {
-        return "create-budget"; 
-    }
-
     @GetMapping("/itinerary/detail/map")
     public String showMapDetail() {
         return "/journal-map-detail";  
@@ -54,10 +47,7 @@ public class GeneralController {
 
    
 
-     @GetMapping("/budgets")
-    public String showBudgets() {
-        return "/budgets";  
-    }
+    
 
     @GetMapping("/budget/edit")
     public String showEditBudget() {

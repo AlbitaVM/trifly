@@ -1,9 +1,12 @@
 package es.albavm.tfg.trifly.Model;
 
+import java.util.Currency;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,9 +23,16 @@ public class Budget {
     private String budgetName;
     private double total;
 
+    @Enumerated(EnumType.STRING)
+    private BudgetCurrency currency;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "itinerary_id", nullable = true)
+    private Itinerary itinerary;
 
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
     private List<ExpenditureCategory> categories;
@@ -43,6 +53,18 @@ public class Budget {
         return total;
     }
 
+    public BudgetCurrency getCurrency() {
+        return currency;
+    }
+
+    public Itinerary getItinerary() {
+        return itinerary;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,5 +79,17 @@ public class Budget {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public void setCurrency(BudgetCurrency currency) {
+        this.currency = currency;
+    }
+
+    public void setItinerary(Itinerary itinerary) {
+        this.itinerary = itinerary;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
