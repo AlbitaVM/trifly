@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import es.albavm.tfg.trifly.Model.Budget;
 import es.albavm.tfg.trifly.Model.ExpenditureCategory;
 import es.albavm.tfg.trifly.Model.Itinerary;
@@ -13,6 +14,8 @@ import es.albavm.tfg.trifly.Repository.BudgetRepository;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
+import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 @Service
 public class BudgetService {
@@ -54,5 +57,17 @@ public class BudgetService {
         budgetRepository.save(budget);
     }
 
-    
+    public Page<SummaryBudgetDto> getAllBudgetsPaginated(String email, Pageable pageable){
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return budgetRepository.findByUser(user, pageable).map(budget -> new SummaryBudgetDto(
+            budget.getId(),
+            budget.getBudgetName(),
+            budget.getTotal(),
+            budget.getCurrency(),
+            budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null
+        ));
+    }
+
 }

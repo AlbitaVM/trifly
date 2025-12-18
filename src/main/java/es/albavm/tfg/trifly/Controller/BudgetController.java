@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
@@ -48,5 +51,23 @@ public class BudgetController {
         return "redirect:/budgets";
     }
 
+    @GetMapping("/budgets")
+    public String showBudgets(Principal principal, @RequestParam(defaultValue = "0") int page, Model model) {
+        String email = principal.getName();
 
+        Page<SummaryBudgetDto> budgets = budgetService.getAllBudgetsPaginated(email, PageRequest.of(page, 3));
+
+        List<Map<String, Object>> pageNumbers = new ArrayList<>();
+        for (int i = 0; i < budgets.getTotalPages(); i++) {
+            Map<String, Object> pageInfo = new HashMap<>();
+            pageInfo.put("number", i);
+            pageInfo.put("display", i + 1);
+            pageInfo.put("active", i == page);
+            pageNumbers.add(pageInfo);
+        }
+        model.addAttribute("pageNumbers", pageNumbers);
+
+        model.addAttribute("budgets", budgets.getContent());
+        return "/budgets";  
+    }
 }

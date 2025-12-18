@@ -2,81 +2,87 @@
 <main class="form-container">
   <div class="container" style="max-width: 1200px;">
     <div class="page-header">
-      <h1 class="form-title" style="text-align: left; margin-bottom: 0;">Presupuestos</h1>
-      <a class="btn btn-danger btn-lg" href="/budget/new">
-        <span class="material-symbols-outlined">add</span>
-        Añadir Presupuesto
-      </a>
+      <h1 class="form-title">Presupuestos</h1>
+      <p class="form-subtitle"> olvides tus tareas importantes</p>
     </div>
-    <section class="notes">
-      <div class="list-section">
-        <!-- Presupuesto 1 -->
-        <div class="list-item budget-item">
+     <section class="notes-section">
+      <div class="notes-header">
+        <h3>Mis presupuestos</h3>
+        <a class="btn-icon-add" href="/budget/new" title="Añadir presupuesto">
+          <span class="material-symbols-outlined">add</span>
+        </a>
+      </div>
+     </section>
+     {{#errorMessage}}
+      <div class="alert alert-danger text-center" role="alert">
+        {{errorMessage}}
+      </div>
+      {{/errorMessage}}
+
+     <div class="notes-grid">
+        {{#budgets}}
+        <!-- Nota 1 -->
+        <div class="list-item">
           <div class="list-item-icon turquoise">
             <span class="material-symbols-outlined">description</span>
           </div>
           <div class="list-item-content">
-            <p>Presupuesto viaje a Paris</p>
-            <p class="list-item-date">20 de septiembre</p>
+            <h4 class="note-title">{{budgetName}}</h4>
+            <p class="note-description">{{total}} {{currency}}</p>
+            {{#itineraryName}}
+            <p class="note-itinerary">
+              <span class="material-symbols-outlined">map</span>
+              {{itineraryName}}
+            </p>
+            {{/itineraryName}}
           </div>
           <div class="list-item-actions">
-            <a href="/budget" class="btn-icon-visibility" title="Ver">
+            <a href="/budget/{{id}}/detail" class="btn-icon-visibility" title="Ver">
               <span class="material-symbols-outlined">visibility</span>
             </a>
-            <a href="/budget/edit" class="btn-icon-edit" title="Editar">
+            <a href="/budget/{{id}}/edit" class="btn-icon-edit" title="Editar">
               <span class="material-symbols-outlined">edit</span>
             </a>
-            <button type="button" class="btn-icon-delete"title="Eliminar">
+            <form method="post" action="/budget/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
+              <input type="hidden" name="_csrf" value="{{token}}">
+            <button type="submit" class="btn-icon-delete" title="Eliminar">
               <span class="material-symbols-outlined">delete</span>
             </button>
+            </form>
           </div>
         </div>
-        
-        <!-- Presupuesto 2 -->
-        <div class="list-item budget-item">
-          <div class="list-item-icon turquoise">
-            <span class="material-symbols-outlined">description</span>
-          </div>
-          <div class="list-item-content">
-            <p>Presupuesto viaje a Mexico</p>
-            <p class="list-item-date">21 de septiembre</p>
-          </div>
-          <div class="list-item-actions">
-            <a href="/budget" class="btn-icon-visibility" title="Ver">
-              <span class="material-symbols-outlined">visibility</span>
-            </a>
-            <a href="/budget/edit" class="btn-icon-edit" title="Editar">
-              <span class="material-symbols-outlined">edit</span>
-            </a>
-            <button type="button" class="btn-icon-delete"title="Eliminar">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Presupuesto 3 -->
-        <div class="list-item budget-item">
-          <div class="list-item-icon turquoise">
-            <span class="material-symbols-outlined">description</span>
-          </div>
-          <div class="list-item-content">
-            <p>Presupuesto viaje a Marruecos</p>
-            <p class="list-item-date">22 de septiembre</p>
-          </div>
-          <div class="list-item-actions">
-            <a href="/budget" class="btn-icon-visibility" title="Ver">
-              <span class="material-symbols-outlined">visibility</span>
-            </a>
-            <a href="/budget/edit" class="btn-icon-edit" title="Editar">
-              <span class="material-symbols-outlined">edit</span>
-            </a>
-            <button type="button" class="btn-icon-delete"title="Eliminar">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
-          </div>
+        {{/budgets}}
+      </div>
+      <div class="row mt-4">
+        <div class="col-12">
+          <nav aria-label="Paginación de itinerarios">
+            <ul class="pagination justify-content-center">
+
+              <!-- Botón Anterior -->
+              {{#hasPrevious}}
+              <li class="page-item">
+                <a class="page-link" href="/budgets?page={{previousPage}}">&laquo;</a>
+              </li>
+              {{/hasPrevious}}
+
+              <!-- Números de página (necesitarás pasar una lista desde el controlador) -->
+              {{#pageNumbers}}
+              <li class="page-item {{#active}}active{{/active}}">
+                <a class="page-link" href="/budgets?page={{number}}">{{display}}</a>
+              </li>
+              {{/pageNumbers}}
+
+              <!-- Botón Siguiente -->
+              {{#hasNext}}
+              <li class="page-item">
+                <a class="page-link" href="/budgets?page={{nextPage}}">&raquo;</a>
+              </li>
+              {{/hasNext}}
+            </ul>
+          </nav>
         </div>
       </div>
-      </section>
+    </section>
   </div>
 </main>
 {{>footer}}
