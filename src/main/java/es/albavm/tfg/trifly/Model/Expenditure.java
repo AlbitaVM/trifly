@@ -54,4 +54,8 @@ public class Expenditure {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public void setCategory(ExpenditureCategory category) {
+        this.category = category;
+    }
 }

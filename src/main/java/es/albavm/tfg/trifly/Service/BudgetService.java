@@ -15,12 +15,14 @@ import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.BudgetRepository;
+import es.albavm.tfg.trifly.Repository.ExpenditureCategoryRepository;
 import es.albavm.tfg.trifly.Repository.ExpenditureRepository;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
 import es.albavm.tfg.trifly.dto.Budget.CategorySummaryDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
@@ -38,6 +40,9 @@ public class BudgetService {
 
     @Autowired
     private ItineraryRepository itineraryRepository;
+
+    @Autowired
+    private ExpenditureCategoryRepository categoryRepository;
 
     public void createBudget(CreateBudgetDto dto, String email) {
         User user = userRepository.findByEmail(email)
@@ -105,12 +110,12 @@ public class BudgetService {
                     double percentage = budget.getTotal() > 0 ? (totalSpent / budget.getTotal()) * 100 : 0;
                     String colorClass = colors.get(index.getAndIncrement() % colors.size());
                     return new CategorySummaryDto(
-            cat.getCategoryName(),
-            totalSpent,
-            Math.round(percentage),
-            colorClass // <-- aquí asignas categoryClass
-        );
-        }).toList();
+                            cat.getCategoryName(),
+                            totalSpent,
+                            Math.round(percentage),
+                            colorClass // <-- aquí asignas categoryClass
+                    );
+                }).toList();
     }
 
     public BudgetDetailDto getBudgetDetail(Long budgetId, String email) {
@@ -137,4 +142,30 @@ public class BudgetService {
                 categories);
 
     }
+
+    public void createBill(CreateExpenditureDto dto, String email) {
+
+        Budget budget = budgetRepository.findById(dto.getBudgetId())
+                .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado"));
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        ExpenditureCategory category = categoryRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+        Expenditure expense = new Expenditure();
+        expense.setConcept(dto.getConcept());
+        expense.setAmount(dto.getAmount());
+        expense.setDate(dto.getDate());
+        expense.setCategory(category);
+
+        expenditureRepository.save(expense);
+    }
+
+    public Budget getBudgetForUser(Long budgetId, String email) {
+    return budgetRepository.findByIdAndUserEmail(budgetId, email)
+            .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado o sin permisos"));
+}
 }

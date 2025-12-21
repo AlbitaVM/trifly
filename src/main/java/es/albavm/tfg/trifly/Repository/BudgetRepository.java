@@ -14,4 +14,6 @@ import es.albavm.tfg.trifly.Model.User;
 public interface BudgetRepository extends JpaRepository<Budget, Long>{
     Page<Budget> findByUser(User user, Pageable pageable);
     Optional<Budget> findById(Long id);
+    Optional<Budget> findByIdAndUserEmail(Long id, String email);
+
 }

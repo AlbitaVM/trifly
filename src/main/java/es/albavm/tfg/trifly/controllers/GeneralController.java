@@ -31,10 +31,7 @@ public class GeneralController {
 
     
 
-     @GetMapping("/bill/new")
-    public String showNewBill() {
-        return "/create-bill";  
-    }
+    
 
    
 

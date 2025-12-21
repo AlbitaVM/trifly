@@ -20,6 +20,7 @@ import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
-
-
 
 @Controller
 public class BudgetController {
@@ -39,12 +37,12 @@ public class BudgetController {
 
     @Autowired
     private ItineraryService itineraryService;
-    
+
     @GetMapping("/budget/new")
     public String showNewBudget(Principal principal, Model model) {
         String email = principal.getName();
         model.addAttribute("itineraries", itineraryService.getItinerariesByUser(email));
-        return "create-budget"; 
+        return "create-budget";
     }
 
     @PostMapping("/budget/new")
@@ -71,18 +69,18 @@ public class BudgetController {
         model.addAttribute("pageNumbers", pageNumbers);
 
         model.addAttribute("budgets", budgets.getContent());
-        return "/budgets";  
+        return "/budgets";
     }
 
     @PostMapping("/budget/{id}/delete")
     public String deleteBudget(@PathVariable Long id, Model model) {
-       try{
+        try {
             budgetService.deleteBudget(id);
             return "redirect:/budgets";
-       }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "El presupuesto no coincide con el id");
             return "redirect:/budgets";
-       }
+        }
     }
 
     @GetMapping("/budget/{id}/detail")
@@ -90,7 +88,26 @@ public class BudgetController {
         String email = principal.getName();
         BudgetDetailDto budget = budgetService.getBudgetDetail(id, email);
         model.addAttribute("budgetDetail", budget);
-        return "budget-detail"; 
+        return "budget-detail";
+    }
+
+    @GetMapping("/bill/{budgetId}/new")
+    public String showNewBill(@PathVariable Long budgetId, Principal principal, Model model) {
+        String email = principal.getName();
+
+        Budget budget = budgetService.getBudgetForUser(budgetId, email);
+
+        model.addAttribute("categories", budget.getCategories());
+        model.addAttribute("budgetId", budgetId);
+
+        return "/create-bill";
+    }
+
+    @PostMapping("/bill/{budgetId}/new")
+    public String createExpense(@PathVariable Long budgetId, @ModelAttribute CreateExpenditureDto dto,
+            Principal principal) {
+        String email = principal.getName();
+        budgetService.createBill(dto, email);
+        return "redirect:/budget/" + budgetId + "/detail";
     }
 }
-
