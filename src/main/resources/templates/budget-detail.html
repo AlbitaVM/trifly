@@ -52,6 +52,19 @@
                 </div>
                 <span class="progress-percentage">{{percentage}}%</span>
               </td>
+              <td>
+                <div class="list-item-actions">
+                  <a href="/budget/{{id}}/edit" class="btn-icon-edit" title="Editar">
+                    <span class="material-symbols-outlined">edit</span>
+                  </a>
+                  <form method="post" action="/budget/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
+                    <input type="hidden" name="_csrf" value="{{token}}">
+                  <button type="submit" class="btn-icon-delete" title="Eliminar">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                  </form>
+                </div>
+              </td>
             </tr>
             {{/budgetDetail.categories}}
           </tbody>
@@ -59,6 +72,13 @@
       </div>
     </div>
   </div>
+  {{#budgetDetail.overBudget}}
+  <div class="alert alert-danger">
+    ⚠ Has sobrepasado tu presupuesto en 
+    <strong>{{budgetDetail.exceededAmount}}{{budgetDetail.currencySymbol}}</strong>
+    ({{budgetDetail.exceededPercentage}}%)
+  </div>
+  {{/budgetDetail.overBudget}}
 </main>
 
 <script>

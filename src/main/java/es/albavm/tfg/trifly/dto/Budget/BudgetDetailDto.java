@@ -10,16 +10,22 @@ public class BudgetDetailDto {
     private double total;
     private double totalSpent;
     private double remaining;
+    private boolean overBudget;
+    private double exceededAmount;
+    private double exceededPercentage;
     private BudgetCurrency currency; 
     private String itineraryName;
     private List<CategorySummaryDto> categories;
 
-    public BudgetDetailDto(Long id, String budgetName, double total, double totalSpent, double remaining, BudgetCurrency currency, String itineraryName, List<CategorySummaryDto> categories) {
+    public BudgetDetailDto(Long id, String budgetName, double total, double totalSpent, double remaining, BudgetCurrency currency, boolean overBudget, double exceededAmount, double exceededPercentage, String itineraryName, List<CategorySummaryDto> categories) {
         this.id = id;
         this.budgetName = budgetName;
         this.total = total;
         this.totalSpent = totalSpent;
         this.remaining = remaining;
+        this.overBudget = overBudget;
+        this.exceededAmount = exceededAmount;
+        this.exceededPercentage = exceededPercentage;
         this.currency = currency;
         this.itineraryName = itineraryName;
         this.categories = categories;
@@ -49,6 +55,10 @@ public class BudgetDetailDto {
         return remaining;
     }
 
+    public boolean isOverBudget() {
+        return overBudget;
+    }
+
     public BudgetCurrency getCurrency() {
         return currency;
     }
@@ -59,6 +69,14 @@ public class BudgetDetailDto {
 
     public List<CategorySummaryDto> getCategories() {
         return categories;
+    }
+
+    public double getExceededAmount() {
+        return exceededAmount;
+    }
+
+    public double getExceededPercentage() {
+        return exceededPercentage;
     }
 
     public void setId(Long id) {
@@ -87,5 +105,21 @@ public class BudgetDetailDto {
 
     public void setCategories(List<CategorySummaryDto> categories) {
         this.categories = categories;
+    }
+
+    public void setExceededAmount(double exceededAmount) {
+        this.exceededAmount = exceededAmount;
+    }
+
+    public void setExceededPercentage(double exceededPercentage) {
+        this.exceededPercentage = exceededPercentage;
+    }
+
+    public void setItineraryName(String itineraryName) {
+        this.itineraryName = itineraryName;
+    }
+
+    public void setOverBudget(boolean overBudget) {
+        this.overBudget = overBudget;
     }
 }

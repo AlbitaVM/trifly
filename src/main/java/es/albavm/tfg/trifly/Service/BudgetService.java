@@ -129,6 +129,12 @@ public class BudgetService {
         double totalSpent = calculateTotalSpent(budget.getId());
         double remaining = calculateRemaining(budget);
 
+        boolean overBudget = totalSpent > budget.getTotal();
+        double exceededAmount = overBudget ? totalSpent - budget.getTotal() : 0;
+        double exceededPercentage = overBudget
+                ? ((totalSpent - budget.getTotal()) / budget.getTotal()) * 100
+                : 0;
+
         List<CategorySummaryDto> categories = buildCategorySummaries(budget);
 
         return new BudgetDetailDto(
@@ -138,6 +144,9 @@ public class BudgetService {
                 totalSpent,
                 remaining,
                 budget.getCurrency(),
+                overBudget,
+                exceededAmount,
+                Math.round(exceededPercentage),
                 budget.getItinerary() != null ? budget.getItinerary().getItineraryName() : null,
                 categories);
 
