@@ -111,4 +111,6 @@ public class Activity {
     public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
+
+
 }

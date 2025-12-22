@@ -41,13 +41,13 @@ public class Itinerary {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItineraryDay> days;
 
-    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Note> notes;
 
-    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reminder> reminders;
 
     public Itinerary(){
@@ -96,6 +96,17 @@ public class Itinerary {
         return days;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
 
     public void setId(Long id) {
         this.id = id;

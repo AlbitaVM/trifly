@@ -25,6 +25,7 @@ import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Itinerary.CreateItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.SummaryItineraryDto;
+import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,7 +61,7 @@ public class ItineraryController {
             pageNumbers.add(pageInfo);
         }
         model.addAttribute("pageNumbers", pageNumbers);
-        
+        model.addAttribute("isItineraries", true);
         model.addAttribute("itineraries", itineraries.getContent());
          
 
@@ -116,7 +117,6 @@ public class ItineraryController {
         }
     }
 
-    @Transactional
     @GetMapping("/itinerary/{id}/edit")
     public String showEditItinerary(@PathVariable Long id,Model model) {
         try{
@@ -128,5 +128,20 @@ public class ItineraryController {
             return "redirect:/"; 
         }       
     }
+
+    @PostMapping("/itinerary/{id}/edit")
+    public String editActivity(
+        @PathVariable Long id,
+        @ModelAttribute EditItineraryDto dto, 
+        @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+        Principal principal) {
+        
+        String email = principal.getName();
+        dto.setId(id); // Asegurar que el ID está en el DTO
+        itineraryService.editItinerary(email, dto, imageFile);
+        return "redirect:/";
+    }
+
+
 
 }

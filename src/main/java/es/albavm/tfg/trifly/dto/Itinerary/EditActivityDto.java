@@ -11,8 +11,8 @@ public class EditActivityDto {
     private int dayIndex;
     private String activityName;
     private String location;
-    private String startTime;
-    private String finishTime;
+    private LocalTime startTime;
+    private LocalTime finishTime;
     private String activityDescription;
     private ActivityType activityType;
 
@@ -42,11 +42,11 @@ public class EditActivityDto {
         return location;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public String getFinishTime() {
+    public LocalTime getFinishTime() {
         return finishTime;
     }
 
@@ -82,11 +82,11 @@ public class EditActivityDto {
         this.location = location;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setFinishTime(String finishTime) {
+    public void setFinishTime(LocalTime finishTime) {
         this.finishTime = finishTime;
     }
 

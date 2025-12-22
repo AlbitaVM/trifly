@@ -20,12 +20,14 @@
 
           <div class="form-group">
             <label class="form-label">Nombre del viaje</label>
-            <input type="text" class="form-control" name="itineraryName" value="{{itinerary.itineraryName}}" placeholder="Nombre de itinerario" required />
+            <input type="text" class="form-control" name="itineraryName" value="{{itinerary.itineraryName}}"
+              placeholder="Nombre de itinerario" required />
           </div>
 
           <div class="form-group">
             <label class="form-label">Destino</label>
-            <input type="text" class="form-control" name="destination" value="{{itinerary.destination}}" placeholder="Destino" required />
+            <input type="text" class="form-control" name="destination" value="{{itinerary.destination}}"
+              placeholder="Destino" required />
           </div>
 
           <div class="form-group">
@@ -61,12 +63,14 @@
               <div class="activity-item">
                 <div class="form-group">
                   <label class="form-label">Nombre de actividad</label>
-                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityName" placeholder="Nombre actividad" value="{{activityName}}" required>
+                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityName"
+                    placeholder="Nombre actividad" value="{{activityName}}" required>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityDescription" placeholder="Descripción">{{activityDescription}}</textarea>
+                  <textarea class="form-control" name="days[{{dayIndex}}].activities[{{index}}].activityDescription"
+                    placeholder="Descripción">{{activityDescription}}</textarea>
                 </div>
 
                 <div class="form-group">
@@ -80,17 +84,20 @@
 
                 <div class="form-group">
                   <label class="form-label">Ubicación</label>
-                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].location" value="{{location}}" placeholder="Ubicación">
+                  <input type="text" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].location"
+                    value="{{location}}" placeholder="Ubicación">
                 </div>
-
+                
                 <div class="form-group">
                   <label class="form-label">Hora inicio</label>
-                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].startTime" value="{{startTime}}">
+                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].startTime"
+                    value="{{startTime}}">
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">Hora fin</label>
-                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].finishTime" value="{{finishTime}}">
+                  <input type="time" class="form-control" name="days[{{dayIndex}}].activities[{{index}}].finishTime"
+                    value="{{finishTime}}">
                 </div>
 
                 <button type="button" class="btn-icon-delete activity-delete" onclick="deleteActivity(this)">
@@ -111,6 +118,14 @@
               Añadir Día
             </button>
           </div>
+          {{/itinerary.days}}
+
+          {{^itinerary.days}}
+          <p>No hay días en este itinerario. Puedes añadir uno abajo.</p>
+          <button type="button" class="btn btn-danger btn-lg btn-block" onclick="addDay()">
+            <span class="material-symbols-outlined">add</span>
+            Añadir Día
+          </button>
           {{/itinerary.days}}
         </div>
       </div>
@@ -336,7 +351,7 @@
         input.name = `days[${dayIndex}].activities[${newActivityIndex}].${field}`;
       });
       const nameInput = activityItem.querySelector('input[name$=".activityName"]');
-      if(nameInput) {
+      if (nameInput) {
         nameInput.placeholder = `Actividad ${newActivityIndex + 1}`;
       }
     });

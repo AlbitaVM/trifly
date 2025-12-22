@@ -25,7 +25,7 @@ public class ItineraryDay {
     @JoinColumn(name = "itinerary_id")
     private Itinerary itinerary;
 
-    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activity;
 
     public Long getId() {
