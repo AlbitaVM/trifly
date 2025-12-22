@@ -4,51 +4,70 @@
     <div class="form-card">
       <h1 class="form-title">Editar Presupuesto</h1>
 
-      <form>
+      <form method="post" action="/budget/{{budget.id}}/edit">
+        <input type="hidden" name="_csrf" value="{{token}}">
+
         <div class="form-group">
-          <label class="form-label" for="budget">Presupuesto total</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label">Nombre del presupuesto</label>
+          <input type="text"
+                 name="budgetName"
+                 class="form-control form-control-lg"
+                 value="{{budget.budgetName}}"
+                 required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Presupuesto total</label>
+          <input type="number"
+                 step="0.01"
+                 name="total"
+                 class="form-control form-control-lg"
+                 value="{{budget.total}}"
+                 required>
         </div>
 
         <div class="form-group">
           <label class="form-label">Moneda</label>
-          <select class="form-control">
-            <option value="">Selecciona una moneda</option>
-            <option value="cultural" selected>Euros</option>
-            <option value="gastronomia">Libras</option>
-            <option value="aventura">Yenes</option>
+          <select class="form-control" name="currency" required>
+            <option value="EUR" {{#isEUR}}selected{{/isEUR}}>Euros (€)</option>
+            <option value="GBP" {{#isGBP}}selected{{/isGBP}}>Libras (£)</option>
+            <option value="JPY" {{#isJPY}}selected{{/isJPY}}>Yenes (¥)</option>
           </select>
         </div>
-        <label class="form-label" for="budget">Categorias</label>
+
         <div class="form-group">
-          <label class="form-label" for="budget">Alojamiento</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="budget">Comida</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="budget">Actividades</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label">Categorías</label>
+          {{#categories}}
+            <div>
+              <input type="checkbox"
+                     name="selectedCategories"
+                     value="{{name}}"
+                     {{#selected}}checked{{/selected}}>
+              {{label}}
+            </div>
+          {{/categories}}
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="budget">Transporte</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="budget">Otros</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="budget">Asociar a itinerario</label>
-          <input type="text" id="budget" class="form-control form-control-lg" />
+          <label class="form-label" for="itineraryId">Asociar a itinerario</label>
+          <select id="itineraryId" name="itineraryId" class="form-control form-control-lg">
+            <option value="">-- Ninguno --</option>
+            {{#itineraries}}
+             <option value="{{id}}" {{#selected}}selected{{/selected}}>{{itineraryName}}</option>
+            {{/itineraries}}
+          </select>
         </div>
 
-        <a href="/budgets" class="btn btn-danger btn-lg btn-block">Editar presupuesto</a>
+        <button type="submit" class="btn btn-danger btn-lg btn-block">
+          Guardar cambios
+        </button>
       </form>
     </div>
+    {{#error}}
+  <div class="alert alert-danger">
+    <strong>⚠ {{error}}</strong>
+  </div>
+  {{/error}}
   </div>
 </section>
 {{>footer}}

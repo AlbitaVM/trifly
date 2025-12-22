@@ -1,8 +1,12 @@
 package es.albavm.tfg.trifly.Service;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,7 @@ import es.albavm.tfg.trifly.Model.Budget;
 import es.albavm.tfg.trifly.Model.Expenditure;
 import es.albavm.tfg.trifly.Model.ExpenditureCategory;
 import es.albavm.tfg.trifly.Model.Itinerary;
+import es.albavm.tfg.trifly.Model.Note;
 import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.BudgetRepository;
@@ -23,7 +28,10 @@ import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
 import es.albavm.tfg.trifly.dto.Budget.CategorySummaryDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
+import es.albavm.tfg.trifly.dto.Budget.EditBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.EditCategoryDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
+import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 import es.albavm.tfg.trifly.dto.Reminder.SummaryReminderDto;
 
 @Service
@@ -174,7 +182,115 @@ public class BudgetService {
     }
 
     public Budget getBudgetForUser(Long budgetId, String email) {
-    return budgetRepository.findByIdAndUserEmail(budgetId, email)
-            .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado o sin permisos"));
-}
+        return budgetRepository.findByIdAndUserEmail(budgetId, email)
+                .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado o sin permisos"));
+    }
+
+    public List<EditCategoryDto> buildCategoriesForEdit(Budget budget) {
+
+        List<String> allCategories = List.of(
+                "ALOJAMIENTO",
+                "COMIDA",
+                "TRANSPORTE",
+                "ACTIVIDADES",
+                "OTROS");
+
+        Set<String> selectedCategories = budget.getCategories()
+                .stream()
+                .map(ExpenditureCategory::getCategoryName)
+                .collect(Collectors.toSet());
+
+        return allCategories.stream()
+                .map(cat -> new EditCategoryDto(
+                        cat,
+                        capitalize(cat),
+                        selectedCategories.contains(cat)))
+                .toList();
+    }
+
+    private String capitalize(String value) {
+        return value.charAt(0) + value.substring(1).toLowerCase();
+    }
+
+    public EditBudgetDto getBudgetForEdit(Long id, String email) {
+        userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Budget budget = budgetRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Presupuesto no encontrado"));
+
+        List<EditCategoryDto> categories = buildCategoriesForEdit(budget);
+
+        return new EditBudgetDto(
+                budget.getId(),
+                budget.getBudgetName(),
+                budget.getTotal(),
+                budget.getCurrency(),
+                budget.getItinerary() != null ? budget.getItinerary().getId() : null,
+                categories);
+    }
+
+    public void updateBudget(String email, EditBudgetDto updatedBudget) {
+        Budget budget = budgetRepository.findById(updatedBudget.getId())
+                .orElseThrow(() -> new RuntimeException("Presupuesto no encontrada"));
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        budget.setBudgetName(updatedBudget.getBudgetName());
+        budget.setTotal(updatedBudget.getTotal());
+        budget.setCurrency(updatedBudget.getCurrency());
+
+         Set<String> selectedCategories = updatedBudget.getCategories().stream()
+            .filter(EditCategoryDto::isSelected)
+            .map(EditCategoryDto::getName)
+            .collect(Collectors.toSet());
+
+    // Eliminar categorías desmarcadas si no tienen gastos
+    Iterator<ExpenditureCategory> it = budget.getCategories().iterator();
+    while (it.hasNext()) {
+        ExpenditureCategory cat = it.next();
+        if (!selectedCategories.contains(cat.getCategoryName())) {
+            if (!cat.getExpenditure().isEmpty()) {
+                throw new RuntimeException(
+                        "No puedes desmarcar la categoría '" + cat.getCategoryName() +
+                        "' porque tiene gastos asociados");
+            }
+            it.remove();
+        }
+    }
+
+    // Agregar nuevas categorías seleccionadas
+    for (String catName : selectedCategories) {
+        boolean exists = budget.getCategories().stream()
+                .anyMatch(c -> c.getCategoryName().equals(catName));
+        if (!exists) {
+            ExpenditureCategory newCat = new ExpenditureCategory();
+            newCat.setCategoryName(catName);
+            newCat.setBudget(budget);
+            budget.getCategories().add(newCat);
+        }
+    }
+
+        if (updatedBudget.getItineraryId() != null) {
+            Itinerary itinerary = itineraryRepository
+                    .findById(updatedBudget.getItineraryId())
+                    .orElseThrow();
+            budget.setItinerary(itinerary);
+        } else {
+            budget.setItinerary(null);
+        }
+
+        budgetRepository.save(budget);
+    }
+
+    public Budget getBudget(Long id) {
+        Optional<Budget> optionalBudget = budgetRepository.findById(id);
+        if(optionalBudget.isPresent()){
+            return optionalBudget.get();
+        }else{
+            return null;
+        }
+    }
 }

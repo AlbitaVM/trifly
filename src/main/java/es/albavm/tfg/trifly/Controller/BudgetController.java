@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import es.albavm.tfg.trifly.Model.Budget;
+import es.albavm.tfg.trifly.Model.BudgetCurrency;
 import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
+import es.albavm.tfg.trifly.dto.Budget.EditBudgetDto;
+import es.albavm.tfg.trifly.dto.Budget.EditCategoryDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
+import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -110,4 +114,69 @@ public class BudgetController {
         budgetService.createBill(dto, email);
         return "redirect:/budget/" + budgetId + "/detail";
     }
+
+    @GetMapping("/budget/{id}/edit")
+    public String editBudgetForm(@PathVariable Long id, Principal principal, Model model) {
+        String email = principal.getName();
+
+        EditBudgetDto budget = budgetService.getBudgetForEdit(id, email);
+
+        List<Map<String, Object>> itineraries = itineraryService
+                .getItinerariesByUser(email)
+                .stream()
+                .map(it -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("id", it.getId());
+                    m.put("itineraryName", it.getItineraryName());
+                    m.put("selected",
+                            it.getId().equals(budget.getItineraryId()));
+                    return m;
+                }).toList();
+
+        model.addAttribute("itineraries", itineraries);
+
+        model.addAttribute("budget", budget); 
+        model.addAttribute("categories", budget.getCategories());
+        model.addAttribute("isEUR", budget.getCurrency() == BudgetCurrency.EUR);
+        model.addAttribute("isGBP", budget.getCurrency() == BudgetCurrency.GBP);
+        model.addAttribute("isJPY", budget.getCurrency() == BudgetCurrency.JPY);
+
+        return "edit-budget";
+    }
+
+    @PostMapping("/budget/{id}/edit")
+    public String updateBudget(@ModelAttribute EditBudgetDto dto, Principal principal, Model model) {
+        String email = principal.getName();
+        try {
+            List<EditCategoryDto> categories = dto.getSelectedCategories().stream()
+                .map(name -> new EditCategoryDto(name, capitalize(name), true))
+                .toList();
+
+            dto.setCategories(categories);
+
+            budgetService.updateBudget(email, dto);
+            return "redirect:/budgets";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", "No puedes desmarcar categorías que tienen gastos asociados");
+            EditBudgetDto budget = budgetService.getBudgetForEdit(dto.getId(), email);
+            model.addAttribute("budget", budget);
+
+            // Reconstruir todas las categorías para mostrar checkboxes correctos
+            model.addAttribute("categories", budgetService.buildCategoriesForEdit(
+                    budgetService.getBudget(dto.getId()) 
+            ));
+
+            // Flags de moneda
+            model.addAttribute("isEUR", budget.getCurrency() == BudgetCurrency.EUR);
+            model.addAttribute("isGBP", budget.getCurrency() == BudgetCurrency.GBP);
+            model.addAttribute("isJPY", budget.getCurrency() == BudgetCurrency.JPY);
+            
+            return "edit-budget";
+        }
+    }
+
+    private String capitalize(String value) {
+        return value.charAt(0) + value.substring(1).toLowerCase();
+    }
+
 }

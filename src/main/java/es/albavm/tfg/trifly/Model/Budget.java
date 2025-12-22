@@ -34,7 +34,7 @@ public class Budget {
     @JoinColumn(name = "itinerary_id", nullable = true)
     private Itinerary itinerary;
 
-    @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<ExpenditureCategory> categories;
 
     public Long getId() {
