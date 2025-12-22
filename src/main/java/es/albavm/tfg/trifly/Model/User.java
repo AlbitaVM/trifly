@@ -4,10 +4,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 
+import java.sql.Blob;
 import java.util.List;
+
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -22,6 +26,11 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
     private String password;
+
+    @Lob
+	@Basic(fetch = FetchType.LAZY)
+	private Blob imageFile;
+	private boolean imageBoolean;
 
     @ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -63,6 +72,26 @@ public class User {
         return password;
     }
 
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public List<Itinerary> getItineraries() {
+        return itineraries;
+    }
+
+    public List<Budget> getBudgets() {
+        return budgets;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
+
     public List<String> getRoles() {
         return roles;
     }
@@ -85,5 +114,29 @@ public class User {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public void setImageBoolean(boolean imageBoolean) {
+        this.imageBoolean = imageBoolean;
+    }
+
+    public void setBudgets(List<Budget> budgets) {
+        this.budgets = budgets;
+    }
+
+    public void setItineraries(List<Itinerary> itineraries) {
+        this.itineraries = itineraries;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders = reminders;
     }
 }

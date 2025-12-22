@@ -63,7 +63,7 @@ public class NoteControlle {
             pageNumbers.add(pageInfo);
         }
         model.addAttribute("pageNumbers", pageNumbers);
-
+        model.addAttribute("isNotes", true);
         model.addAttribute("notes", notes.getContent());
         return "notes";
     }

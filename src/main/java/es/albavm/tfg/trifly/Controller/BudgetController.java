@@ -67,7 +67,7 @@ public class BudgetController {
             pageNumbers.add(pageInfo);
         }
         model.addAttribute("pageNumbers", pageNumbers);
-
+        model.addAttribute("isBudgets", true);
         model.addAttribute("budgets", budgets.getContent());
         return "/budgets";
     }

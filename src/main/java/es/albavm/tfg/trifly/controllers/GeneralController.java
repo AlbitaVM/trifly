@@ -1,6 +1,7 @@
 package es.albavm.tfg.trifly.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -18,7 +19,8 @@ public class GeneralController {
     }
 
     @GetMapping("/foreignExchange")
-    public String showForeignExchange() {
+    public String showForeignExchange(Model model) {
+        model.addAttribute("isForeignExchange", true);
         return "/foreign-exchange";  
     }
 
@@ -49,7 +51,8 @@ public class GeneralController {
    
 
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(Model model) {
+        model.addAttribute("isProfile", true);
         return "/profile";  
     }
 

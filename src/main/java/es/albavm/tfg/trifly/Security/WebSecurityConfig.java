@@ -70,6 +70,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/login").permitAll()
 				.requestMatchers("/signup").permitAll()
 				.requestMatchers("/itineraries/{id}/image").permitAll()
+				.requestMatchers("/user/{id}/image").authenticated()
 				// USER PAGES
 				
 				

@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trifly - Planea tus itinerarios</title>
 
   <!-- Bootstrap local -->
- <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet" />
 
- <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <!-- Mapbox -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet" />
@@ -23,35 +26,47 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- Tus estilos -->
-   <script defer src="/js/script.js"></script>
-   <!-- Script del mapa -->
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+  <script defer src="/js/script.js"></script>
+  <!-- Script del mapa -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
 </head>
+
 <body>
-   <header class="bg-light border-bottom shadow-sm sticky-top">
+  <header class="bg-light border-bottom shadow-sm sticky-top">
     <div class="container d-flex align-items-center justify-content-between py-3">
       <div class="d-flex align-items-center gap-2">
         <h1>
-          <a class="h4 m-0 fw-bold text-dark" href="/" >
-          Trifly
-        </a>
+          <a class="h4 m-0 fw-bold text-dark" href="/">
+            Trifly
+          </a>
       </div>
 
       <nav class="d-none d-md-flex gap-4">
-        <a href="/" class="text-dark fw-medium text-decoration-none">Itinerarios</a>
-        <a href="/notes" class="text-secondary text-decoration-none">Notas</a>
-        <a href="/reminders" class="text-secondary text-decoration-none">Recordatorios</a>
-        <a href="/budgets" class="text-secondary text-decoration-none">Presupuestos</a>
-        <a href="/foreignExchange" class="text-secondary text-decoration-none">Divisas</a>
-        <a href="/profile" class="text-secondary text-decoration-none">Perfil</a>
+        <a href="/"
+          class="text-decoration-none {{#isItineraries}}fw-bold text-dark{{/isItineraries}}{{^isItineraries}}text-secondary{{/isItineraries}}">Itinerarios</a>
+        <a href="/notes"
+          class="text-decoration-none {{#isNotes}}fw-bold text-dark{{/isNotes}}{{^isNotes}}text-secondary{{/isNotes}}">Notas</a>
+        <a href="/reminders"
+          class="text-decoration-none {{#isReminders}}fw-bold text-dark{{/isReminders}}{{^isReminders}}text-secondary{{/isReminders}}">Recordatorios</a>
+        <a href="/budgets"
+          class="text-decoration-none {{#isBudgets}}fw-bold text-dark{{/isBudgets}}{{^isBudgets}}text-secondary{{/isBudgets}}">Presupuestos</a>
+        <a href="/foreignExchange" 
+          class="text-decoration-none {{#isForeignExchange}}fw-bold text-dark{{/isForeignExchange}}{{^isForeignExchange}}text-secondary{{/isForeignExchange}}">Divisas</a>
+        <a href="/profile" 
+          class="text-decoration-none {{#isProfile}}fw-bold text-dark{{/isProfile}}{{^isProfile}}text-secondary{{/isProfile}}">Perfil</a>
       </nav>
 
-      <div >
-             
-        <img  class="rounded-circle">
-    
+      {{#isAuthenticated}}
+      <div class="d-flex align-items-center gap-3">
+        <span class="fw-medium text-dark">{{userName}}</span>
+        <a href="/profile">
+          <img src="/user/{{userId}}/image" alt="{{userName}}" class="rounded-circle"
+            style="width: 40px; height: 40px; object-fit: cover; cursor: pointer; border: 2px solid #e2e8f0;">
+        </a>
       </div>
-
+      {{/isAuthenticated}}
+      {{^isAuthenticated}}
       <a class="btn btn-danger fw-bold" href="/login">Iniciar Sesión</a>
+      {{/isAuthenticated}}
     </div>
   </header>

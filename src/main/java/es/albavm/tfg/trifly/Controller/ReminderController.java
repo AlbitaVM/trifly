@@ -68,7 +68,7 @@ public class ReminderController {
             pageNumbers.add(pageInfo);
         }
         model.addAttribute("pageNumbers", pageNumbers);
-
+        model.addAttribute("isReminders", true);
         model.addAttribute("reminders", reminders.getContent());
         return "reminders";
     }
