@@ -219,5 +219,13 @@ public class BudgetController {
         return "redirect:/budget/" + dto.getBudgetId() + "/detail";
     }
 
+    @PostMapping("/expenditure/{id}/delete")
+    public String deleteExpenditure(@PathVariable Long id, Principal principal) {
+        String email = principal.getName();
+        EditExpenditureDto expenditure = budgetService.getExpenditureForEdit(id, email);
+        Long budgetId = expenditure.getBudgetId();
+        budgetService.deleteExpenditure(id, email);
+        return "redirect:/budget/" + budgetId + "/detail";
+    }
 
 }

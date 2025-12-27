@@ -378,4 +378,16 @@ public class BudgetService {
         expenditureRepository.save(expenditure);
     }
 
+    public void deleteExpenditure(Long expenditureId, String email) {
+        Expenditure expenditure = expenditureRepository.findById(expenditureId)
+                .orElseThrow(() -> new RuntimeException("Gasto no encontrado"));
+
+        Budget budget = expenditure.getCategory().getBudget();
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        expenditureRepository.delete(expenditure);
+    }
 }
