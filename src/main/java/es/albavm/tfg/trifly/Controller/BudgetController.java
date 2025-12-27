@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,16 +21,19 @@ import es.albavm.tfg.trifly.Model.BudgetCurrency;
 import es.albavm.tfg.trifly.Service.BudgetService;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Budget.BudgetDetailDto;
+import es.albavm.tfg.trifly.dto.Budget.CategoryExpendituresDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.EditBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.EditCategoryDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
@@ -88,10 +92,16 @@ public class BudgetController {
     }
 
     @GetMapping("/budget/{id}/detail")
-    public String showBudgetDetail(@PathVariable Long id, Principal principal, Model model) {
+    public String showBudgetDetail(@PathVariable Long id, Principal principal, Model model, HttpServletRequest request) {
         String email = principal.getName();
         BudgetDetailDto budget = budgetService.getBudgetDetail(id, email);
+        
+        // Pasar el token CSRF al modelo
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        
         model.addAttribute("budgetDetail", budget);
+        model.addAttribute("_csrf", csrfToken);
+        
         return "budget-detail";
     }
 
@@ -177,6 +187,16 @@ public class BudgetController {
 
     private String capitalize(String value) {
         return value.charAt(0) + value.substring(1).toLowerCase();
+    }
+
+    @GetMapping("/budget/{budgetId}/category/{categoryName}/expenditures")
+    @ResponseBody
+    public CategoryExpendituresDto getCategoryExpenditures(
+            @PathVariable Long budgetId,
+            @PathVariable String categoryName,
+            Principal principal) {
+        String email = principal.getName();
+        return budgetService.getCategoryExpenditures(budgetId, categoryName, email);
     }
 
 }

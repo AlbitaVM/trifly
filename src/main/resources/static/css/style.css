@@ -2619,3 +2619,235 @@ input[type="file"]::-webkit-file-upload-button:hover {
   line-height: 1.5 !important;
   padding: 12px 16px !important;
 }
+
+/* ============================================
+   MODAL DE GASTOS
+   ============================================ */
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-in-out;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(19, 164, 236, 0.2);
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #dc3545;
+}
+
+.modal-close .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Expenditure List */
+.expenditure-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.expenditure-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.expenditure-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #13a4ec;
+}
+
+.expenditure-info {
+  flex: 1;
+}
+
+.expenditure-concept {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.expenditure-details {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.expenditure-amount {
+  font-weight: 600;
+  color: #13a4ec;
+}
+
+.expenditure-date {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.expenditure-date .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+.expenditure-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Empty State */
+.empty-expenditures {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #64748b;
+}
+
+.empty-expenditures .material-symbols-outlined {
+  font-size: 4rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.empty-expenditures p {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Clickable category row */
+.expenses-table .category-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.expenses-table .category-row:hover {
+  background-color: rgba(19, 164, 236, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .expenditure-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .expenditure-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .expenditure-details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Modo oscuro */
+.dark .modal-content {
+  background: rgba(16, 28, 34, 0.95);
+  border: 1px solid #334155;
+}
+
+.dark .modal-header {
+  border-bottom-color: #334155;
+}
+
+.dark .modal-header h2 {
+  color: #f1f5f9;
+}
+
+.dark .expenditure-item {
+  background: rgba(51, 65, 85, 0.3);
+  border-color: #334155;
+}
+
+.dark .expenditure-item:hover {
+  background: rgba(51, 65, 85, 0.5);
+}
+
+.dark .expenditure-concept {
+  color: #f1f5f9;
+}
+
+.dark .expenditure-details {
+  color: #94a3b8;
+}

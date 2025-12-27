@@ -13,6 +13,15 @@
       </a>
     </div>
 
+    <!-- Alerta de sobrepresupuesto (mejor arriba) -->
+    {{#budgetDetail.overBudget}}
+    <div class="alert alert-danger" style="margin-bottom: 2rem;">
+      ⚠ Has sobrepasado tu presupuesto en
+      <strong>{{budgetDetail.exceededAmount}}{{budgetDetail.currencySymbol}}</strong>
+      ({{budgetDetail.exceededPercentage}}%)
+    </div>
+    {{/budgetDetail.overBudget}}
+
     <!-- Resumen del presupuesto -->
     <div class="budget-summary">
       <div class="budget-summary-card">
@@ -31,7 +40,10 @@
 
     <!-- Tabla de gastos -->
     <div class="expenses-section">
-      <h2 class="expenses-title">Desglose de Gastos</h2>
+      <h2 class="expenses-title">Desglose de Gastos por Categoría</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem;">
+        Haz clic en cualquier categoría para ver sus gastos detallados
+      </p>
       <div class="expenses-card">
         <table class="expenses-table">
           <thead>
@@ -39,13 +51,15 @@
               <th>CATEGORÍA</th>
               <th>GASTO</th>
               <th>PORCENTAJE</th>
+              <th style="text-align: center; width: 100px;">ACCIONES</th>
             </tr>
           </thead>
           <tbody>
-             {{#budgetDetail.categories}}
-            <tr>
+            {{#budgetDetail.categories}}
+            <tr class="category-row" data-budget-id="{{id}}" data-category="{{categoryName}}"
+              onclick="openExpendituresModal(this)">
               <td class="expense-category">{{categoryName}}</td>
-              <td class="expense-amount">{{spent}}{{budgetDetail.currencySymbol}}</td>
+              <td class="expense-amount">{{spent}}{{currencySymbol}}</td>
               <td class="expense-progress">
                 <div class="progress-bar-container">
                   <div class="progress-bar-fill {{categoryClass}}" data-width="{{percentage}}%"></div>
@@ -54,15 +68,9 @@
               </td>
               <td>
                 <div class="list-item-actions">
-                  <a href="/budget/{{id}}/edit" class="btn-icon-edit" title="Editar">
-                    <span class="material-symbols-outlined">edit</span>
+                  <a class="btn-icon-visibility" title="Ver">
+                    <span class="material-symbols-outlined">visibility</span>
                   </a>
-                  <form method="post" action="/budget/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
-                    <input type="hidden" name="_csrf" value="{{token}}">
-                  <button type="submit" class="btn-icon-delete" title="Eliminar">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                  </form>
                 </div>
               </td>
             </tr>
@@ -72,18 +80,29 @@
       </div>
     </div>
   </div>
-  {{#budgetDetail.overBudget}}
-  <div class="alert alert-danger">
-    ⚠ Has sobrepasado tu presupuesto en 
-    <strong>{{budgetDetail.exceededAmount}}{{budgetDetail.currencySymbol}}</strong>
-    ({{budgetDetail.exceededPercentage}}%)
-  </div>
-  {{/budgetDetail.overBudget}}
 </main>
 
+<!-- Modal de gastos -->
+<div class="modal-overlay" id="expendituresModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Gastos de Categoría</h2>
+      <button class="modal-close" onclick="closeExpendituresModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="expenditure-list" id="expendituresList">
+      <!-- Se llenará dinámicamente -->
+    </div>
+  </div>
+</div>
+
 <script>
+  // Token CSRF para los formularios dinámicos
+  const csrfToken = '{{_csrf.token}}';
+
   // Animar las barras de progreso
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const bars = document.querySelectorAll('.progress-bar-fill');
     bars.forEach(bar => {
       const width = bar.getAttribute('data-width');
@@ -94,6 +113,118 @@
       }, 100);
     });
   });
-</script>
-{{>footer}}
 
+  // Abrir modal de gastos
+  async function openExpendituresModal(row) {
+    const budgetId = row.dataset.budgetId;
+    const categoryName = row.dataset.category;
+
+    const modal = document.getElementById('expendituresModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const expendituresList = document.getElementById('expendituresList');
+
+    // Mostrar loading
+    expendituresList.innerHTML = '<div style="text-align: center; padding: 2rem;"><p>Cargando gastos...</p></div>';
+    modal.classList.add('active');
+
+    try {
+      const response = await fetch(`/budget/${budgetId}/category/${categoryName}/expenditures`);
+
+      if (!response.ok) {
+        throw new Error('Error al cargar los gastos');
+      }
+
+      const data = await response.json();
+
+      modalTitle.textContent = `Gastos de ${data.categoryName}`;
+
+      if (data.expenditures && data.expenditures.length > 0) {
+        expendituresList.innerHTML = data.expenditures.map(exp => `
+          <div class="expenditure-item">
+            <div class="expenditure-info">
+              <h3 class="expenditure-concept">${escapeHtml(exp.concept)}</h3>
+              <div class="expenditure-details">
+                <span class="expenditure-amount">${exp.amount.toFixed(2)}${data.currencySymbol}</span>
+                <span class="expenditure-date">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                  ${formatDate(exp.date)}
+                </span>
+              </div>
+            </div>
+            <div class="list-item-actions">
+              <a href="/expenditure/${exp.id}/edit" class="btn-icon-edit" title="Editar gasto">
+                <span class="material-symbols-outlined">edit</span>
+              </a>
+              <form method="post" action="/expenditure/${exp.id}/delete" style="display: inline-flex; margin: 0; padding: 0;">
+                <input type="hidden" name="_csrf" value="${csrfToken}">
+                <button type="submit" class="btn-icon-delete" title="Eliminar gasto" 
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este gasto: ${escapeHtml(exp.concept)}?');">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        expendituresList.innerHTML = `
+          <div class="empty-expenditures">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <p>No hay gastos registrados en esta categoría</p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+              <a href="/bill/${budgetId}/new" style="color: #13a4ec; text-decoration: underline;">
+                Añadir primer gasto
+              </a>
+            </p>
+          </div>
+        `;
+      }
+    } catch (error) {
+      console.error('Error al cargar gastos:', error);
+      expendituresList.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: #dc3545;">
+          <span class="material-symbols-outlined" style="font-size: 3rem;">error</span>
+          <p style="margin-top: 1rem;">Error al cargar los gastos. Por favor, inténtalo de nuevo.</p>
+        </div>
+      `;
+    }
+  }
+
+  // Cerrar modal
+  function closeExpendituresModal() {
+    const modal = document.getElementById('expendituresModal');
+    modal.classList.remove('active');
+  }
+
+  // Cerrar modal al hacer clic fuera
+  document.getElementById('expendituresModal').addEventListener('click', function (e) {
+    if (e.target === this) {
+      closeExpendituresModal();
+    }
+  });
+
+  // Cerrar modal con tecla ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeExpendituresModal();
+    }
+  });
+
+  // Formatear fecha
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  // Escapar HTML para prevenir XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+</script>
+
+{{>footer}}
