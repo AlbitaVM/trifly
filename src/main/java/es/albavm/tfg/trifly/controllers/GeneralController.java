@@ -39,14 +39,6 @@ public class GeneralController {
 
    
 
-    
-
-    @GetMapping("/budget/edit")
-    public String showEditBudget() {
-        return "/edit-budget";  
-    }
-
-    
 
    
 

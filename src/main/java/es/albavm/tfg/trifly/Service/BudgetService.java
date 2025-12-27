@@ -31,6 +31,7 @@ import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.EditBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.EditCategoryDto;
+import es.albavm.tfg.trifly.dto.Budget.EditExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryExpenditureDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
@@ -113,7 +114,7 @@ public class BudgetService {
 
     private List<CategorySummaryDto> buildCategorySummaries(Budget budget) {
         List<String> colors = List.of("red", "cyan", "yellow", "pink", "blue");
-         String currencySymbol = budget.getCurrency().getSymbol();
+        String currencySymbol = budget.getCurrency().getSymbol();
         AtomicInteger index = new AtomicInteger(0);
         return budget.getCategories().stream()
                 .map(cat -> {
@@ -126,7 +127,7 @@ public class BudgetService {
                             totalSpent,
                             Math.round(percentage),
                             colorClass,
-                            currencySymbol  // <-- aquí asignas categoryClass
+                            currencySymbol // <-- aquí asignas categoryClass
                     );
                 }).toList();
     }
@@ -247,36 +248,36 @@ public class BudgetService {
         budget.setTotal(updatedBudget.getTotal());
         budget.setCurrency(updatedBudget.getCurrency());
 
-         Set<String> selectedCategories = updatedBudget.getCategories().stream()
-            .filter(EditCategoryDto::isSelected)
-            .map(EditCategoryDto::getName)
-            .collect(Collectors.toSet());
+        Set<String> selectedCategories = updatedBudget.getCategories().stream()
+                .filter(EditCategoryDto::isSelected)
+                .map(EditCategoryDto::getName)
+                .collect(Collectors.toSet());
 
-    // Eliminar categorías desmarcadas si no tienen gastos
-    Iterator<ExpenditureCategory> it = budget.getCategories().iterator();
-    while (it.hasNext()) {
-        ExpenditureCategory cat = it.next();
-        if (!selectedCategories.contains(cat.getCategoryName())) {
-            if (!cat.getExpenditure().isEmpty()) {
-                throw new RuntimeException(
-                        "No puedes desmarcar la categoría '" + cat.getCategoryName() +
-                        "' porque tiene gastos asociados");
+        // Eliminar categorías desmarcadas si no tienen gastos
+        Iterator<ExpenditureCategory> it = budget.getCategories().iterator();
+        while (it.hasNext()) {
+            ExpenditureCategory cat = it.next();
+            if (!selectedCategories.contains(cat.getCategoryName())) {
+                if (!cat.getExpenditure().isEmpty()) {
+                    throw new RuntimeException(
+                            "No puedes desmarcar la categoría '" + cat.getCategoryName() +
+                                    "' porque tiene gastos asociados");
+                }
+                it.remove();
             }
-            it.remove();
         }
-    }
 
-    // Agregar nuevas categorías seleccionadas
-    for (String catName : selectedCategories) {
-        boolean exists = budget.getCategories().stream()
-                .anyMatch(c -> c.getCategoryName().equals(catName));
-        if (!exists) {
-            ExpenditureCategory newCat = new ExpenditureCategory();
-            newCat.setCategoryName(catName);
-            newCat.setBudget(budget);
-            budget.getCategories().add(newCat);
+        // Agregar nuevas categorías seleccionadas
+        for (String catName : selectedCategories) {
+            boolean exists = budget.getCategories().stream()
+                    .anyMatch(c -> c.getCategoryName().equals(catName));
+            if (!exists) {
+                ExpenditureCategory newCat = new ExpenditureCategory();
+                newCat.setCategoryName(catName);
+                newCat.setBudget(budget);
+                budget.getCategories().add(newCat);
+            }
         }
-    }
 
         if (updatedBudget.getItineraryId() != null) {
             Itinerary itinerary = itineraryRepository
@@ -292,9 +293,9 @@ public class BudgetService {
 
     public Budget getBudget(Long id) {
         Optional<Budget> optionalBudget = budgetRepository.findById(id);
-        if(optionalBudget.isPresent()){
+        if (optionalBudget.isPresent()) {
             return optionalBudget.get();
-        }else{
+        } else {
             return null;
         }
     }
@@ -331,5 +332,50 @@ public class BudgetService {
                 expenditures);
     }
 
+    public EditExpenditureDto getExpenditureForEdit(Long expenditureId, String email) {
+        Expenditure expenditure = expenditureRepository.findById(expenditureId)
+                .orElseThrow(() -> new RuntimeException("Gasto no encontrado"));
+
+        Budget budget = expenditure.getCategory().getBudget();
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        EditExpenditureDto dto = new EditExpenditureDto();
+        dto.setId(expenditure.getId());
+        dto.setConcept(expenditure.getConcept());
+        dto.setAmount(expenditure.getAmount());
+        dto.setDate(expenditure.getDate());
+        dto.setCategoryId(expenditure.getCategory().getId());
+        dto.setBudgetId(budget.getId());
+
+        return dto;
+    }
+
+    // Actualizar un gasto
+    public void updateExpenditure(Long expenditureId, EditExpenditureDto dto, String email) {
+        Expenditure expenditure = expenditureRepository.findById(expenditureId)
+                .orElseThrow(() -> new RuntimeException("Gasto no encontrado"));
+
+        Budget budget = expenditure.getCategory().getBudget();
+
+        if (!budget.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
+
+        expenditure.setConcept(dto.getConcept());
+        expenditure.setAmount(dto.getAmount());
+        expenditure.setDate(dto.getDate());
+
+        // Si cambia la categoría
+        if (!expenditure.getCategory().getId().equals(dto.getCategoryId())) {
+            ExpenditureCategory newCategory = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+            expenditure.setCategory(newCategory);
+        }
+
+        expenditureRepository.save(expenditure);
+    }
 
 }

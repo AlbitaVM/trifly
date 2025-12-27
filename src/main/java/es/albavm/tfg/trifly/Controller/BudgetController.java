@@ -26,6 +26,7 @@ import es.albavm.tfg.trifly.dto.Budget.CreateBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.CreateExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.EditBudgetDto;
 import es.albavm.tfg.trifly.dto.Budget.EditCategoryDto;
+import es.albavm.tfg.trifly.dto.Budget.EditExpenditureDto;
 import es.albavm.tfg.trifly.dto.Budget.SummaryBudgetDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -198,5 +199,25 @@ public class BudgetController {
         String email = principal.getName();
         return budgetService.getCategoryExpenditures(budgetId, categoryName, email);
     }
+
+    @GetMapping("/expenditure/{id}/edit")
+    public String editExpenditureForm(@PathVariable Long id, Principal principal, Model model) {
+        String email = principal.getName();
+        EditExpenditureDto expenditure = budgetService.getExpenditureForEdit(id, email);
+        
+        Budget budget = budgetService.getBudget(expenditure.getBudgetId());
+        model.addAttribute("expenditure", expenditure);
+        model.addAttribute("categories", budget.getCategories());
+        
+        return "edit-expenditure";
+    }
+
+    @PostMapping("/expenditure/{id}/edit")
+    public String updateExpenditure(@PathVariable Long id, @ModelAttribute EditExpenditureDto dto, Principal principal) {
+        String email = principal.getName();
+        budgetService.updateExpenditure(id, dto, email);
+        return "redirect:/budget/" + dto.getBudgetId() + "/detail";
+    }
+
 
 }

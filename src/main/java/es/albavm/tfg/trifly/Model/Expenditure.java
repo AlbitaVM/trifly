@@ -39,6 +39,10 @@ public class Expenditure {
         return date;
     }
 
+    public ExpenditureCategory getCategory() {
+        return category;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
