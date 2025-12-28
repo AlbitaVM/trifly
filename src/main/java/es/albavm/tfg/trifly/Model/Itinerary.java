@@ -50,6 +50,9 @@ public class Itinerary {
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reminder> reminders;
 
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Budget> budgets;
+
     public Itinerary(){
 
     }
@@ -104,6 +107,10 @@ public class Itinerary {
         return notes;
     }
 
+    public List<Budget> getBudgets() {
+        return budgets;
+    }
+
     public List<Reminder> getReminders() {
         return reminders;
     }
@@ -148,5 +155,16 @@ public class Itinerary {
         this.user = user;
     }
 
+    public void setBudgets(List<Budget> budgets) {
+        this.budgets = budgets;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders = reminders;
+    }
     
 }

@@ -2851,3 +2851,235 @@ input[type="file"]::-webkit-file-upload-button:hover {
 .dark .expenditure-details {
   color: #94a3b8;
 }
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.activity-name {
+  font-weight: 600;
+  margin: 0;
+}
+
+.activity-type-badge {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.activity-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.activity-time {
+  color: #888;
+  font-weight: 500;
+}
+
+.activity-description {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.note-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: #fff9e6;
+  border-left: 3px solid #ffc107;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.note-item span {
+  color: #ffc107;
+}
+
+.note-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background-color: #fff9e6;
+  border-left: 4px solid #ffc107;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.note-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.note-item:last-child {
+  margin-bottom: 0;
+}
+
+.note-icon {
+  color: #ffc107;
+  flex-shrink: 0;
+  font-size: 28px;
+  margin-top: 2px;
+}
+
+.note-content {
+  flex: 1;
+}
+
+.note-title {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.note-description {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* Cuando no hay notas */
+.no-notes {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.no-notes .material-symbols-outlined {
+  font-size: 64px;
+  color: #ccc;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.no-notes p {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.no-notes small {
+  display: block;
+  font-size: 0.9rem;
+}
+
+/* Botón añadir nota */
+.btn-outline-primary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-outline-primary .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* RECORDATORIOS */
+.reminder-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reminder-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.reminder-item:last-child {
+  margin-bottom: 0;
+}
+
+.reminder-icon {
+  color: #ff9800;
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+.reminder-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.reminder-title {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.reminder-datetime {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: #ff9800;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.reminder-datetime .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.reminder-description {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+}
+
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state .material-symbols-outlined {
+  font-size: 48px;
+  color: #ccc;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Botones */
+.btn-outline-primary,
+.btn-outline-warning {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.btn-outline-primary .material-symbols-outlined,
+.btn-outline-warning .material-symbols-outlined {
+  font-size: 18px;
+}

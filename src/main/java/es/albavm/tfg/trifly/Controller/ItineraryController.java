@@ -23,6 +23,7 @@ import es.albavm.tfg.trifly.Model.ActivityType;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Service.ItineraryService;
 import es.albavm.tfg.trifly.dto.Itinerary.CreateItineraryDto;
+import es.albavm.tfg.trifly.dto.Itinerary.DetailItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.SummaryItineraryDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
@@ -35,11 +36,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @Controller
 public class ItineraryController {
-    
+
     @Autowired
     private ItineraryService itineraryService;
 
@@ -47,9 +46,9 @@ public class ItineraryController {
     public ActivityType[] showAllActivityTypes() {
         return ActivityType.values();
     }
-   
+
     @GetMapping("/")
-    public String showItineraries(Model model,@RequestParam (defaultValue = "0") int page) {
+    public String showItineraries(Model model, @RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 6);
         Page<SummaryItineraryDto> itineraries = itineraryService.getAllItinerariesPaged(pageable);
         List<Map<String, Object>> pageNumbers = new ArrayList<>();
@@ -63,7 +62,6 @@ public class ItineraryController {
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("isItineraries", true);
         model.addAttribute("itineraries", itineraries.getContent());
-         
 
         return "index";
     }
@@ -72,76 +70,86 @@ public class ItineraryController {
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) throws Exception {
         Itinerary itinerary = itineraryService.findById(id).orElseThrow();
 
-        byte[] imageBytes;        
+        byte[] imageBytes;
         MediaType mediaType;
 
         if (itinerary.getImageFile() != null) {
             imageBytes = itinerary.getImageFile().getBytes(1, (int) itinerary.getImageFile().length());
             mediaType = MediaType.IMAGE_PNG;
-        }else {
+        } else {
             Resource resource = new ClassPathResource("static/img/itineraries/no_photo.png");
-             try (InputStream is = resource.getInputStream()) {
-            imageBytes = is.readAllBytes();
+            try (InputStream is = resource.getInputStream()) {
+                imageBytes = is.readAllBytes();
             }
             mediaType = MediaType.IMAGE_PNG;
         }
-         return ResponseEntity.ok()
-            .contentType(mediaType)
-            .body(imageBytes);
+        return ResponseEntity.ok()
+                .contentType(mediaType)
+                .body(imageBytes);
     }
-    
 
     @GetMapping("/itinerary/new")
     public String showNewItinerary() {
-        return "/create-itinerary";  
+        return "/create-itinerary";
     }
 
     @PostMapping("/itinerary/new")
-    public String createItinerary(@ModelAttribute CreateItineraryDto itineraryDto, @RequestParam("imageFile") MultipartFile imageFile, Principal principal) {
-        
+    public String createItinerary(@ModelAttribute CreateItineraryDto itineraryDto,
+            @RequestParam("imageFile") MultipartFile imageFile, Principal principal) {
+
         String email = principal.getName();
 
-        itineraryService.createItinerary(itineraryDto,imageFile,email);
-        
+        itineraryService.createItinerary(itineraryDto, imageFile, email);
+
         return "redirect:/";
     }
-    
+
     @PostMapping("/itinerary/{id}/delete")
     public String deleteItinerary(@PathVariable Long id, Model model) {
-         try {
+        try {
             itineraryService.deleteItinerary(id);
-            return "redirect:/"; 
+            return "redirect:/";
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "El itinerario no coincide con el id");
-            return "redirect:/"; 
+            return "redirect:/";
         }
     }
 
     @GetMapping("/itinerary/{id}/edit")
-    public String showEditItinerary(@PathVariable Long id,Model model) {
-        try{
+    public String showEditItinerary(@PathVariable Long id, Model model) {
+        try {
             EditItineraryDto editItinerary = itineraryService.getEditItineraryDto(id);
             model.addAttribute("itinerary", editItinerary);
             return "edit-itinerary";
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "El itinerario no existe");
-            return "redirect:/"; 
-        }       
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/itinerary/{id}/edit")
     public String editActivity(
-        @PathVariable Long id,
-        @ModelAttribute EditItineraryDto dto, 
-        @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-        Principal principal) {
-        
+            @PathVariable Long id,
+            @ModelAttribute EditItineraryDto dto,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            Principal principal) {
+
         String email = principal.getName();
         dto.setId(id); // Asegurar que el ID está en el DTO
         itineraryService.editItinerary(email, dto, imageFile);
         return "redirect:/";
     }
 
-
+    @GetMapping("/itinerary/{id}/detail")
+    public String showItinerarydetails(@PathVariable Long id, Model model) {
+        try {
+            DetailItineraryDto itinerary = itineraryService.getDetailItineraryDto(id);
+            model.addAttribute("itinerary", itinerary);
+            return "itinerary-detail";
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "El itinerario no existe");
+            return "redirect:/";
+        }
+    }
 
 }

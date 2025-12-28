@@ -18,20 +18,27 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.transaction.Transactional;
 import es.albavm.tfg.trifly.Model.Activity;
 import es.albavm.tfg.trifly.Model.ActivityType;
+import es.albavm.tfg.trifly.Model.Budget;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Model.ItineraryDay;
 import es.albavm.tfg.trifly.Model.Note;
+import es.albavm.tfg.trifly.Model.Reminder;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.ItineraryRepository;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.dto.Itinerary.ActivityTypeOptionDto;
 import es.albavm.tfg.trifly.dto.Itinerary.CreateItineraryDto;
+import es.albavm.tfg.trifly.dto.Itinerary.DetailActivityDto;
+import es.albavm.tfg.trifly.dto.Itinerary.DetailDayDto;
+import es.albavm.tfg.trifly.dto.Itinerary.DetailItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.EditActivityDto;
 import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDayDto;
 import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Itinerary.ItineraryDayDto;
 import es.albavm.tfg.trifly.dto.Itinerary.SummaryItineraryDto;
+import es.albavm.tfg.trifly.dto.Note.DetailNoteDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
+import es.albavm.tfg.trifly.dto.Reminder.DetailReminderDto;
 
 @Service
 public class ItineraryService {
@@ -120,7 +127,6 @@ public class ItineraryService {
     }
 
     public EditItineraryDto getEditItineraryDto(Long id) {
-        // Usar findById normal pero dentro de una transacción
         Itinerary itinerary = itineraryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
 
@@ -131,10 +137,8 @@ public class ItineraryService {
         dto.setStartDate(itinerary.getStartDate());
         dto.setFinishDate(itinerary.getFinishDate());
 
-        // Usar AtomicInteger para el índice del día (empezando en 0)
         AtomicInteger dayIndex = new AtomicInteger(0);
 
-        // Forzar la carga de las colecciones lazy
         List<ItineraryDay> days = itinerary.getDays();
         if (days == null)
             days = new ArrayList<>();
@@ -199,21 +203,19 @@ public class ItineraryService {
     }
 
     public void editItinerary(String email, EditItineraryDto updatedItinerary, MultipartFile imageFile) {
-    Itinerary itinerary = itineraryRepository.findById(updatedItinerary.getId())
-        .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
+        Itinerary itinerary = itineraryRepository.findById(updatedItinerary.getId())
+                .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
 
-    if (!itinerary.getUser().getEmail().equals(email)) {
-        throw new RuntimeException("Acceso no permitido");
-    }
+        if (!itinerary.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Acceso no permitido");
+        }
 
-    // Actualizar campos básicos
-    itinerary.setItineraryName(updatedItinerary.getItineraryName());
-    itinerary.setDestination(updatedItinerary.getDestination());
-    itinerary.setStartDate(updatedItinerary.getStartDate());
-    itinerary.setFinishDate(updatedItinerary.getFinishDate());
+        itinerary.setItineraryName(updatedItinerary.getItineraryName());
+        itinerary.setDestination(updatedItinerary.getDestination());
+        itinerary.setStartDate(updatedItinerary.getStartDate());
+        itinerary.setFinishDate(updatedItinerary.getFinishDate());
 
-    // Procesar imagen si se subió una nueva
-    if (imageFile != null && !imageFile.isEmpty()) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 Blob blob = new SerialBlob(imageFile.getBytes());
                 itinerary.setImageFile(blob);
@@ -223,35 +225,113 @@ public class ItineraryService {
             }
         }
 
-    // LIMPIAR días existentes (orphanRemoval se encarga de eliminar de BD)
-    itinerary.getDays().clear();
+        itinerary.getDays().clear();
 
-    // CREAR NUEVOS días desde el DTO
-    for (EditItineraryDayDto dayDto : updatedItinerary.getDays()) {
-        ItineraryDay day = new ItineraryDay();
-        day.setNumberDay(dayDto.getNumberDay());
-        day.setItinerary(itinerary);
+        for (EditItineraryDayDto dayDto : updatedItinerary.getDays()) {
+            ItineraryDay day = new ItineraryDay();
+            day.setNumberDay(dayDto.getNumberDay());
+            day.setItinerary(itinerary);
 
-        // CREAR NUEVAS actividades
-        List<Activity> activities = new ArrayList<>();
-        for (EditActivityDto activityDto : dayDto.getActivities()) {
-            Activity activity = new Activity();
-            activity.setActivityName(activityDto.getActivityName());
-            activity.setActivityDescription(activityDto.getActivityDescription());
-            activity.setLocation(activityDto.getLocation());
-            activity.setActivityType(activityDto.getActivityType());
-            activity.setStartTime(activityDto.getStartTime() != null ? activityDto.getStartTime() : LocalTime.MIDNIGHT);
-            activity.setFinishTime(activityDto.getFinishTime() != null ? activityDto.getFinishTime() : LocalTime.MIDNIGHT);
-            activity.setDay(day);
-            
-            activities.add(activity);
+            List<Activity> activities = new ArrayList<>();
+            for (EditActivityDto activityDto : dayDto.getActivities()) {
+                Activity activity = new Activity();
+                activity.setActivityName(activityDto.getActivityName());
+                activity.setActivityDescription(activityDto.getActivityDescription());
+                activity.setLocation(activityDto.getLocation());
+                activity.setActivityType(activityDto.getActivityType());
+                activity.setStartTime(
+                        activityDto.getStartTime() != null ? activityDto.getStartTime() : LocalTime.MIDNIGHT);
+                activity.setFinishTime(
+                        activityDto.getFinishTime() != null ? activityDto.getFinishTime() : LocalTime.MIDNIGHT);
+                activity.setDay(day);
+
+                activities.add(activity);
+            }
+
+            day.setActivity(activities);
+            itinerary.getDays().add(day);
         }
-        
-        day.setActivity(activities);
-        itinerary.getDays().add(day);
+
+        itineraryRepository.save(itinerary);
     }
 
-    // Un solo save gracias a CascadeType.ALL
-    itineraryRepository.save(itinerary);
-}
+
+    public DetailItineraryDto getDetailItineraryDto(Long id){
+         Itinerary itinerary = itineraryRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
+
+        DetailItineraryDto itineraryDto = new DetailItineraryDto();
+        itineraryDto.setId(itinerary.getId());
+        itineraryDto.setItineraryName(itinerary.getItineraryName());
+        itineraryDto.setDestination(itinerary.getDestination());
+        itineraryDto.setStartDate(itinerary.getStartDate());
+        itineraryDto.setFinishDate(itinerary.getFinishDate());
+
+        List<Budget> budgets = itinerary.getBudgets();
+
+        if (budgets != null && !budgets.isEmpty()) {
+            itineraryDto.setHasBudget(true);
+            itineraryDto.setBudgetId(budgets.get(0).getId()); 
+        } else {
+            itineraryDto.setHasBudget(false);
+        }
+
+        List<DetailDayDto> daysDto = new ArrayList<>();
+        List<ItineraryDay> days = itinerary.getDays();
+
+        if(days != null){
+            for(ItineraryDay day :days){
+                List<DetailActivityDto> activityDtos = new ArrayList<>();
+                if (day.getActivity() != null) {
+                     for (Activity activity : day.getActivity()) {
+                        DetailActivityDto activityDto = new DetailActivityDto();
+                        activityDto.setActivityName(activity.getActivityName());
+                        activityDto.setLocation(activity.getLocation());
+                        activityDto.setStartTime(activity.getStartTime());
+                        activityDto.setFinishTime(activity.getFinishTime());
+                        activityDto.setActivityDescription(activity.getActivityDescription());
+                        
+                        if (activity.getActivityType() != null) {
+                            activityDto.setActivityTypeIcon(activity.getActivityType().getIcon());
+                            activityDto.setActivityTypeName(activity.getActivityType().getDisplayName());
+                        }
+                        
+                        activityDtos.add(activityDto);
+                     }
+                }
+                 DetailDayDto dayDto = new DetailDayDto(day.getNumberDay(), activityDtos);
+                daysDto.add(dayDto);
+            }
+        }
+        itineraryDto.setDays(daysDto);
+
+        List<DetailNoteDto> noteDtos = new ArrayList<>();
+        if (itinerary.getNotes() != null && !itinerary.getNotes().isEmpty()) {
+            for (Note note : itinerary.getNotes()) {
+                DetailNoteDto noteDto = new DetailNoteDto(
+                    note.getId(),
+                    note.getNoteTitle(),
+                    note.getNoteDescription()
+                );
+                noteDtos.add(noteDto);
+            }
+        }
+        itineraryDto.setNotes(noteDtos);
+
+        List<DetailReminderDto> reminderDtos = new ArrayList<>();
+        if (itinerary.getReminders() != null && !itinerary.getReminders().isEmpty()) {
+            for (Reminder reminder : itinerary.getReminders()) {
+                DetailReminderDto reminderDto = new DetailReminderDto(
+                    reminder.getId(),
+                    reminder.getReminderTitle(),
+                    reminder.getReminderDescription(),
+                    reminder.getDateTime()
+                );
+                reminderDtos.add(reminderDto);
+            }
+        }
+        itineraryDto.setReminders(reminderDtos);
+
+        return itineraryDto;
+    }
 }

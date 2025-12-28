@@ -1,23 +1,29 @@
 package es.albavm.tfg.trifly.Model;
 
 public enum ActivityType {
-    CULTURAL("Cultural"),
-    GASTRONOMIA("Gastronomía"),
-    AVENTURA( "Aventura"),
-    NATURALEZA("Naturaleza"),
-    VIDA_NOCTURNA("Vida Nocturna"),
-    TRANSPORTE("Transporte"),
-    ALOJAMIENTO("Alojamiento"),
-    OTRO("Otro");
+    CULTURAL("Cultural", "museum"),
+    GASTRONOMIA("Gastronomía", "restaurant"),
+    AVENTURA("Aventura", "hiking"),
+    NATURALEZA("Naturaleza", "park"),
+    VIDA_NOCTURNA("Vida Nocturna", "nightlife"),
+    TRANSPORTE("Transporte", "directions_car"),
+    ALOJAMIENTO("Alojamiento", "hotel"),
+    OTRO("Otro", "category");
 
     private final String displayName;
+    private final String icon;
 
-    ActivityType(String displayName) {
+    ActivityType(String displayName, String icon) {
         this.displayName = displayName;
+        this.icon = icon;
     }
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public static ActivityType fromString(String text) {

@@ -1,81 +1,117 @@
 {{>header}}
-  <main class="main">
-    <section class="trip-header">
-      <div>
-        <h2 class="trip-title">Viaje a Paris</h2>
-        <p class="trip-subtitle">5 dias en Paris, Francia</p>
-      </div>
-      <div class="btn-group">
-        <a class="btn btn-info fw-bold rounded" href="/itinerary/detail/map">
-          <span class="material-symbols-outlined">map</span>
-          Ver en mapa
-        </a>
-        <button class="btn btn-warning fw-bold rounded">
-          <span class="material-symbols-outlined">download</span>
-          Descargar PDF
-        </button>
-      </div>
-    </section>
+<main class="main">
+  <section class="trip-header">
+    <div>
+      <h2 class="trip-title">{{itinerary.itineraryName}}</h2>
+      <p class="trip-subtitle">{{itinerary.totalDays}} días en {{itinerary.destination}} ·
+        {{itinerary.startDate}} - {{itinerary.finishDate}}</p>
+    </div>
+    <div class="btn-group">
+      {{#itinerary.hasBudget}}
+      <a class="btn btn-success fw-bold rounded" href="/budget/{{itinerary.budgetId}}/detail">
+        <span class="material-symbols-outlined">payments</span>
+        Presupuesto
+      </a>
+      {{/itinerary.hasBudget}}
+      <a class="btn btn-info fw-bold rounded" href="/itinerary/detail/map">
+        <span class="material-symbols-outlined">map</span>
+        Ver en mapa
+      </a>
+      <button class="btn btn-warning fw-bold rounded">
+        <span class="material-symbols-outlined">download</span>
+        Descargar PDF
+      </button>
+    </div>
+  </section>
 
-    <section class="day-section">
-      <h3>Dia 1: Aterrizaje y ver Torre Eaffle</h3>
-      <ul class="timeline">
-        <li>
-        <span class="material-symbols-outlined">flight</span>
-          <div>
-            <p>Legada a Paris</p>
-            <small>10:00 AM</small>
+  {{#itinerary.days}}
+  <section class="day-section">
+    <h3>Dia {{numberDay}}</h3>
+    <ul class="timeline">
+      {{#activities}}
+      <li>
+        <span class="material-symbols-outlined">{{activityTypeIcon}}</span>
+        <div class="activity-info">
+          <div class="activity-header">
+            <p class="activity-name">{{activityName}}</p>
+            <span class="activity-type-badge">{{activityTypeName}}</span>
           </div>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">hotel</span>
-          <div>
-            <p>Checking</p>
-            <small>12:00 PM</small>
-          </div>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">language_french</span>
-          <div>
-            <p>Visitar Torre Eiffel</p>
-            <small>3:00 PM</small>
-          </div>
-        </li>
-      </ul>
-    </section>
+          {{#location}}
+          <small class="activity-location">
+            <span class="material-symbols-outlined" style="font-size: 14px;">location_on</span>
+            {{location}}
+          </small>
+          {{/location}}
+          <small class="activity-time">{{timeRange}}</small>
+          {{#activityDescription}}
+          <p class="activity-description">{{activityDescription}}</p>
+          {{/activityDescription}}
+        </div>
+      </li>
+      {{/activities}}
+    </ul>
+  </section>
+  {{/itinerary.days}}
 
-    <section class="day-section">
-      <h3>Dia 2: Museo del Louvre y Rio del Sena</h3>
-      <ul class="timeline">
-        <li>
-          <span class="material-symbols-outlined">museum</span>
-          <div>
-            <p> Museo del Louvre</p>
-            <small>9:00 AM</small>
-          </div>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">restaurant</span>
-          <div>
-            <p>Comida</p>
-            <small>1:00 PM</small>
-          </div>
-        </li>
-        <li>
-          <span class="material-symbols-outlined">directions_boat</span>
-          <div>
-            <p>Rio del Sena</p>
-            <small>4:00 PM</small>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="notes">
-      <h3>Notas y Recordatorios</h3>
-      <div class="notes-box">
-        <p>No hay notas ni recordatorios asociados a este itinerario.</p>
+  <section class="notes">
+    <h3>Notas</h3>
+    <div class="notes-box">
+      {{#itinerary.notes}}
+      <div class="note-item">
+        <span class="material-symbols-outlined note-icon">sticky_note_2</span>
+        <div class="note-content">
+          {{#noteTitle}}
+          <h5 class="note-title">{{noteTitle}}</h5>
+          {{/noteTitle}}
+          {{#noteDescription}}
+          <p class="note-description">{{noteDescription}}</p>
+          {{/noteDescription}}
+          {{^noteTitle}}
+          {{^noteDescription}}
+          <p class="text-muted">Nota sin contenido</p>
+          {{/noteDescription}}
+          {{/noteTitle}}
+        </div>
       </div>
-    </section>
-  </main>
+      {{/itinerary.notes}}
+
+      {{^itinerary.notes}}
+      <div class="no-notes">
+        <span class="material-symbols-outlined">note_add</span>
+        <p class="text-muted">No hay notas asociadas a este itinerario.</p>
+        <small class="text-muted">Añade notas importantes para recordar durante tu viaje.</small>
+      </div>
+      {{/itinerary.notes}}
+    </div>
+
+    <h3>Recordatorios</h3>
+    <div class="notes-box">
+      {{#itinerary.reminders}}
+      <div class="reminder-item">
+        <span class="material-symbols-outlined reminder-icon">notifications</span>
+        <div class="reminder-content">
+          {{#reminderTitle}}
+          <h5 class="reminder-title">{{reminderTitle}}</h5>
+          {{/reminderTitle}}
+          {{#hasDateTime}}
+          <div class="reminder-datetime">
+            <span class="material-symbols-outlined">schedule</span>
+            <span>{{formattedDateTime}}</span>
+          </div>
+          {{/hasDateTime}}
+          {{#reminderDescription}}
+          <p class="reminder-description">{{reminderDescription}}</p>
+          {{/reminderDescription}}
+        </div>
+      </div>
+      {{/itinerary.reminders}}
+      {{^itinerary.reminders}}
+      <div class="empty-state">
+        <span class="material-symbols-outlined">alarm_add</span>
+        <p class="text-muted">No hay recordatorios</p>
+      </div>
+      {{/itinerary.reminders}}
+    </div>
+  </section>
+</main>
 {{>footer}}

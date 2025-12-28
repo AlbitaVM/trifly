@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class GeneralController {
      
 
-     @GetMapping("/itinerary")
-    public String showdetails() {
-        return "itinerary-detail"; 
-    }
+   
 
     @GetMapping("/itinerary/detail/map")
     public String showMapDetail() {

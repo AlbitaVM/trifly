@@ -34,7 +34,7 @@
             <p class="text-muted">{{destination}}</p>
             <p class="text-secondary small mb-3">{{startDate}} - {{finishDate}}</p>
             <div class="d-flex justify-content-end gap-2">
-              <a class="btn btn-info btn-sm" href="/itinerary">Ver</a>
+              <a class="btn btn-info btn-sm" href="/itinerary/{{id}}/detail">Ver</a>
               <a class="btn btn-warning btn-sm" href="/itinerary/{{id}}/edit">Editar</a>
               <form method="post" action="/itinerary/{{id}}/delete"  style="display: inline-flex; margin: 0; padding: 0;">
                 <input type="hidden" name="_csrf" value="{{token}}">
