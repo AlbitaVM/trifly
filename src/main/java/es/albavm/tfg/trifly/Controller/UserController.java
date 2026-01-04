@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Service.UserService;
+import es.albavm.tfg.trifly.dto.User.ProfileDto;
 
 
 @Controller
@@ -76,7 +77,7 @@ public class UserController {
             imageBytes = user.getImageFile().getBytes(1, (int) user.getImageFile().length());
             mediaType = MediaType.IMAGE_PNG;
         }else {
-            Resource resource = new ClassPathResource("static/img/itineraries/no_photo.png");
+            Resource resource = new ClassPathResource("static/img/users/default_photo.png");
              try (InputStream is = resource.getInputStream()) {
             imageBytes = is.readAllBytes();
             }
@@ -102,6 +103,20 @@ public class UserController {
         } else {
             model.addAttribute("isAuthenticated", false);
         }
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Principal principal) {
+        
+        ProfileDto profile = userService.getProfile(principal.getName());
+        model.addAttribute("isProfile", true);
+        model.addAttribute("user" ,profile);
+        return "/profile";  
+    }
+
+    @GetMapping("/profile/edit")
+    public String showFormEdit() {
+        return "/edit-profile";  
     }
     
 }

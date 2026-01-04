@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.Security.CSRFHandlerConfiguration;
+import es.albavm.tfg.trifly.dto.User.ProfileDto;
 import es.albavm.tfg.trifly.dto.User.UserDto;
 import es.albavm.tfg.trifly.dto.User.UserMapper;
 
@@ -58,6 +59,22 @@ public class UserService {
 
     public void save(User user){
         userRepository.save(user);
+    }
+
+    public ProfileDto getProfile(String email){
+        User user = userRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        boolean isAdmin = user.getRoles()
+        .stream()
+        .anyMatch(r -> r.equals("ROLE_ADMIN"));
+
+        return new ProfileDto(
+            user.getId(),
+            user.getName(),
+            user.getEmail(),
+            isAdmin
+        );
     }
     
 }

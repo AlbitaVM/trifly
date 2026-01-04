@@ -39,15 +39,6 @@ public class GeneralController {
 
    
 
-    @GetMapping("/profile")
-    public String showProfile(Model model) {
-        model.addAttribute("isProfile", true);
-        return "/profile";  
-    }
-
-    @GetMapping("/profile/edit")
-    public String showFormEdit() {
-        return "/edit-profile";  
-    }
+    
 }
 

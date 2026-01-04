@@ -8,10 +8,12 @@
     <div class="profile-sidebar">
       <div class="profile-card">
         <div class="profile-info">
-          <div class="profile-photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9zYKlH8fQwLQ4kL3xcm2FX7jYG6xtEem-f_noemnYj4o6KcCf93z3syYbnOEIbMcZ43xSPOOxPtgphTpmmu_WAvK3g-t0HxBec0MuizgtANCRpneMv9uToA9m9OUF6bjCAyvFw7bFN-4vfEqMCs2lSVJfl1CJtTw7glqGXzrsAGj3OkAXkmKjf-QGGeAqvnne3DkglTWeMqcWr0Hkw-wqLwq_ICLHQ69drroF4B5EeUl3YbsyAqxqZ5OsE-JrmRFudATQmttB_Lo");'></div>
+          <div class="profile-photo-wrapper">
+             <img src="/user/{{user.id}}/image" alt="Foto de perfil {{user.name}}" class="profile-photo-img">
+          </div>
           <div class="profile-text">
-            <p class="name">Juan Pérez</p>
-            <p class="username">juanperez@gmail.com</p>
+            <p class="name">{{user.name}}</p>
+            <p class="username">{{user.email}}</p>
           </div>
         </div>
         <a class="btn btn-warning btn-lg btn-block" href="/profile/edit">
