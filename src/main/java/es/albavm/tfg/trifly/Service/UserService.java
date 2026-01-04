@@ -132,7 +132,7 @@ public class UserService {
     }
 
     public Page<SummaryUserDto> getAllUsersPaginated(String email, Pageable pageable) {
-        User user = userRepository.findByEmail(email)
+        userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         return userRepository.findAll(pageable).map(u -> new SummaryUserDto(
@@ -140,5 +140,14 @@ public class UserService {
                 u.getName(),
                 u.getEmail()
             ));
+    }
+
+    public void deleteUser(Long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            userRepository.delete(optionalUser.get());
+        }else {
+            throw new RuntimeException("User not found");
+        }
     }
 }

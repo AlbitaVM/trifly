@@ -175,5 +175,16 @@ public class UserController {
         return "redirect:/profile";
     }
 
+    @PostMapping("/user/{id}/delete")
+    public String deleteUser(@PathVariable Long id, Model model) {
+        try {
+            userService.deleteUser(id);
+            return "redirect:/profile";
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "El usuario no coincide con el id");
+            return "redirect:/profile";
+        }
+    }
+    
     
 }

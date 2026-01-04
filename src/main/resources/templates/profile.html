@@ -176,9 +176,12 @@
               <p class="list-item-date">{{email}}</p>
             </div>
             <div class="list-item-actions">
-              <button type="button" class="btn-icon-delete" title="Eliminar">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
+              <form method="post" action="/user/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
+                  <input type="hidden" name="_csrf" value="{{token}}">
+                  <button type="submit" class="btn-icon-delete" title="Eliminar">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+              </form>
             </div>
           </div>
           {{/users}}
