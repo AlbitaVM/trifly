@@ -9,7 +9,7 @@
       <div class="profile-card">
         <div class="profile-info">
           <div class="profile-photo-wrapper">
-             <img src="/user/{{user.id}}/image" alt="Foto de perfil {{user.name}}" class="profile-photo-img">
+            <img src="/user/{{user.id}}/image" alt="Foto de perfil {{user.name}}" class="profile-photo-img">
           </div>
           <div class="profile-text">
             <p class="name">{{user.name}}</p>
@@ -98,7 +98,8 @@
       <div class="map-card">
         <h3>Tu Mapa de Viajes</h3>
         <div class="map-container">
-          <img alt="Mapa del mundo con pines de los lugares visitados" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5hNcnZjLl2XDmWD1dJ_jV-gHKhhXuR3v-C4kg-MzHC9WN5HM_Eilrd_fCV034XyChc85_iyjX2gwIzBCT9v0o4bqT28zacRAPJyKHzA1dIeGJTIeRrgUzJTGZKua81rywP_djO2ZIWQ7bWRnClJNlGwHWEIwFrahh-XtX8WJWbpJ6OSKt6P2eLXCj8vDCI3w68QXd2t_ZTNjWt5s2UVVJsXxLRGgw5NooRYyqp97t6BHAcseYT8LA-nDKmb9RFJAtRttolmMp3lQ" />
+          <img alt="Mapa del mundo con pines de los lugares visitados"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5hNcnZjLl2XDmWD1dJ_jV-gHKhhXuR3v-C4kg-MzHC9WN5HM_Eilrd_fCV034XyChc85_iyjX2gwIzBCT9v0o4bqT28zacRAPJyKHzA1dIeGJTIeRrgUzJTGZKua81rywP_djO2ZIWQ7bWRnClJNlGwHWEIwFrahh-XtX8WJWbpJ6OSKt6P2eLXCj8vDCI3w68QXd2t_ZTNjWt5s2UVVJsXxLRGgw5NooRYyqp97t6BHAcseYT8LA-nDKmb9RFJAtRttolmMp3lQ" />
         </div>
       </div>
 
@@ -144,7 +145,7 @@
             <div>
               <p class="stat-value">2,958</p>
               <p class="stat-label">Total Presupuestos</p>
-              
+
             </div>
           </div>
         </div>
@@ -164,41 +165,51 @@
       <!-- Lista de usuarios registrados -->
       <div class="stats-card" style="margin-top: 2rem;">
         <h3>Usuarios Registrados</h3>
+        {{#users}}
         <div class="list-section">
           <div class="list-item user-item">
             <div class="list-item-icon turquoise">
               <span class="material-symbols-outlined">person</span>
             </div>
             <div class="list-item-content">
-              <p>Juan Pérez</p>
-              <p class="list-item-date">juanperez@gmail.com</p>
+              <p>{{name}}</p>
+              <p class="list-item-date">{{email}}</p>
             </div>
             <div class="list-item-actions">
-              <a href="/users/view" class="btn-icon-visibility" title="Ver">
-                <span class="material-symbols-outlined">visibility</span>
-              </a>
               <button type="button" class="btn-icon-delete" title="Eliminar">
                 <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
           </div>
+          {{/users}}
+        </div>
+        <div class="row mt-4">
+          <div class="col-12">
+            <nav aria-label="Paginación de itinerarios">
+              <ul class="pagination justify-content-center">
 
-          <div class="list-item user-item">
-            <div class="list-item-icon turquoise">
-              <span class="material-symbols-outlined">person</span>
-            </div>
-            <div class="list-item-content">
-              <p>María López</p>
-              <p class="list-item-date">marialopez@gmail.com</p>
-            </div>
-            <div class="list-item-actions">
-              <a href="/users/view" class="btn-icon-visibility" title="Ver">
-                <span class="material-symbols-outlined">visibility</span>
-              </a>
-              <button type="button" class="btn-icon-delete" title="Eliminar">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
+                <!-- Botón Anterior -->
+                {{#hasPrevious}}
+                <li class="page-item">
+                  <a class="page-link" href="/notes?page={{previousPage}}">&laquo;</a>
+                </li>
+                {{/hasPrevious}}
+
+                <!-- Números de página (necesitarás pasar una lista desde el controlador) -->
+                {{#pageNumbers}}
+                <li class="page-item {{#active}}active{{/active}}">
+                  <a class="page-link" href="/notes?page={{number}}">{{display}}</a>
+                </li>
+                {{/pageNumbers}}
+
+                <!-- Botón Siguiente -->
+                {{#hasNext}}
+                <li class="page-item">
+                  <a class="page-link" href="/notes?page={{nextPage}}">&raquo;</a>
+                </li>
+                {{/hasNext}}
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
@@ -215,33 +226,33 @@
   const itinerarios = [3, 6, 9, 4, 7, 11];
 
   new Chart(document.getElementById('usersChart'), {
-      type: 'bar',
-      data: {
-          labels: meses,
-          datasets: [{
-              label: 'Usuarios registrados',
-              data: usuarios,
-              backgroundColor: 'rgba(54, 162, 235, 0.6)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1
-          }]
-      },
-      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Usuarios registrados',
+        data: usuarios,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
   });
 
   new Chart(document.getElementById('itinerariesChart'), {
-      type: 'bar',
-      data: {
-          labels: meses,
-          datasets: [{
-              label: 'Itinerarios creados',
-              data: itinerarios,
-              backgroundColor: 'rgba(222, 170, 12, .5)',
-              borderColor: 'rgba(245, 186, 7, 0.5)',
-              borderWidth: 1
-          }]
-      },
-      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Itinerarios creados',
+        data: itinerarios,
+        backgroundColor: 'rgba(222, 170, 12, .5)',
+        borderColor: 'rgba(245, 186, 7, 0.5)',
+        borderWidth: 1
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
   });
 </script>
 {{>footer}}

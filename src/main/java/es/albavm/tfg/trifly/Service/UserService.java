@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,8 +18,10 @@ import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Repository.UserRepository;
 import es.albavm.tfg.trifly.Security.CSRFHandlerConfiguration;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
+import es.albavm.tfg.trifly.dto.Note.SummaryNoteDto;
 import es.albavm.tfg.trifly.dto.User.EditProfileDto;
 import es.albavm.tfg.trifly.dto.User.ProfileDto;
+import es.albavm.tfg.trifly.dto.User.SummaryUserDto;
 import es.albavm.tfg.trifly.dto.User.UserDto;
 import es.albavm.tfg.trifly.dto.User.UserMapper;
 
@@ -127,4 +131,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public Page<SummaryUserDto> getAllUsersPaginated(String email, Pageable pageable) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return userRepository.findAll(pageable).map(u -> new SummaryUserDto(
+                u.getId(),
+                u.getName(),
+                u.getEmail()
+            ));
+    }
 }

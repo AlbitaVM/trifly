@@ -2,12 +2,17 @@ package es.albavm.tfg.trifly.Controller;
 
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +34,7 @@ import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
 import es.albavm.tfg.trifly.dto.User.EditProfileDto;
 import es.albavm.tfg.trifly.dto.User.ProfileDto;
+import es.albavm.tfg.trifly.dto.User.SummaryUserDto;
 
 @Controller
 public class UserController {
@@ -110,9 +116,24 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(Model model, Principal principal) {
+    public String showProfile(Model model, Principal principal, @RequestParam (defaultValue = "0") int page) {
 
-        ProfileDto profile = userService.getProfile(principal.getName());
+        String email = principal.getName();
+
+        ProfileDto profile = userService.getProfile(email);
+        
+        Page<SummaryUserDto> users = userService.getAllUsersPaginated(email, PageRequest.of(page, 3));
+        List<Map<String, Object>> pageNumbers = new ArrayList<>();
+        for (int i = 0; i < users.getTotalPages(); i++) {
+            Map<String, Object> pageInfo = new HashMap<>();
+            pageInfo.put("number", i);
+            pageInfo.put("display", i + 1);
+            pageInfo.put("active", i == page);
+            pageNumbers.add(pageInfo);
+        }
+
+        model.addAttribute("users",  users.getContent());
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("isProfile", true);
         model.addAttribute("user", profile);
         return "/profile";
@@ -153,4 +174,6 @@ public class UserController {
         }
         return "redirect:/profile";
     }
+
+    
 }
