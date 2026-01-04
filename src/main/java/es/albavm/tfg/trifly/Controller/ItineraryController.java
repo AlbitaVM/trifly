@@ -137,7 +137,7 @@ public class ItineraryController {
         String email = principal.getName();
         dto.setId(id); // Asegurar que el ID está en el DTO
         itineraryService.editItinerary(email, dto, imageFile);
-        return "redirect:/";
+        return "redirect:/profile";
     }
 
     @GetMapping("/itinerary/{id}/detail")

@@ -3,47 +3,73 @@
     <div class="container">
         <div class="form-card">
             <h1 class="form-title">Editar Perfil</h1>
-
-            <form>
+            {{#errors}}
+            <div  class="alert alert-danger" style="margin-bottom: 2rem;">
+                <p> ⚠ {{message}}</p>
+            </div>
+            {{/errors}}
+            <form method="post" action="/profile/{{user.id}}/edit" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" value="{{token}}">
                 <div class="form-group">
                     <div class="profile-card">
-                    <div class="profile-info">
-                        <div class="profile-photo-wrapper">
-                            <div class="profile-photo"style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9zYKlH8fQwLQ4kL3xcm2FX7jYG6xtEem-f_noemnYj4o6KcCf93z3syYbnOEIbMcZ43xSPOOxPtgphTpmmu_WAvK3g-t0HxBec0MuizgtANCRpneMv9uToA9m9OUF6bjCAyvFw7bFN-4vfEqMCs2lSVJfl1CJtTw7glqGXzrsAGj3OkAXkmKjf-QGGeAqvnne3DkglTWeMqcWr0Hkw-wqLwq_ICLHQ69drroF4B5EeUl3YbsyAqxqZ5OsE-JrmRFudATQmttB_Lo");'></div>
-                            <button class="edit-photo-btn">    
-                                <span class="material-symbols-outlined">edit</span>
-                            </button>
+                        <div class="profile-info">
+                            <div class="profile-photo-wrapper">
+                                <img src="/user/{{user.id}}/image" alt="Foto de perfil {{user.name}}"
+                                    class="profile-photo-img">
+                                <label for="imageInput" class="edit-photo-btn">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </label>
+                                <input id="imageInput" type="file" name="imageFile" accept="image/*" hidden>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
                 <div class="form-group">
-                    <label class="form-label">Nombre de usuario</label>
-                    <input type="text" class="form-control" value="Juan Pérez">
+                    <label class="form-label" for="name">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="name" value="{{user.name}}" name="name">
                 </div>
 
                 <div class="form-group full-width">
-                    <label class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" value="juanperez@gmail.com" disabled>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Contraseña actual</label>
-                    <input type="password" class="form-control" placeholder="••••••••">
-                </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Nueva contraseña</label>
-                        <input type="password" class="form-control" placeholder="Nueva contraseña">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Confirmar nueva contraseña</label>
-                        <input type="password" class="form-control" placeholder="Confirmar contraseña">
-                    </div>
+                    <label class="form-label" for="email">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" value="{{user.email}}" name="email" disabled>
                 </div>
 
-                <a href="/profile" class="btn btn-danger btn-lg btn-block">Editar perfil</a>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="togglePassword">
+                        ¿Quieres cambiar la contraseña?
+                    </label>
+                </div>
+
+                <div id="passwordSection" style="display:none">
+
+                    <div class="form-group">
+                        <label>Contraseña actual</label>
+                        <input type="password" name="currentPassword" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nueva contraseña</label>
+                        <input type="password" name="newPassword" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmar contraseña</label>
+                        <input type="password" name="confirmPassword" class="form-control">
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-danger btn-lg btn-block">Editar perfil</button>
             </form>
         </div>
     </div>
 </section>
+<script>
+  const toggle = document.getElementById('togglePassword');
+  const section = document.getElementById('passwordSection');
+
+  toggle.addEventListener('change', () => {
+    section.style.display = toggle.checked ? 'block' : 'none';
+  });
+</script>
 {{>footer}}

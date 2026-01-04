@@ -2230,6 +2230,7 @@ textarea.form-control {
 .profile-photo-wrapper {
   position: relative;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .edit-photo-btn {
