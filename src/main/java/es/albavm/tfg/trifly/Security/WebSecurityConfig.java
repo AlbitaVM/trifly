@@ -26,6 +26,9 @@ public class WebSecurityConfig {
 	public RepositoryUserDetailsService userDetailService;
 
 	@Autowired
+	private CustomLoginSuccessHandler customLoginSuccessHandler;
+
+	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
 	@Autowired
@@ -83,6 +86,7 @@ public class WebSecurityConfig {
 					.loginPage("/login")
 					.usernameParameter("email") 
 					.failureUrl("/login?error=true")
+					.successHandler(customLoginSuccessHandler)
 					.defaultSuccessUrl("/",true)
 					.permitAll())
 				// LOGOUT

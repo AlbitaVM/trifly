@@ -102,10 +102,11 @@
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5hNcnZjLl2XDmWD1dJ_jV-gHKhhXuR3v-C4kg-MzHC9WN5HM_Eilrd_fCV034XyChc85_iyjX2gwIzBCT9v0o4bqT28zacRAPJyKHzA1dIeGJTIeRrgUzJTGZKua81rywP_djO2ZIWQ7bWRnClJNlGwHWEIwFrahh-XtX8WJWbpJ6OSKt6P2eLXCj8vDCI3w68QXd2t_ZTNjWt5s2UVVJsXxLRGgw5NooRYyqp97t6BHAcseYT8LA-nDKmb9RFJAtRttolmMp3lQ" />
         </div>
       </div>
-
+      {{#stats}}
       <!-- Estadísticas tipo Admin Dashboard -->
       <div class="stats-card" style="margin-top: 2rem;">
         <h3>Estadísticas</h3>
+
         <div class="stats-grid">
           <!-- Usuarios -->
           <div class="stat-box primary">
@@ -113,11 +114,11 @@
               <span class="material-symbols-outlined">group</span>
             </div>
             <div>
-              <p class="stat-value">1,250</p>
+              <p class="stat-value">{{totalUsers}}</p>
               <p class="stat-label">Total Usuarios Registrados</p>
               <div class="card-details">
-                <div><span>Usuarios nuevos (mes)</span><strong>+128</strong></div>
-                <div><span>Activos / Inactivos</span><strong>1,100 / 150</strong></div>
+                <div><span>Usuarios nuevos (mes)</span><strong>+{{newUsersThisMonth}}</strong></div>
+                <div><span>Activos / Inactivos</span><strong>{{activeUsers}} / {{inactiveUsers}}</strong></div>
               </div>
             </div>
           </div>
@@ -128,11 +129,11 @@
               <span class="material-symbols-outlined">map</span>
             </div>
             <div>
-              <p class="stat-value">3,480</p>
+              <p class="stat-value">{{totalItineraries}}</p>
               <p class="stat-label">Total Itinerarios</p>
               <div class="card-details">
-                <div><span>Promedio por usuario</span><strong>2.8</strong></div>
-                <div><span>Crecimiento (mes)</span><strong>+8.5%</strong></div>
+                <div><span>Promedio por usuario</span><strong>{{avgItinerariesPerUser}}</strong></div>
+                <div><span>Crecimiento (mes)</span><strong>+{{growthThisMonth}}%</strong></div>
               </div>
             </div>
           </div>
@@ -143,7 +144,7 @@
               <span class="material-symbols-outlined">account_balance_wallet</span>
             </div>
             <div>
-              <p class="stat-value">2,958</p>
+              <p class="stat-value">{{totalBudgets}}</p>
               <p class="stat-label">Total Presupuestos</p>
 
             </div>
@@ -161,7 +162,7 @@
           <canvas id="itinerariesChart" height="120"></canvas>
         </div>
       </div>
-
+      {{/stats}}
       <!-- Lista de usuarios registrados -->
       <div class="stats-card" style="margin-top: 2rem;">
         <h3>Usuarios Registrados</h3>
@@ -176,11 +177,11 @@
               <p class="list-item-date">{{email}}</p>
             </div>
             <div class="list-item-actions">
-              <form method="post" action="/user/{{id}}/delete"   style="display: inline-flex; margin: 0; padding: 0;">
-                  <input type="hidden" name="_csrf" value="{{token}}">
-                  <button type="submit" class="btn-icon-delete" title="Eliminar">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
+              <form method="post" action="/user/{{id}}/delete" style="display: inline-flex; margin: 0; padding: 0;">
+                <input type="hidden" name="_csrf" value="{{token}}">
+                <button type="submit" class="btn-icon-delete" title="Eliminar">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
               </form>
             </div>
           </div>
@@ -224,38 +225,56 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
-  const usuarios = [5, 8, 12, 7, 10, 15];
-  const itinerarios = [3, 6, 9, 4, 7, 11];
+  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
+  const users = JSON.parse('{{usersPerMonthJson}}');
+  const itineraries = JSON.parse('{{itinerariesPerMonthJson}}');
 
   new Chart(document.getElementById('usersChart'), {
     type: 'bar',
     data: {
-      labels: meses,
+      labels: months,
       datasets: [{
         label: 'Usuarios registrados',
-        data: usuarios,
+        data: users,
         backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1
       }]
     },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    options: {
+      responsive: true, scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1   
+          }
+        }
+      }
+    }
   });
 
   new Chart(document.getElementById('itinerariesChart'), {
     type: 'bar',
     data: {
-      labels: meses,
+      labels: months,
       datasets: [{
         label: 'Itinerarios creados',
-        data: itinerarios,
+        data: itineraries,
         backgroundColor: 'rgba(222, 170, 12, .5)',
         borderColor: 'rgba(245, 186, 7, 0.5)',
         borderWidth: 1
       }]
     },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    options: {
+      responsive: true, scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1   
+          }
+        }
+      }
+    }
   });
 </script>
 {{>footer}}

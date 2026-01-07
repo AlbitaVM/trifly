@@ -3,13 +3,17 @@ package es.albavm.tfg.trifly.Model;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 
 import java.sql.Blob;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
@@ -32,6 +36,13 @@ public class User {
 	private Blob imageFile;
 	private boolean imageBoolean;
 
+    @CreationTimestamp
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "last_login_date")
+    private LocalDateTime lastLoginDate;
+
     @ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
@@ -47,6 +58,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reminder> reminders;
+
 
     public User() {}
 
@@ -90,6 +102,14 @@ public class User {
 
     public List<Reminder> getReminders() {
         return reminders;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDateTime getLastLoginDate() {
+        return lastLoginDate;
     }
 
     public List<String> getRoles() {
@@ -138,5 +158,13 @@ public class User {
 
     public void setReminders(List<Reminder> reminders) {
         this.reminders = reminders;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+    
+    public void setLastLoginDate(LocalDateTime lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
     }
 }

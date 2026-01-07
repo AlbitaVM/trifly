@@ -27,11 +27,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Model.User;
 import es.albavm.tfg.trifly.Service.UserService;
 import es.albavm.tfg.trifly.dto.Itinerary.EditItineraryDto;
 import es.albavm.tfg.trifly.dto.Note.EditNoteDto;
+import es.albavm.tfg.trifly.dto.User.AdminStatsDto;
 import es.albavm.tfg.trifly.dto.User.EditProfileDto;
 import es.albavm.tfg.trifly.dto.User.ProfileDto;
 import es.albavm.tfg.trifly.dto.User.SummaryUserDto;
@@ -132,6 +136,28 @@ public class UserController {
             pageNumbers.add(pageInfo);
         }
 
+        AdminStatsDto stats = userService.getProfileStats();
+        
+        // Convertimos a JSON seguro para JS
+        String usersPerMonthJson = "[]";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            usersPerMonthJson = mapper.writeValueAsString(stats.getUsersPerMonth());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        String itinerariesPerMonthJson = "[]";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            itinerariesPerMonthJson = mapper.writeValueAsString(stats.getItinerariesPerMonth());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("usersPerMonthJson", usersPerMonthJson);
+        model.addAttribute("itinerariesPerMonthJson", itinerariesPerMonthJson);
+        model.addAttribute("stats", stats);
         model.addAttribute("users",  users.getContent());
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("isProfile", true);
