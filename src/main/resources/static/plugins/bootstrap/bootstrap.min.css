@@ -3048,6 +3048,50 @@ fieldset:disabled a.btn {
     box-shadow: 0 0 0 .2rem rgba(58, 176, 195, .5)
 }
 
+.btn-cancel {
+    color: #fff; /* Texto oscuro */
+    background-color: #777e86; /* Gris muy clarito */
+    border: 1px solid #777e86; /* Borde gris */
+  
+}
+
+.btn-cancel:hover {
+    color: #fff;
+    background-color: #9199a2; /* Gris un poco más oscuro al pasar el ratón */
+    border-color: #9199a2;
+}
+
+.btn-cancel:focus,
+.btn-cancel.focus {
+    color: #fff;
+    background-color: #c9d1da;
+    border-color: #c9d1da;
+    box-shadow: 0 0 0 .2rem rgba(110, 118, 125, 0.25); /* Sombra suave */
+}
+
+.btn-cancel.disabled,
+.btn-cancel:disabled {
+    color: #6c757d; /* Gris del texto deshabilitado */
+    background-color: #c9d1da;
+    border-color: #c9d1da;
+}
+
+.btn-cancel:not(:disabled):not(.disabled).active,
+.btn-cancel:not(:disabled):not(.disabled):active,
+.show>.btn-cancel.dropdown-toggle {
+    color: #fff;
+    background-color: #696f76; /* Gris un poco más oscuro al hacer click */
+    border-color: #696f76;
+}
+
+.btn-cancel:not(:disabled):not(.disabled).active:focus,
+.btn-cancel:not(:disabled):not(.disabled):active:focus,
+.show>.btn-cancel.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(108, 117, 125, .25);
+}
+
+
+
 .btn-warning {
     color: #fff;
     background-color: #ffc107;
