@@ -53,6 +53,18 @@
   </section>
   {{/itinerary.days}}
 
+   <!-- SECCIÓN DEL MAPA CON BOTONES DE DÍA -->
+  <section class="map-section" style="margin: 2rem 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h3 style="margin: 0;">📍 Mapa del Itinerario</h3>
+      <div id="dayButtons" style="display: flex; gap: 10px;"></div>
+    </div>
+    <div id="map" style="width: 100%; height: 500px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1;"></div>
+    <div id="map-message" style="display: none; padding: 20px; text-align: center; background: #f5f5f5; border-radius: 10px; margin-top: 10px;">
+      <p style="color: #999; margin: 0;">No hay ubicaciones geocodificadas para mostrar en el mapa</p>
+    </div>
+  </section>
+
   <section class="notes">
     <h3>Notas</h3>
     <div class="notes-box">
@@ -114,4 +126,227 @@
     </div>
   </section>
 </main>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Routing Machine (para rutas) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+<div id="dayButtons" style="margin-bottom: 10px;"></div>
+<div id="map" style="height: 500px;"></div>
+
+<script>
+console.log("🗺️ Iniciando mapa con datos desde JSON...");
+
+// IMPORTANTE: Parsear el JSON que viene del backend
+var itineraryData = null;
+try {
+  var jsonString = '{{{itineraryJson}}}';
+  console.log("📄 JSON recibido (primeros 200 chars):", jsonString.substring(0, 200));
+  itineraryData = JSON.parse(jsonString);
+  console.log("✅ JSON parseado correctamente:", itineraryData);
+} catch (e) {
+  console.error("❌ Error parseando JSON:", e);
+  console.error("JSON string:", '{{{itineraryJson}}}');
+  document.getElementById('map').style.display = 'none';
+  document.getElementById('map-message').style.display = 'block';
+  document.getElementById('map-message').innerHTML = '<p style="color: #d32f2f;">Error cargando datos del itinerario</p>';
+}
+
+var map;
+var currentPolyline;
+var currentMarkers = [];
+var routeColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("✅ DOM cargado");
+  if (itineraryData) {
+    initializeMap();
+  }
+});
+
+function initializeMap() {
+  console.log("🔍 Verificando coordenadas en los días...");
+  
+  // Verificar si hay coordenadas
+  var hasCoordinates = false;
+  if (itineraryData.days) {
+    itineraryData.days.forEach(function(day) {
+      if (day.activities) {
+        day.activities.forEach(function(act) {
+          if (act.latitud && act.longitud) {
+            hasCoordinates = true;
+            console.log("✓ Encontrada actividad con coordenadas:", act.activityName, act.latitud, act.longitud);
+          } else {
+            console.log("✗ Actividad sin coordenadas:", act.activityName);
+          }
+        });
+      }
+    });
+  }
+
+  if (!hasCoordinates) {
+    console.warn("⚠️ No hay coordenadas para mostrar");
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('map-message').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('map-message').style.display = 'none';
+  document.getElementById('map').style.display = 'block';
+
+  // Crear el mapa
+  console.log("🗺️ Creando mapa...");
+  map = L.map('map').setView([40.4168, -3.7038], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  console.log("✓ Mapa creado");
+
+  // Crear botones por cada día
+  createDayButtons();
+
+  // Mostrar el primer día automáticamente
+  if (itineraryData.days && itineraryData.days.length > 0) {
+    var firstDay = itineraryData.days[0].numberDay;
+    showDay(firstDay);
+  }
+}
+
+function createDayButtons() {
+  var buttonsDiv = document.getElementById('dayButtons');
+  buttonsDiv.innerHTML = '';
+
+  if (!itineraryData.days) return;
+
+  itineraryData.days.forEach(function(day) {
+    var button = document.createElement('button');
+    button.className = 'day-button';
+    button.textContent = 'Día ' + day.numberDay;
+    button.onclick = function() {
+      showDay(day.numberDay);
+    };
+    buttonsDiv.appendChild(button);
+  });
+
+  console.log("🔘 Botones creados:", itineraryData.days.length);
+}
+
+function showDay(dayNumber) {
+  console.log("📍 Mostrando día:", dayNumber);
+
+  // Actualizar botones activos
+  var buttons = document.querySelectorAll('.day-button');
+  buttons.forEach(function(btn) {
+    btn.classList.remove('active');
+    if (btn.textContent === 'Día ' + dayNumber) {
+      btn.classList.add('active');
+    }
+  });
+
+  // Limpiar marcadores y líneas anteriores
+  if (currentPolyline) {
+    map.removeLayer(currentPolyline);
+  }
+  currentMarkers.forEach(function(marker) {
+    map.removeLayer(marker);
+  });
+  currentMarkers = [];
+
+  // Obtener el día
+  var day = null;
+  if (itineraryData.days) {
+    for (var i = 0; i < itineraryData.days.length; i++) {
+      if (itineraryData.days[i].numberDay === dayNumber) {
+        day = itineraryData.days[i];
+        break;
+      }
+    }
+  }
+
+  if (!day) {
+    console.error("❌ No se encontró el día", dayNumber);
+    return;
+  }
+
+  if (!day.activities) {
+    console.warn("⚠️ El día no tiene actividades");
+    return;
+  }
+
+  var coords = [];
+  var activityIndex = 0;
+
+  // Agregar marcadores para cada actividad
+  day.activities.forEach(function(activity) {
+    if (activity.latitud && activity.longitud) {
+      activityIndex++;
+      
+      // Crear icono personalizado
+      var iconHtml = '<div class="custom-marker marker-day-' + dayNumber + '">' + activityIndex + '</div>';
+      var customIcon = L.divIcon({
+        html: iconHtml,
+        className: 'custom-div-icon',
+        iconSize: [35, 35],
+        iconAnchor: [17, 17]
+      });
+
+      // Crear popup
+      var popupHTML = '<div class="popup-title">' + (activity.activityName || 'Sin nombre') + '</div>';
+      
+      if (activity.location) {
+        popupHTML += '<div class="popup-location">📍 ' + activity.location + '</div>';
+      }
+      
+      if (activity.startTime && activity.startTime !== '00:00:00') {
+        var timeText = activity.startTime;
+        if (activity.finishTime && activity.finishTime !== '00:00:00') {
+          timeText += ' - ' + activity.finishTime;
+        }
+        popupHTML += '<div class="popup-time">🕐 ' + timeText + '</div>';
+      }
+      
+      if (activity.activityDescription) {
+        popupHTML += '<div class="popup-description">' + activity.activityDescription + '</div>';
+      }
+
+      // Agregar marcador
+      var marker = L.marker([activity.latitud, activity.longitud], { icon: customIcon })
+        .addTo(map)
+        .bindPopup(popupHTML);
+      
+      currentMarkers.push(marker);
+      coords.push([activity.latitud, activity.longitud]);
+
+      console.log("✓ Marcador agregado:", activity.activityName, "(" + activity.latitud + ", " + activity.longitud + ")");
+    }
+  });
+
+  // Dibujar ruta entre actividades si hay más de una
+  if (coords.length > 1) {
+    var color = routeColors[(dayNumber - 1) % routeColors.length];
+    currentPolyline = L.polyline(coords, {
+      color: color,
+      weight: 4,
+      opacity: 0.75
+    }).addTo(map);
+
+    // Ajustar zoom para ver toda la ruta
+    map.fitBounds(currentPolyline.getBounds(), { padding: [50, 50] });
+    console.log("🛣️ Ruta dibujada con", coords.length, "puntos");
+  } else if (coords.length === 1) {
+    // Si solo hay un punto, centrarlo
+    map.setView(coords[0], 15);
+    console.log("📌 Centrado en único punto");
+  } else {
+    console.warn("⚠️ No hay coordenadas válidas para el día", dayNumber);
+  }
+}
+</script>
+
 {{>footer}}

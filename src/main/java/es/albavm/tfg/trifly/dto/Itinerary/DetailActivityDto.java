@@ -11,6 +11,9 @@ public class DetailActivityDto {
     private String activityTypeIcon;
     private String activityTypeName;
 
+    private Double latitud;
+    private Double longitud;
+
     public DetailActivityDto() {}
 
     public String getFormattedStartTime() {
@@ -56,6 +59,14 @@ public class DetailActivityDto {
         return startTime;
     }
 
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
@@ -82,5 +93,13 @@ public class DetailActivityDto {
 
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 }

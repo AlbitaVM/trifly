@@ -3,6 +3,7 @@ package es.albavm.tfg.trifly.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.io.IOException;
 import java.sql.Blob;
@@ -48,6 +49,9 @@ public class ItineraryService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NominatimService nominatimService;
 
     public Page<SummaryItineraryDto> getAllItinerariesPaged(Pageable pageable) {
         return itineraryRepository.findAll(pageable).map(it -> new SummaryItineraryDto(
@@ -105,6 +109,20 @@ public class ItineraryService {
                 activity.setFinishTime(activityDto.getFinishTime());
                 activity.setActivityDescription(activityDto.getActivityDescription());
                 activity.setActivityType(activityDto.getActivityType());
+                if (activityDto.getLocation() != null && !activityDto.getLocation().trim().isEmpty()) {
+                    try {
+                        Map<String, Double> coordinates = nominatimService.geocodeAddress(activityDto.getLocation());
+                        if (coordinates != null) {
+                            activity.setLatitud(coordinates.get("latitude"));
+                            activity.setLongitud(coordinates.get("longitude"));
+                            System.out.println("✓ Geocodificado: " + activityDto.getLocation());
+                        } else {
+                            System.out.println("✗ No se pudo geocodificar: " + activityDto.getLocation());
+                        }
+                    } catch (Exception e) {
+                        System.err.println("✗ Error geocodificando: " + activityDto.getLocation() + " - " + e.getMessage());
+                    }
+                }
                 activity.setDay(day);
                 return activity;
             }).toList();
@@ -243,6 +261,19 @@ public class ItineraryService {
                         activityDto.getStartTime() != null ? activityDto.getStartTime() : LocalTime.MIDNIGHT);
                 activity.setFinishTime(
                         activityDto.getFinishTime() != null ? activityDto.getFinishTime() : LocalTime.MIDNIGHT);
+                
+                if (activityDto.getLocation() != null && !activityDto.getLocation().trim().isEmpty()) {
+                    try {
+                        Map<String, Double> coordinates = nominatimService.geocodeAddress(activityDto.getLocation());
+                        if (coordinates != null) {
+                            activity.setLatitud(coordinates.get("latitude"));
+                            activity.setLongitud(coordinates.get("longitude"));
+                            System.out.println("✓ Geocodificado (edit): " + activityDto.getLocation());
+                        }
+                    } catch (Exception e) {
+                        System.err.println("✗ Error geocodificando (edit): " + activityDto.getLocation());
+                    }
+                }
                 activity.setDay(day);
 
                 activities.add(activity);
@@ -295,6 +326,9 @@ public class ItineraryService {
                             activityDto.setActivityTypeIcon(activity.getActivityType().getIcon());
                             activityDto.setActivityTypeName(activity.getActivityType().getDisplayName());
                         }
+                        
+                        activityDto.setLatitud(activity.getLatitud());
+                        activityDto.setLongitud(activity.getLongitud());
                         
                         activityDtos.add(activityDto);
                      }

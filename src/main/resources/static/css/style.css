@@ -3111,3 +3111,83 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 
+/*Mapa*/
+.leaflet-container {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos para los marcadores personalizados */
+.custom-marker {
+  background-color: #FF6B6B;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+}
+
+.marker-day-1 { background-color: #FF6B6B; }
+.marker-day-2 { background-color: #4ECDC4; }
+.marker-day-3 { background-color: #45B7D1; }
+.marker-day-4 { background-color: #FFA07A; }
+.marker-day-5 { background-color: #98D8C8; }
+.marker-day-6 { background-color: #F7DC6F; }
+.marker-day-7 { background-color: #BB8FCE; }
+
+/* Estilos para los popups */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.leaflet-popup-content {
+  margin: 10px 15px;
+  max-width: 250px;
+}
+
+.popup-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 15px;
+}
+
+.popup-location {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.popup-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.popup-description {
+  font-size: 13px;
+  color: #555;
+  margin-top: 8px;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+/* Ocultar el panel de instrucciones de routing */
+.leaflet-routing-container {
+  display: none;
+}
+
+/* Estilo para las líneas de ruta */
+.leaflet-routing-line {
+  stroke-width: 4;
+  stroke-opacity: 0.75;
+}

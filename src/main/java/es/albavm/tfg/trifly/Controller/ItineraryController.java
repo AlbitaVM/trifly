@@ -18,7 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import es.albavm.tfg.trifly.Model.ActivityType;
 import es.albavm.tfg.trifly.Model.Itinerary;
 import es.albavm.tfg.trifly.Service.ItineraryService;
@@ -33,6 +34,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -141,10 +148,19 @@ public class ItineraryController {
     }
 
     @GetMapping("/itinerary/{id}/detail")
-    public String showItinerarydetails(@PathVariable Long id, Model model) {
+    public String showItinerarydetails(@PathVariable Long id, Model model) throws JsonProcessingException {
         try {
             DetailItineraryDto itinerary = itineraryService.getDetailItineraryDto(id);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+            String jsonItinerary = mapper.writeValueAsString(itinerary);
+
+            model.addAttribute("itineraryJson", jsonItinerary);
+
             model.addAttribute("itinerary", itinerary);
+
             return "itinerary-detail";
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "El itinerario no existe");
